@@ -17,12 +17,6 @@ class App extends Component {
 
     componentDidMount(){
 
-        // var fetchString = "https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350"
- 
-        // fetch(fetchString)
-        // .then(response => response.json())
-        // .then(data => this.setState({ data }))
-
         var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
         targetUrl = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&limit=100000'
         fetch(proxyUrl + targetUrl)
@@ -53,105 +47,95 @@ class App extends Component {
 
     ParseRecords(){
 
+        var cases = {}
 
         for (var index in this.state.records) {
 
-            var found = this.state.dictionary[this.state.records[index].Accurate_Episode_Date]
+            var found = cases[this.state.records[index].Accurate_Episode_Date]
             if (found === undefined) {
-                this.state.dictionary[this.state.records[index].Accurate_Episode_Date] = 1
+                cases[this.state.records[index].Accurate_Episode_Date] = 1
             }
             else {
-                this.state.dictionary[this.state.records[index].Accurate_Episode_Date]++
+                cases[this.state.records[index].Accurate_Episode_Date]++
             }
         }
 
-            const myChartRef = this.chartRef.current.getContext("2d");
-
-            // const datasetX = {
-            //     borderColor: "Red",
-            //     fill: false,
-            //     data: [
-            //         {y: 1, x: 1},
-            //         {y: 5, x: 5},
-            //     ]
-            // }
+        this.setState({dictionary: cases})
+        const myChartRef = this.chartRef.current.getContext("2d");
     
-            // var data = {datasets: [dataset1]}
-    
-            const options = {
-                scales:{
-                    xAxes:[{
-                        id: "A",
-                        scaleLabel: {
-                            display: true,
-                            fontStyle: "bold",
-                            fontColor: "black",
-                            labelString: "# of Active Cases"
-                        },
-                        type: "time",
-                        time:{
-                            tooltipFormat: "YYYY/DDD"
-                        }
+        const options = {
+            scales:{
+                xAxes:[{
+                    id: "A",
+                    scaleLabel: {
+                        display: true,
+                        fontStyle: "bold",
+                        fontColor: "black",
+                        labelString: "# of Active Cases"
+                    },
+                    type: "time",
+                    time:{
+                        tooltipFormat: "MMM/DD/YYYY"
                     }
-                    ],
-                    yAxes:[{
-                        id: "B",
-                        scaleLabel: {
-                            display: true,
-                            fontStyle: "bold",
-                            fontColor: "black",
-                            labelString: "# of Active Cases"
-                        },
-                        ticks: {
-                            suggestedMin: -2,
-                        }
-                    }
-                    ]
-    
-                },
-                tooltips:{
-                    callbacks:{
-                        label: function(tooltipItem, data){
-                            return tooltipItem.yLabel;
-                        }
-                    }
-                },
-                pan: {
-                    enabled: true,
-                    mode: 'x',
-                },
-                zoom: {
-                    enabled: true,                      
-                    mode: 'x',
                 }
+                ],
+                yAxes:[{
+                    id: "B",
+                    scaleLabel: {
+                        display: true,
+                        fontStyle: "bold",
+                        fontColor: "black",
+                        labelString: "# of Active Cases"
+                    },
+                    ticks: {
+                        suggestedMin: -2,
+                    }
+                }
+                ]
+
+            },
+            tooltips:{
+                callbacks:{
+                    label: function(tooltipItem, data){
+                        return tooltipItem.yLabel;
+                    }
+                }
+            },
+            pan: {
+                enabled: true,
+                mode: 'x',
+            },
+            zoom: {
+                enabled: true,                      
+                mode: 'x',
             }
-            
-            // var temp = ["JAN", "FEB", "MAR"]
-            // Object.sort(this.state.dictionary)
-            // console.log(Object.keys(this.state.dictionary))
+        }
+
+        const sortedCases = Object.entries(this.state.dictionary).sort()
+        var totalCases = 0
+
+        for (var index in sortedCases) {
+
+            // sortedCases[index][0] = date
+            // sortedCases[index][1] = new cases
+
+        }
     
-            new Chart(myChartRef, {
-                type: "line",
-                data: {
-                    //Bring in data
-                    // labels: this.state.dictionary.map((value, key) => { return key}),
-                    labels: Object.keys(this.state.dictionary).sort(),
-                    // labels: ["Jan", "Feb", "Mar"],
-                    datasets: [
-                        {
-                            borderColor: "Red",
-                            fill: false,
-                            label: "Active Cases of COVID in Ontario",
-                            // data: [1, 6, 2],
-                            data: Object.values(this.state.dictionary)
-                        }
-                    ]
-                },
-                options: options
-            });
-
-        
-
+        new Chart(myChartRef, {
+            type: "line",
+            data: {
+                labels: sortedCases.map((key, index) => { return sortedCases[index][0] }),
+                datasets: [
+                    {
+                        borderColor: "Red",
+                        fill: false,
+                        label: "Active Cases of COVID in Ontario",
+                        data: sortedCases.map((key, index) => { return sortedCases[index][1] })
+                    }
+                ]
+            },
+            options: options
+        });
 
         console.log("done parse")
 
@@ -160,13 +144,11 @@ class App extends Component {
     render() {
 
         return (
-
-        // <div>{this.state.records.length > 0 ? this.state.records[0].Row_ID : "TEST"}</div>
-        <div>
+            <div>
                 <canvas
                     id="myChart"
                     ref={this.chartRef}
-                    style={{width: 800, height: 300}}
+                    // style={{width: 800, height: 300}}
                 />
             </div>
             
