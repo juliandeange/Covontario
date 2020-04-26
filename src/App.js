@@ -2,6 +2,9 @@ import React from 'react';
 import './App.css';
 import Chart from 'chart.js'
 import { Component } from 'react';
+// var CanvasJSReact = require('./canvasjs.react');
+// var CanvasJS = CanvasJSReact.CanvasJS;
+// var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class App extends Component {
 
@@ -77,22 +80,32 @@ class App extends Component {
                     time:{
                         tooltipFormat: "MMM/DD/YYYY"
                     }
-                }
-                ],
+                }],
                 yAxes:[{
-                    id: "B",
-                    scaleLabel: {
-                        display: true,
-                        fontStyle: "bold",
-                        fontColor: "black",
-                        labelString: "# of Active Cases"
-                    },
+                    type: "logarithmic",
                     ticks: {
-                        suggestedMin: -2,
-                    }
-                }
-                ]
-
+                        min: 0,
+                        max: 100000,
+                        // maxTicksLimit: 4,
+                        callback: function(value, index, values) {//needed to change the scientific notation results from using logarithmic scale
+                            return Number(value.toString());//pass tick values as a string into Number function
+                        }
+                    },
+                }]
+                // yAxes:[{
+                //     id: "B",
+                //     scaleLabel: {
+                //         display: true,
+                //         fontStyle: "bold",
+                //         fontColor: "black",
+                //         labelString: "# of Active Cases"
+                //     },
+                //     ticks: {
+                //         fontStyle: "bold",
+                //         max: 100000
+                //         // suggestedMin: -2,
+                //     }
+                // }]
             },
             tooltips:{
                 callbacks:{
@@ -118,6 +131,9 @@ class App extends Component {
 
             // sortedCases[index][0] = date
             // sortedCases[index][1] = new cases
+            totalCases = totalCases + sortedCases[index][1]
+            sortedCases[index][1] = totalCases
+            
 
         }
     
