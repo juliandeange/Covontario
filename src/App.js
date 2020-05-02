@@ -85,7 +85,7 @@ class App extends Component {
                     },
                     type: "time",
                     time:{
-                        tooltipFormat: "MMM/DD/YYYY"
+                        tooltipFormat: "MMM DD"
                     }
                 }],
                 yAxes:[{
