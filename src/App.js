@@ -41,18 +41,33 @@ class App extends Component {
         const myChartRef = this.chartRef.current.getContext("2d");
     
         const options = {
+            legend: {
+                labels: {
+                    fontColor: "white",
+                    fontSize: 14,
+                    fontStyle: "bold"
+                }
+            },
             scales:{
                 xAxes:[{
                     id: "A",
                     scaleLabel: {
                         display: true,
-                        fontStyle: "bold",
                         fontColor: "white",
+                        fontSize: 14,
+                        fontStyle: "bold",
                         labelString: "Day"
                     },
                     type: "time",
                     time:{
                         tooltipFormat: "MMM DD"
+                    },
+                    gridLines: {
+                        display: false
+                    },
+                    ticks: {
+                        autoSkip: true,
+                        maxTicksLimit: 50
                     }
                 }],
                 yAxes:[{
@@ -62,8 +77,9 @@ class App extends Component {
                     },
                     scaleLabel: {
                         display: true,
-                        fontStyle: "bold",
                         fontColor: "white",
+                        fontSize: 14,
+                        fontStyle: "bold",
                         labelString: "# of Active Cases"
                     },
                 }]
@@ -101,7 +117,7 @@ class App extends Component {
                             borderColor: "Red",
                             fill: false,
                             label: "Active Cases of COVID in Ontario",
-                            fontColor: "white",
+                            
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["Active Cases"]})
                         }
