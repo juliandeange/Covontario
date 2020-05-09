@@ -2,8 +2,9 @@ import React from 'react';
 import './App.css';
 import Chart from 'chart.js'
 import { Component } from 'react';
-// import CanvasJSReact from './canvasjs.react';
 import Tabletop from 'tabletop';
+import {isBrowser} from "react-device-detect";
+// import CanvasJSReact from './canvasjs.react';
 //var CanvasJSReact = require('./canvasjs.react');
 // var CanvasJS = CanvasJSReact.CanvasJS;
 // var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -100,6 +101,7 @@ class App extends Component {
                             borderColor: "Red",
                             fill: false,
                             label: "Active Cases of COVID in Ontario",
+                            fontColor: "white",
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["Active Cases"]})
                         }
@@ -119,13 +121,16 @@ class App extends Component {
 
     render() {
         return (
+
+            // {isBrowser ? <div></div> : }
+
             <div 
             style={{
                 background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)",
-                height: "100vh"
+                height: isBrowser ? "100vh" : "120vh"
             }}>
 
-                {/* <div style={{marginLeft: 60, marginTop: 20}}>
+                {/* <div style={{color: "white", style: "bold"}}>
                     Total Cases: {}
                 </div> */}
 
