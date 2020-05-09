@@ -23,52 +23,18 @@ class App extends Component {
     }
 
     componentDidMount(){
-
-    //     // https://docs.google.com/spreadsheets/d/e/2PACX-1vROHlPiz9H7qy9JHQM2BfvTtvXeQFMq7EvUafNlN4T4S-R4KhBX2tYHWFTNY41Q9ALtlehgXS0e6kK8/pubhtml
-
-
-    //     var proxyUrl = 'https://cors-anywhere.herokuapp.com/',
-    //     targetUrl = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&limit=100'
-    //     fetch(proxyUrl + targetUrl)
-    //     .then(blob => blob.json())
-    //     .then(data => {
-    //         console.log(data);
-    //         // document.querySelector("pre").innerHTML = JSON.stringify(data, null, 2);
-    //         this.setState({records : data.result.records})
             
-            this.ParseRecords()
-
-    //         return data;
-        
-    //   })
-    //   .catch(e => {
-    //       console.log(e);
-    //       return e;
-    //   });
-
+        this.ParseRecords()
 
     }
 
     componentDidUpdate(props, state) {
 
-        console.log("update")
+        // console.log("update")
 
     }
 
     ParseRecords(){
-
-        // var cases = {}
-
-        // for (var index in this.state.records) {
-
-        //     var found = cases[this.state.records[index].Accurate_Episode_Date]
-        //     if (found === undefined) {
-        //         cases[this.state.records[index].Accurate_Episode_Date] = 1
-        //     }
-        //     else {
-        //         cases[this.state.records[index].Accurate_Episode_Date]++
-        //     }
-        // }
 
         // this.setState({dictionary: cases})
         const myChartRef = this.chartRef.current.getContext("2d");
@@ -99,29 +65,7 @@ class App extends Component {
                         fontColor: "black",
                         labelString: "# of Active Cases"
                     },
-                    // ticks: {
-                    //     steps: 20,
-                    //     stepValue: 500,
-                    //     max: 20000,
-                    //     callback: function(value, index, values) {//needed to change the scientific notation results from using logarithmic scale
-                    //         return Number(value.toString());//pass tick values as a string into Number function
-                    //     }
-                    // },
                 }]
-                // yAxes:[{
-                //     id: "B",
-                //     scaleLabel: {
-                //         display: true,
-                //         fontStyle: "bold",
-                //         fontColor: "black",
-                //         labelString: "# of Active Cases"
-                //     },
-                //     ticks: {
-                //         fontStyle: "bold",
-                //         max: 100000
-                //         // suggestedMin: -2,
-                //     }
-                // }]
             },
             tooltips:{
                 callbacks:{
@@ -139,19 +83,6 @@ class App extends Component {
                 mode: 'x',
             }
         }
-
-        // const sortedCases = Object.entries(this.state.dictionary).sort()
-        // var totalCases = 0
-
-        // for (var caseIndex in sortedCases) {
-
-        //     // sortedCases[index][0] = date
-        //     // sortedCases[index][1] = new cases
-        //     totalCases = totalCases + sortedCases[caseIndex][1]
-        //     sortedCases[caseIndex][1] = totalCases
-            
-
-        // }
 
         Tabletop.init({
             key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
@@ -182,15 +113,20 @@ class App extends Component {
             simpleSheet: true
           })
     
-        
-
-        console.log("done parse")
+        // console.log("done parse")
 
     }
 
     render() {
         return (
             <div>
+
+                <div style={{marginLeft: 60, marginTop: 20}}>
+                    {/* Total Cases: {} */}
+                </div>
+
+                
+
                 <canvas
                     id="myChart"
                     ref={this.chartRef}
@@ -201,6 +137,8 @@ class App extends Component {
 
                 {/* <CanvasJSChart options={options}/> */}
                 
+                
+
             </div>
             
         )
