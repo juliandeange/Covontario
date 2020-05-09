@@ -46,7 +46,7 @@ class App extends Component {
                     scaleLabel: {
                         display: true,
                         fontStyle: "bold",
-                        fontColor: "black",
+                        fontColor: "white",
                         labelString: "Day"
                     },
                     type: "time",
@@ -62,7 +62,7 @@ class App extends Component {
                     scaleLabel: {
                         display: true,
                         fontStyle: "bold",
-                        fontColor: "black",
+                        fontColor: "white",
                         labelString: "# of Active Cases"
                     },
                 }]
@@ -119,11 +119,15 @@ class App extends Component {
 
     render() {
         return (
-            <div>
+            <div 
+            style={{
+                background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)",
+                height: "100vh"
+            }}>
 
-                <div style={{marginLeft: 60, marginTop: 20}}>
-                    {/* Total Cases: {} */}
-                </div>
+                {/* <div style={{marginLeft: 60, marginTop: 20}}>
+                    Total Cases: {}
+                </div> */}
 
                 
 
