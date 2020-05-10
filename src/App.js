@@ -17,9 +17,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            records: [],
-            dictionary: {},
-            sheetData: []
+            data: []
         }
     }
 
@@ -37,7 +35,6 @@ class App extends Component {
 
     ParseRecords(){
 
-        // this.setState({dictionary: cases})
         const myChartRef = this.chartRef.current.getContext("2d");
     
         const options = {
@@ -124,33 +121,27 @@ class App extends Component {
                     ]
                 },
                 options: options
+                
             });
 
+
+            this.setState({data: googleData})
 
             },
             simpleSheet: true
           })
-    
-        // console.log("done parse")
 
     }
 
     render() {
         return (
 
-            // {isBrowser ? <div></div> : }
 
             <div 
             style={{
                 background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)",
-                height: isBrowser ? "100vh" : "120vh"
-            }}>
-
-                {/* <div style={{color: "white", style: "bold"}}>
-                    Total Cases: {}
-                </div> */}
-
-                
+                height: isBrowser ? "100vh" : "130vh"
+            }}>             
 
                 <canvas
                     id="myChart"
@@ -158,9 +149,10 @@ class App extends Component {
                     // style={{width: 800, height: 300}}
                 />
 
-                
+                <div style={{color: "white", paddingLeft: 50}}>
+                    Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
+                </div>
 
-                {/* <CanvasJSChart options={options}/> */}
                 
                 
 
