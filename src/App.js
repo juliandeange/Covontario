@@ -149,7 +149,7 @@ class App extends Component {
                     // style={{width: 800, height: 300}}
                 />
 
-                <div style={{color: "white", paddingLeft: 50}}>
+                <div style={{color: "white", fontWeight: "bold", paddingLeft: 50}}>
                     Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                 </div>
 
