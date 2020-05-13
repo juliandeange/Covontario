@@ -132,7 +132,7 @@ class App extends Component {
                         {
                             borderColor: "Red",
                             fill: false,
-                            label: "Active Cases of COVID in Ontario",
+                            label: "Active Cases of COVID-19 in Ontario",
                             
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["Active Cases"]})
@@ -192,7 +192,7 @@ class App extends Component {
                     open={this.state.dialogOpen}
                     aria-labelledby="alert-dialog-title"
                     aria-describedby="alert-dialog-description">
-                    <DialogTitle id="alert-dialog-title">{"Addition COVID-19 Ontario Data"}</DialogTitle>
+                    <DialogTitle id="alert-dialog-title">{"Addition Ontario COVID-19 data"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
                                 Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
