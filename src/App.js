@@ -195,7 +195,7 @@ class App extends Component {
                     <DialogTitle id="alert-dialog-title">{"Addition COVID-19 Ontario Data"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Data here...
+                                Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                             </DialogContentText>
                         </DialogContent>
                     <DialogActions>
