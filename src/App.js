@@ -4,6 +4,16 @@ import Chart from 'chart.js'
 import { Component } from 'react';
 import Tabletop from 'tabletop';
 import {isBrowser} from "react-device-detect";
+
+import IconButton from '@material-ui/core/IconButton';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 // import CanvasJSReact from './canvasjs.react';
 //var CanvasJSReact = require('./canvasjs.react');
 // var CanvasJS = CanvasJSReact.CanvasJS;
@@ -17,15 +27,24 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: []
+            data: [],
+            dialogOpen: false
         }
     }
 
     componentDidMount(){
             
+        // this.timer = setInterval(()=> this.getMovies(), 1000)
         this.ParseRecords()
 
     }
+
+    // async getMovies(){
+
+    //     console.log("fetch!")
+
+
+    // }
 
     componentDidUpdate(props, state) {
 
@@ -101,7 +120,7 @@ class App extends Component {
         Tabletop.init({
             key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
             callback: googleData => {
-              console.log('google sheet data --->', googleData)
+            //   console.log('google sheet data --->', googleData)
                 
 
               new Chart(myChartRef, {
@@ -133,15 +152,30 @@ class App extends Component {
 
     }
 
+    handleClose() {
+
+        this.setState({ dialogOpen: false })
+
+    }
+
+    handleOpen() {
+
+        this.setState({ dialogOpen: true })
+
+    }
+
     render() {
+
         return (
 
-
             <div 
-            style={{
-                background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)",
-                height: isBrowser ? "100vh" : "130vh"
-            }}>             
+                style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)", 
+                height: isBrowser ? "101vh" : "130vh"
+            }}>     
+
+                <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
+                    <HelpOutlineIcon />
+                </IconButton>
 
                 <canvas
                     id="myChart"
@@ -149,9 +183,27 @@ class App extends Component {
                     // style={{width: 800, height: 300}}
                 />
 
-                <div style={{color: "white", fontWeight: "bold", paddingLeft: 50}}>
+                {/* <div style={{color: "white", fontWeight: "bold", paddingLeft: 50}}>
                     Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
-                </div>
+                </div> */}
+
+                
+                <Dialog
+                    open={this.state.dialogOpen}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description">
+                    <DialogTitle id="alert-dialog-title">{"Addition COVID-19 Ontario Data"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                Data here...
+                            </DialogContentText>
+                        </DialogContent>
+                    <DialogActions>
+                    <Button onClick={this.handleClose.bind(this)} color="primary">
+                        Close
+                    </Button>
+                    </DialogActions>
+                </Dialog>
 
                 
                 
