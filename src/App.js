@@ -83,7 +83,7 @@ class App extends Component {
                     },
                     ticks: {
                         autoSkip: true,
-                        maxTicksLimit: 50
+                        maxTicksLimit: isBrowser ? 50 : 15
                     }
                 }],
                 yAxes:[{
@@ -170,7 +170,7 @@ class App extends Component {
 
             <div 
                 style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)", 
-                height: isBrowser ? "101vh" : "135vh"
+                // height: isBrowser ? "101vh" : "135vh"
             }}>     
 
                 <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
@@ -180,7 +180,7 @@ class App extends Component {
                 <canvas
                     id="myChart"
                     ref={this.chartRef}
-                    // style={{width: 800, height: 300}}
+                    style={{width: "100%", height: isBrowser ? "calc(100vh) - 50px" : "calc(94vh)"}}
                 />
 
                 {/* <div style={{color: "white", fontWeight: "bold", paddingLeft: 50}}>
