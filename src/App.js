@@ -197,7 +197,11 @@ class App extends Component {
                             <DialogContentText id="alert-dialog-description">
                                 Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                                 <br />
-                                Total Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                                Tests Completed: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                                <br />
+                                Resolved Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
+                                <br />
+                                Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
                             </DialogContentText>
                         </DialogContent>
                     <DialogActions>
