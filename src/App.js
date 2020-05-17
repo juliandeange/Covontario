@@ -170,7 +170,7 @@ class App extends Component {
 
             <div 
                 style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)", 
-                height: isBrowser ? "101vh" : "130vh"
+                height: isBrowser ? "101vh" : "135vh"
             }}>     
 
                 <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
