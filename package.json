@@ -8,6 +8,8 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "chart.js": "^2.9.3",
+    "json-query": "^2.2.2",
+    "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-device-detect": "^1.12.1",
     "react-dom": "^16.13.1",
