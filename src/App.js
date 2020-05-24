@@ -105,6 +105,7 @@ class App extends Component {
                 {
                     id: "NewCases",
                     type: "linear",
+                    position: "right",
                     gridLines:{
                         display: false
                     },
