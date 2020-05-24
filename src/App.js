@@ -59,6 +59,7 @@ class App extends Component {
     
         const options = {
             legend: {
+                position: "bottom",
                 labels: {
                     fontColor: "white",
                     fontSize: 14,
@@ -209,9 +210,9 @@ class App extends Component {
                     </Grid>
 
                     <Grid item xs={10} style={{color: "white", fontWeight: "bold", paddingTop: 10}}>
-                        Active Cases Today: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                        Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>
                         <br />
-                        New Cases Today: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                        New Cases Today: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
                     </Grid>
 
                     {/* <Grid item xs={2} style={{color: "white", fontWeight: "bold"}}>
