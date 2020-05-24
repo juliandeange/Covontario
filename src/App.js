@@ -204,13 +204,13 @@ class App extends Component {
 
                 <Grid container spacing={2}>
 
-                    <Grid item xs={2}>
+                    <Grid item xs={1}>
                         <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
                             <HelpOutlineIcon />
                         </IconButton>
                     </Grid>
 
-                    <Grid item xs={10} style={{color: "white", fontWeight: "bold", paddingTop: 10}}>
+                    <Grid item xs={11} style={{color: "white", fontWeight: "bold", paddingTop: 10, paddingLeft: 20, paddingBottom: 10}}>
                         Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>
                         <br />
                         New Cases Today: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
