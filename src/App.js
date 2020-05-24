@@ -202,11 +202,21 @@ class App extends Component {
 
                 <Grid container spacing={2}>
 
-                    <Grid item xs={4}>
+                    <Grid item xs={2}>
                         <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
                             <HelpOutlineIcon />
                         </IconButton>
                     </Grid>
+
+                    <Grid item xs={10} style={{color: "white", fontWeight: "bold", paddingTop: 10}}>
+                        Active Cases Today: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                        <br />
+                        New Cases Today: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                    </Grid>
+
+                    {/* <Grid item xs={2} style={{color: "white", fontWeight: "bold"}}>
+                        
+                    </Grid> */}
 
                 </Grid>
 
