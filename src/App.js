@@ -210,10 +210,10 @@ class App extends Component {
                         </IconButton>
                     </Grid>
 
-                    <Grid item xs={11} style={{color: "white", fontWeight: "bold", paddingTop: 10, paddingLeft: 20, paddingBottom: 10}}>
-                        Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>
-                        <br />
+                    <Grid item xs={11} style={{color: "white", fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
                         New Cases Today: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
+                        <br />
+                        Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>                        
                     </Grid>
 
                     {/* <Grid item xs={2} style={{color: "white", fontWeight: "bold"}}>
