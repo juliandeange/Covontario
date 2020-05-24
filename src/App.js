@@ -5,6 +5,7 @@ import { Component } from 'react';
 import Tabletop from 'tabletop';
 import {isBrowser} from "react-device-detect";
 
+import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
 import Button from '@material-ui/core/Button';
@@ -104,7 +105,7 @@ class App extends Component {
                     id: "NewCases",
                     type: "linear",
                     gridLines:{
-                        // display: false
+                        display: false
                     },
                     scaleLabel: {
                         display: true,
@@ -199,9 +200,15 @@ class App extends Component {
                 // height: isBrowser ? "101vh" : "135vh"
             }}>     
 
-                <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
-                    <HelpOutlineIcon />
-                </IconButton>
+                <Grid container spacing={2}>
+
+                    <Grid item xs={4}>
+                        <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
+                            <HelpOutlineIcon />
+                        </IconButton>
+                    </Grid>
+
+                </Grid>
 
                 <canvas
                     id="myChart"
