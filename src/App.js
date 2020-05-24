@@ -87,6 +87,7 @@ class App extends Component {
                     }
                 }],
                 yAxes:[{
+                    id: "ActiveCases",
                     type: "linear",
                     gridLines:{
                         // display: false
@@ -98,7 +99,22 @@ class App extends Component {
                         fontStyle: "bold",
                         labelString: "# of Active Cases"
                     },
-                }]
+                },
+                {
+                    id: "NewCases",
+                    type: "linear",
+                    gridLines:{
+                        // display: false
+                    },
+                    scaleLabel: {
+                        display: true,
+                        fontColor: "white",
+                        fontSize: 14,
+                        fontStyle: "bold",
+                        labelString: "# of New Cases"
+                    },
+                }
+            ]
             },
             tooltips:{
                 callbacks:{
@@ -132,11 +148,21 @@ class App extends Component {
                         {
                             borderColor: "Red",
                             fill: false,
-                            label: "Active Cases of COVID-19 in Ontario",
-                            
+                            label: "Active Cases",
+                            yAxisId: "ActiveCases",
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["Active Cases"]})
+                        },
+
+                        {
+                            borderColor: "Blue",
+                            fill: false,
+                            label: "New Cases",
+                            yAxisID: "NewCases",
+                            // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
+                            data: googleData.map((key, index) => { return googleData[index]["New Cases"]})
                         }
+
                     ]
                 },
                 options: options
@@ -180,7 +206,7 @@ class App extends Component {
                 <canvas
                     id="myChart"
                     ref={this.chartRef}
-                    style={{width: "100%", height: isBrowser ? "calc(100vh) - 50px" : "calc(94vh)"}}
+                    style={{width: "100%", height: isBrowser ? "" : "calc(94vh)"}}
                 />
 
                 {/* <div style={{color: "white", fontWeight: "bold", paddingLeft: 50}}>
