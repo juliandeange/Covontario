@@ -99,7 +99,7 @@ class App extends Component {
                         fontColor: "white",
                         fontSize: 14,
                         fontStyle: "bold",
-                        labelString: "# of Active Cases"
+                        labelString: "Active Cases"
                     },
                 },
                 {
@@ -114,7 +114,7 @@ class App extends Component {
                         fontColor: "white",
                         fontSize: 14,
                         fontStyle: "bold",
-                        labelString: "# of New Cases"
+                        labelString: "New Cases / Recoveries"
                     },
                 }
             ]
