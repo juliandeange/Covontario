@@ -169,7 +169,8 @@ class App extends Component {
                             fill: false,
                             label: "New Recoveries",
                             yAxisID: "OtherCases",
-                            data: googleData.map((key, index) => {return googleData[index]["New Recoveries"]})
+                            data: googleData.map((key, index) => {return googleData[index]["New Recoveries"]}),
+                            hidden: true
                         }
 
                     ]
