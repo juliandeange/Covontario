@@ -103,7 +103,7 @@ class App extends Component {
                     },
                 },
                 {
-                    id: "NewCases",
+                    id: "OtherCases",
                     type: "linear",
                     position: "right",
                     gridLines:{
@@ -156,14 +156,20 @@ class App extends Component {
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["Active Cases"]})
                         },
-
                         {
                             borderColor: "Blue",
                             fill: false,
                             label: "New Cases",
-                            yAxisID: "NewCases",
+                            yAxisID: "OtherCases",
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["New Cases"]})
+                        },
+                        {
+                            borderColor: "Green",
+                            fill: false,
+                            label: "New Recoveries",
+                            yAxisID: "OtherCases",
+                            data: googleData.map((key, index) => {return googleData[index]["New Recoveries"]})
                         }
 
                     ]
