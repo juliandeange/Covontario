@@ -5,6 +5,8 @@ import { Component } from 'react';
 import Tabletop from 'tabletop';
 import {isBrowser} from "react-device-detect";
 
+// eslint-disable-next-line
+import Zoom from 'chartjs-plugin-zoom'
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
@@ -14,12 +16,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-// import CanvasJSReact from './canvasjs.react';
-//var CanvasJSReact = require('./canvasjs.react');
-// var CanvasJS = CanvasJSReact.CanvasJS;
-// var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-
 
 class App extends Component {
 
@@ -58,6 +54,8 @@ class App extends Component {
         const myChartRef = this.chartRef.current.getContext("2d");
     
         const options = {
+            maintainAspectRatio: false,
+            responsive: false,
             legend: {
                 position: "bottom",
                 labels: {
@@ -201,16 +199,13 @@ class App extends Component {
     }
 
     render() {
-
         return (
 
-            <div 
-                style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)", 
-                // height: isBrowser ? "101vh" : "135vh"
-            }}>     
+            <div style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)" }}>     
+                {/* // height: isBrowser ? "101vh" : "135vh"
+                // height: "100%" */}
 
-                <Grid container spacing={2}>
-
+                <Grid container spacing={2} style={{height: "20vh"}}>
                     <Grid item xs={1}>
                         <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
                             <HelpOutlineIcon />
@@ -222,24 +217,20 @@ class App extends Component {
                         <br />
                         Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>                        
                     </Grid>
-
-                    {/* <Grid item xs={2} style={{color: "white", fontWeight: "bold"}}>
-                        
-                    </Grid> */}
-
                 </Grid>
 
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
-                    style={{width: "100%", height: isBrowser ? "" : "calc(94vh)"}}
-                />
 
-                {/* <div style={{color: "white", fontWeight: "bold", paddingLeft: 50}}>
-                    Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
-                </div> */}
+                <Grid item xs={12} style={{height: "80vh"}}>
 
-                
+                    <canvas
+                        id="myChart"
+                        ref={this.chartRef}
+                        // style={{width: "100%", height: isBrowser ? "" : "calc(94vh)"}}
+                        // style={{height: "90vh", width: "95%"}}
+                        style={{height: "100%", width: "100%"}}/>
+                        
+                </Grid>
+
                 <Dialog
                     open={this.state.dialogOpen}
                     aria-labelledby="alert-dialog-title"
@@ -262,10 +253,6 @@ class App extends Component {
                     </Button>
                     </DialogActions>
                 </Dialog>
-
-                
-                
-
             </div>
             
         )
