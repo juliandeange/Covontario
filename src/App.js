@@ -199,20 +199,23 @@ class App extends Component {
     }
 
     render() {
+
+        // let vh = window.innerHeight * 0.01;
+        // // Then we set the value in the --vh custom property to the root of the document
+        // document.documentElement.style.setProperty('--vh', `${vh}px`);
+
         return (
 
             <div style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)" }}>     
-                {/* // height: isBrowser ? "101vh" : "135vh"
-                // height: "100%" */}
 
-                <Grid container spacing={2} style={{height: "20vh"}}>
+                <Grid container spacing={2} style={{height: "10vh"}}>
                     <Grid item xs={1}>
                         <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
                             <HelpOutlineIcon />
                         </IconButton>
                     </Grid>
 
-                    <Grid item xs={11} style={{color: "white", fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
+                    <Grid item xs={11} style={{color: "white", fontSize: 12, fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
                         New Cases Today: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
                         <br />
                         Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>                        
@@ -220,14 +223,14 @@ class App extends Component {
                 </Grid>
 
 
-                <Grid item xs={12} style={{height: "80vh"}}>
+                <Grid item xs={12} style={{height: "90vh"}}>
 
                     <canvas
                         id="myChart"
                         ref={this.chartRef}
                         // style={{width: "100%", height: isBrowser ? "" : "calc(94vh)"}}
                         // style={{height: "90vh", width: "95%"}}
-                        style={{height: "100%", width: "100%"}}/>
+                        style={{height: "100%", width: "95%"}}/>
                         
                 </Grid>
 
