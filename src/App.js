@@ -36,16 +36,7 @@ class App extends Component {
 
     }
 
-    // async getMovies(){
-
-    //     console.log("fetch!")
-
-
-    // }
-
     componentDidUpdate(props, state) {
-
-        // console.log("update")
 
     }
 
@@ -200,10 +191,6 @@ class App extends Component {
 
     render() {
 
-        // let vh = window.innerHeight * 0.01;
-        // // Then we set the value in the --vh custom property to the root of the document
-        // document.documentElement.style.setProperty('--vh', `${vh}px`);
-
         return (
 
             <div style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)" }}>     
@@ -222,15 +209,12 @@ class App extends Component {
                     </Grid>
                 </Grid>
 
-
-                <Grid item xs={12} style={{height: "90vh"}}>
+                <Grid item xs={12} style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
 
                     <canvas
                         id="myChart"
                         ref={this.chartRef}
-                        // style={{width: "100%", height: isBrowser ? "" : "calc(94vh)"}}
-                        // style={{height: "90vh", width: "95%"}}
-                        style={{height: "100%", width: "95%"}}/>
+                        style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
                         
                 </Grid>
 
