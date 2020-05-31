@@ -235,6 +235,11 @@ class App extends Component {
                             </DialogContentText>
                         </DialogContent>
                     <DialogActions>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description" style={{fontSize: 10, marginLeft: -10}}>
+                                Source: https://covid-19.ontario.ca/
+                            </DialogContentText>
+                        </DialogContent>
                     <Button onClick={this.handleClose.bind(this)} color="primary">
                         Close
                     </Button>
