@@ -223,13 +223,19 @@ class App extends Component {
                 <Dialog
                     open={this.state.dialogOpen}
                     aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description">
+                    aria-describedby="alert-dialog-description"
+                    // fullWidth={true}
+                    // maxWidth={"sm"}
+                    >
                     <DialogTitle id="alert-dialog-title">{"Addition Ontario COVID-19 data"}</DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
+
+                                New Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
                                 <br />
-                                Tests Completed: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                                Total Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                                <br />
+                                Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                                 <br />
                                 Resolved Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
                                 <br />
