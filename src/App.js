@@ -143,7 +143,8 @@ class App extends Component {
                             label: "Active Cases",
                             yAxisId: "ActiveCases",
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
-                            data: googleData.map((key, index) => { return googleData[index]["Active Cases"]})
+                            data: googleData.map((key, index) => { return googleData[index]["Active Cases"]}),
+                            pointRadius: 5
                         },
                         {
                             borderColor: "Blue",
@@ -151,7 +152,8 @@ class App extends Component {
                             label: "New Cases",
                             yAxisID: "OtherCases",
                             // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
-                            data: googleData.map((key, index) => { return googleData[index]["New Cases"]})
+                            data: googleData.map((key, index) => { return googleData[index]["New Cases"]}),
+                            pointRadius: 5
                         },
                         {
                             borderColor: "Green",
@@ -159,7 +161,8 @@ class App extends Component {
                             label: "New Recoveries",
                             yAxisID: "OtherCases",
                             data: googleData.map((key, index) => {return googleData[index]["New Recoveries"]}),
-                            hidden: true
+                            hidden: true,
+                            pointRadius: 5
                         }
 
                     ]
