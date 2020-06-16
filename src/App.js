@@ -30,8 +30,7 @@ class App extends Component {
     }
 
     componentDidMount(){
-            
-        // this.timer = setInterval(()=> this.getMovies(), 1000)
+
         this.ParseRecords()
 
     }
@@ -129,13 +128,9 @@ class App extends Component {
         Tabletop.init({
             key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
             callback: googleData => {
-            //   console.log('google sheet data --->', googleData)
-                
-
               new Chart(myChartRef, {
                 type: "line",
                 data: {
-                    // labels: sortedCases.map((key, index) => { return sortedCases[index][0] }),
                     labels: googleData.map((key, index) => { return googleData[index]["Date"]}),
                     datasets: [
                         {
@@ -143,7 +138,6 @@ class App extends Component {
                             fill: false,
                             label: "Active Cases",
                             yAxisId: "ActiveCases",
-                            // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["Active Cases"]}),
                             pointRadius: 5
                         },
@@ -152,7 +146,6 @@ class App extends Component {
                             fill: false,
                             label: "New Cases",
                             yAxisID: "OtherCases",
-                            // data: sortedCases.map((key, index) => { return sortedCases[index][1] })
                             data: googleData.map((key, index) => { return googleData[index]["New Cases"]}),
                             pointRadius: 5
                         },
@@ -260,9 +253,7 @@ class App extends Component {
             </div>
             
         )
-
     }
-
 }
 
 export default App;
