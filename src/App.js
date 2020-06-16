@@ -122,6 +122,7 @@ class App extends Component {
             zoom: {
                 enabled: true,                      
                 mode: 'x',
+                speed: 0.04 // as a percent
             }
         }
 
