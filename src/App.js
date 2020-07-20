@@ -200,11 +200,11 @@ class App extends Component {
                     </Grid>
 
                     <Grid item xs={11} style={{color: "white", fontSize: 14, fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
-                        Active Cases Today: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>
+                        Active Cases: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>
                         <br />
-                        New Cases Today: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
+                        New Cases: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
                         <br />
-                        Recovered Cases Today: <span style={{color: "green"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""} </span>
+                        New Recoveries: <span style={{color: "green"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""} </span>
                     </Grid>
                 </Grid>
 
