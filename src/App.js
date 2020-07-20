@@ -236,7 +236,9 @@ class App extends Component {
                                 <br />
                                 Resolved Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
                                 <br />
-                                Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
+                                New Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
+                                <br />
+                                Total Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
                             </DialogContentText>
                         </DialogContent>
                     <DialogActions>
