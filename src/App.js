@@ -26,7 +26,9 @@ class App extends Component {
         this.state = {
             data: [],
             dialogOpen: false,
-            activeCases: ""
+            activeCasesChange: "",
+            newCasesChange: "",
+            resolvedCasesChange: ""
         }
     }
 
@@ -170,11 +172,19 @@ class App extends Component {
 
             this.setState({data: googleData})
 
-            var active = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
+            var active   = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
+            var newCases = (googleData[this.state.data.length - 1]["New Cases"] - googleData[this.state.data.length - 2]["New Cases"])
+
             if (active > 0)
                 active = "+" + active
+
+            if (newCases > 0)
+                newCases = "+" + newCases
             
-            this.setState({activeCases: active})
+            this.setState({
+                activeCasesChange: active,
+                newCasesChange: newCases
+            })
 
             },
             simpleSheet: true
@@ -220,7 +230,7 @@ class App extends Component {
                                     { this.state.data[this.state.data.length - 1]["Active Cases"] } 
                                     <span style={{color: "white"}}> {" "}
                                         (
-                                            {this.state.activeCases}
+                                            {this.state.activeCasesChange}
                                         )
                                     </span> 
                                 </span>
@@ -231,7 +241,16 @@ class App extends Component {
                         <br />
 
                         New Cases: <span style={{color: "blue"}}> 
-                            {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} 
+                        {this.state.data.length > 0 ? 
+                                <span style={{color: "blue"}}> 
+                                    { this.state.data[this.state.data.length - 1]["New Cases"] } 
+                                    <span style={{color: "white"}}> {" "}
+                                        (
+                                            {this.state.newCasesChange}
+                                        )
+                                    </span> 
+                                </span>
+                            : ""}  
                         </span>
                         
                         <br />
