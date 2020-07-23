@@ -25,13 +25,15 @@ class App extends Component {
         super(props);
         this.state = {
             data: [],
-            dialogOpen: false
+            dialogOpen: false,
+            activeCases: ""
         }
     }
 
     componentDidMount(){
 
         this.ParseRecords()
+        this.setActiveCases()
 
     }
 
@@ -168,9 +170,17 @@ class App extends Component {
 
             this.setState({data: googleData})
 
+            var active = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
+            if (active > 0)
+                active = "+" + active
+            
+            this.setState({activeCases: active})
+
             },
             simpleSheet: true
           })
+
+         
 
     }
 
@@ -183,6 +193,10 @@ class App extends Component {
     handleOpen() {
 
         this.setState({ dialogOpen: true })
+
+    }
+
+    setActiveCases(){
 
     }
 
@@ -200,11 +214,31 @@ class App extends Component {
                     </Grid>
 
                     <Grid item xs={11} style={{color: "white", fontSize: 14, fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
-                        Active Cases: <span style={{color: "red"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""} </span>
+                        Active Cases: <span> 
+                            {this.state.data.length > 0 ? 
+                                <span style={{color: "red"}}> 
+                                    { this.state.data[this.state.data.length - 1]["Active Cases"] } 
+                                    <span style={{color: "white"}}> {" "}
+                                        (
+                                            {this.state.activeCases}
+                                        )
+                                    </span> 
+                                </span>
+                            : ""}  
+                        </span> 
+                        
+
                         <br />
-                        New Cases: <span style={{color: "blue"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} </span>
+
+                        New Cases: <span style={{color: "blue"}}> 
+                            {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""} 
+                        </span>
+                        
                         <br />
-                        New Recoveries: <span style={{color: "green"}}> {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""} </span>
+
+                        New Recoveries: <span style={{color: "green"}}> 
+                            {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""} 
+                        </span>
                     </Grid>
                 </Grid>
 
