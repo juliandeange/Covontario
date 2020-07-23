@@ -35,7 +35,6 @@ class App extends Component {
     componentDidMount(){
 
         this.ParseRecords()
-        this.setActiveCases()
 
     }
 
@@ -172,18 +171,23 @@ class App extends Component {
 
             this.setState({data: googleData})
 
-            var active   = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
+            var active = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
             var newCases = (googleData[this.state.data.length - 1]["New Cases"] - googleData[this.state.data.length - 2]["New Cases"])
+            var resolved = (googleData[this.state.data.length - 1]["New Recoveries"] - googleData[this.state.data.length - 2]["New Recoveries"])
 
             if (active > 0)
                 active = "+" + active
 
             if (newCases > 0)
                 newCases = "+" + newCases
+
+            if (resolved > 0)
+                resolved = "+" + resolved
             
             this.setState({
                 activeCasesChange: active,
-                newCasesChange: newCases
+                newCasesChange: newCases,
+                resolvedCasesChange: resolved
             })
 
             },
@@ -206,10 +210,6 @@ class App extends Component {
 
     }
 
-    setActiveCases(){
-
-    }
-
     render() {
 
         return (
@@ -228,7 +228,7 @@ class App extends Component {
                             {this.state.data.length > 0 ? 
                                 <span style={{color: "red"}}> 
                                     { this.state.data[this.state.data.length - 1]["Active Cases"] } 
-                                    <span style={{color: "white"}}> {" "}
+                                    <span> {" "}
                                         (
                                             {this.state.activeCasesChange}
                                         )
@@ -244,7 +244,7 @@ class App extends Component {
                         {this.state.data.length > 0 ? 
                                 <span style={{color: "blue"}}> 
                                     { this.state.data[this.state.data.length - 1]["New Cases"] } 
-                                    <span style={{color: "white"}}> {" "}
+                                    <span> {" "}
                                         (
                                             {this.state.newCasesChange}
                                         )
@@ -256,7 +256,16 @@ class App extends Component {
                         <br />
 
                         New Recoveries: <span style={{color: "green"}}> 
-                            {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""} 
+                        {this.state.data.length > 0 ? 
+                                <span style={{color: "green"}}> 
+                                    { this.state.data[this.state.data.length - 1]["New Recoveries"] } 
+                                    <span> {" "}
+                                        (
+                                            {this.state.resolvedCasesChange}
+                                        )
+                                    </span> 
+                                </span>
+                            : ""}  
                         </span>
                     </Grid>
                 </Grid>
