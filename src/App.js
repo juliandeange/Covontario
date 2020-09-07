@@ -309,9 +309,9 @@ class App extends Component {
                                 Source: https://covid-19.ontario.ca/
                             </DialogContentText>
                         </DialogContent>
-                    <Button onClick={this.handleClose.bind(this)} color="primary">
-                        Close
-                    </Button>
+                        <Button onClick={this.handleClose.bind(this)} color="primary">
+                            Close
+                        </Button>
                     </DialogActions>
                 </Dialog>
             </div>
