@@ -12,6 +12,7 @@
     "json-query": "^2.2.2",
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
+    "react-app-badge": "^1.1.0",
     "react-device-detect": "^1.12.1",
     "react-dom": "^16.13.1",
     "react-mobile-store-button": "0.0.6",
