@@ -1,21 +1,22 @@
-import React from 'react';
-import './App.css';
+import React from 'react'
+import './App.css'
 import Chart from 'chart.js'
-import { Component } from 'react';
-import Tabletop from 'tabletop';
-import {isBrowser} from "react-device-detect";
+import { Component } from 'react'
+import Tabletop from 'tabletop'
+import {isBrowser} from "react-device-detect"
+import AppBadge from 'react-app-badge'
 
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
-import Grid from '@material-ui/core/Grid';
-import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid'
+import IconButton from '@material-ui/core/IconButton'
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline'
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Button from '@material-ui/core/Button'
+import Dialog from '@material-ui/core/Dialog'
+import DialogActions from '@material-ui/core/DialogActions'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
 class App extends Component {
 
@@ -212,6 +213,9 @@ class App extends Component {
 
     render() {
 
+        const googlePlayLink = "https://play.google.com/store/apps/details?id=ca.gc.hcsc.canada.stopcovid&hl=en_CA"
+        const iosStoreLink= "https://apps.apple.com/ca/app/covid-alert/id1520284227"
+
         return (
 
             <div style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)" }}>     
@@ -288,8 +292,7 @@ class App extends Component {
                     >
                     <DialogTitle id="alert-dialog-title">{"Addition Ontario COVID-19 data"}</DialogTitle>
                         <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-
+                            <DialogContentText id="alert-dialog-description" style={{marginBottom: "-30px"}}>
                                 New Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
                                 <br />
                                 Total Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
@@ -301,6 +304,14 @@ class App extends Component {
                                 New Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
                                 <br />
                                 Total Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
+                                <br />
+                                <br />
+                                {/* <div style={{marginBottom: "-10px"}}> */}
+
+                                Get the COVID-19 Alert App!
+                                <AppBadge version="google" url={googlePlayLink} />
+                                <AppBadge version="ios" url={iosStoreLink} />
+
                             </DialogContentText>
                         </DialogContent>
                     <DialogActions>
