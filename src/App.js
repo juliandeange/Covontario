@@ -307,8 +307,9 @@ class App extends Component {
                                 <br />
                                 <br />
                                 {/* <div style={{marginBottom: "-10px"}}> */}
-
-                                Get the COVID-19 Alert App!
+                                <div style={{paddingBottom: "5px"}}>
+                                    <b>Get the COVID-19 Alert App</b>
+                                </div>
                                 <AppBadge version="google" url={googlePlayLink} />
                                 <AppBadge version="ios" url={iosStoreLink} />
 
