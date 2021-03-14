@@ -46,7 +46,11 @@ class App extends Component {
     ParseRecords(){
 
         const myChartRef = this.chartRef.current.getContext("2d");
-    
+
+        var currentDate = new Date();
+        var daysBack = new Date(currentDate);
+        daysBack.setDate(daysBack.getDate() - 90);
+
         const options = {
             maintainAspectRatio: false,
             responsive: false,
@@ -76,6 +80,7 @@ class App extends Component {
                         display: false
                     },
                     ticks: {
+                        min: daysBack.toDateString(),
                         autoSkip: true,
                         maxTicksLimit: isBrowser ? 50 : 15
                     }
@@ -217,9 +222,8 @@ class App extends Component {
         const iosStoreLink= "https://apps.apple.com/ca/app/covid-alert/id1520284227"
 
         return (
-
+            
             <div style={{background: "radial-gradient(circle, rgba(83,51,87,1) 0%, rgba(0,0,0,1) 100%)" }}>     
-
                 <Grid container spacing={2} style={{height: "10vh"}}>
                     <Grid item xs={1}>
                         <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
@@ -306,7 +310,6 @@ class App extends Component {
                                 Total Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
                                 <br />
                                 <br />
-                                {/* <div style={{marginBottom: "-10px"}}> */}
                                 <div style={{paddingBottom: "5px"}}>
                                     <b>Get the COVID-19 Alert App</b>
                                 </div>
