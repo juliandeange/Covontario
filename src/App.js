@@ -74,7 +74,7 @@ class App extends Component {
                     },
                     type: "time",
                     time:{
-                        tooltipFormat: "MMM DD"
+                        tooltipFormat: "MMM DD YYYY"
                     },
                     gridLines: {
                         display: false
