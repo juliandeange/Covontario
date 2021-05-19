@@ -42,7 +42,7 @@ await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_i
 
 })()
 
-async function AccessSpreadsheet(todayCases, totalResolved, totalFatal) {
+async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, totalTotalFatal) {
 
     const creds = require('./client_secret.json');
     const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
@@ -56,32 +56,32 @@ async function AccessSpreadsheet(todayCases, totalResolved, totalFatal) {
 
     const rows = await doc.sheetsByIndex[0].getRows()
 
-    var yesterday = rows[rows.length - 1]["Date"]
-    var yesterdayCases = rows[rows.length - 1]["Total Cases"]
-
     var today = dateFormat(new Date(), "mmmm dd yyyy")
+    var yesterday = rows[rows.length - 1]["Date"]
+    var yesterdayTotalCases = rows[rows.length - 1]["Total Cases"]
 
-    if (yesterday != today && yesterdayCases != todayCases) {
+    
 
-        // var newCases = todayCases - yesterdayCases
-        // var 
+    if (yesterday != today && yesterdayTotalCases != todayTotalCases) {
 
-        var activeCases = todayCases - totalResolved - totalFatal
+        var activeCases = todayTotalCases - totalResolved - totalFatal
 
         doc.sheetsByIndex[0].addRow({
 
             "Date": today,
-            "Total Cases": todayCases,
+            "Total Cases": todayTotalCases,
             // "New Cases": 
             // 7 Day Avg
-            "Resolved Cases": totalResolved,
+            "Resolved Cases": todayTotalResolved,
             // "New Recoveries": 
-            "Deceased Cases": totalFatal,
+            "Deceased Cases": totalTotalFatal,
             // "New Deaths": 
             "Active Cases": activeCases,
             // "Active Case Difference": 
 
         })
+
+        doc.sheetsByIndex[0].saveUpdatedCells()
 
     }
 
