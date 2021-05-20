@@ -42,7 +42,7 @@ await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_i
 
 })()
 
-async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, totalTotalFatal) {
+async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotalFatal) {
 
     const creds = require('./client_secret.json');
     const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
@@ -60,24 +60,26 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, totalTotal
     var yesterday = rows[rows.length - 1]["Date"]
     var yesterdayTotalCases = rows[rows.length - 1]["Total Cases"]
 
-    
-
     if (yesterday != today && yesterdayTotalCases != todayTotalCases) {
 
         var activeCases = todayTotalCases - totalResolved - totalFatal
+        var newCases = todayTotalCases - yesterdayTotalCases
+        var newRecoveries = todayTotalResolved - rows[rows.length - 1]["Resolved Cases"]
+        var newDeaths = todayTotalFatal - rows[rows.length - 1]["Deceased Cases"]
+        var activeCaseDifference = activeCases - rows[rows.length - 1]["Active Cases"]
 
         doc.sheetsByIndex[0].addRow({
 
             "Date": today,
             "Total Cases": todayTotalCases,
-            // "New Cases": 
+            "New Cases": newCases,
             // 7 Day Avg
             "Resolved Cases": todayTotalResolved,
-            // "New Recoveries": 
-            "Deceased Cases": totalTotalFatal,
-            // "New Deaths": 
+            "New Recoveries": newRecoveries,
+            "Deceased Cases": todayTotalFatal,
+            "New Deaths": newDeaths,
             "Active Cases": activeCases,
-            // "Active Case Difference": 
+            "Active Case Difference": activeCaseDifference
 
         })
 
@@ -98,13 +100,6 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, totalTotal
     // New Tests
     // % Positive
     // Total Tests
-
-    // doc.sheetsByIndex[0].addRow({
-    //     Date: "1",
-    //     "Total Cases": "2"
-    // })
-
-    // console.log(rows.length)
 
 }
 
