@@ -1,9 +1,10 @@
 const fetch = require('node-fetch');
-const jsonQuery = require('json-query')   
+const https = require('https') 
+
 const { google } = require('googleapis'); 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const { promisify } = require('util')
-const https = require('https')
+
+const jsonQuery = require('json-query') 
 var dateFormat = require('dateformat');
      
 const httpsOptions = {
@@ -15,7 +16,7 @@ const httpsOptions = {
 
   (async () => {
 
-await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=1000000', httpsOptions)
+    await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=1000000', httpsOptions)
     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
     .then(response => response.json())
     .then(data => {
@@ -62,7 +63,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
     if (yesterday != today && yesterdayTotalCases != todayTotalCases) {
 
-        var activeCases = todayTotalCases - totalResolved - totalFatal
+        var activeCases = todayTotalCases - todayTotalResolved - todayTotalFatal
         var newCases = todayTotalCases - yesterdayTotalCases
         var newRecoveries = todayTotalResolved - rows[rows.length - 1]["Resolved Cases"]
         var newDeaths = todayTotalFatal - rows[rows.length - 1]["Deceased Cases"]
