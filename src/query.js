@@ -3,6 +3,7 @@ const https = require('https')
 
 const { google } = require('googleapis'); 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const Twitter = require('twitter')
 
 const jsonQuery = require('json-query') 
 var dateFormat = require('dateformat');
@@ -13,8 +14,18 @@ const httpsOptions = {
     })
   };
 
-
   (async () => {
+
+    const config = require("./TwitterAPIKeys")
+    const twitterClient = new Twitter(config)
+    twitterClient.post('statuses/update', {status: "Test \n newline"}, function(error, tweet, response){
+		if(!error){
+			console.log(error);
+		}
+	})
+
+
+    // console.log(twitterClient)
 
     await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=1000000', httpsOptions)
     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
