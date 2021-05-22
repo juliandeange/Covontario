@@ -1,0 +1,8 @@
+Total Cases: 518980
+Resolved Cases: 488201
+Fatal Cases: 8579
+Active Cases: 22200
+Total Cases: 518980
+Resolved Cases: 488201
+Fatal Cases: 8579
+Active Cases: 22200

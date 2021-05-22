@@ -24,7 +24,8 @@
     "react-mobile-store-button": "0.0.6",
     "react-native": "^0.63.3",
     "react-scripts": "3.4.1",
-    "tabletop": "^1.6.3"
+    "tabletop": "^1.6.3",
+    "twitter": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
