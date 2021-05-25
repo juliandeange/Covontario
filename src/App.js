@@ -4,12 +4,7 @@ import { Component } from 'react'
 import Tabletop from 'tabletop'
 import AppBadge from 'react-app-badge'
 
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import isBrowser from 'react-device-detect'
 import { Tabs, Tab } from '@material-ui/core'
 import ChartTab from './ChartTab'
 
@@ -22,22 +17,11 @@ class App extends Component {
         super(props);
         this.state = {
             data: [],
-            dialogOpen: false,
             value: 0,
         }
     }
 
     componentDidMount(){
-
-        this.ParseRecords()
-
-    }
-
-    componentDidUpdate(props, state) {
-
-    }
-
-    ParseRecords() {
 
         Tabletop.init({
             key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
@@ -48,20 +32,6 @@ class App extends Component {
             },
             simpleSheet: true
           })
-
-
-
-    }
-
-    handleClose() {
-
-        this.setState({ dialogOpen: false })
-
-    }
-
-    handleOpen() {
-
-        this.setState({ dialogOpen: true })
 
     }
 
@@ -78,7 +48,7 @@ class App extends Component {
 
         return (
             
-            <div style={{height: "100vh"}}>     
+            <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>     
 
                 <Tabs
                     value={this.state.value}
@@ -91,119 +61,85 @@ class App extends Component {
                 </Tabs>
 
                 {this.state.value === 0 ? this.state.data.length > 0 ? 
+                    <div>
+                        <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
 
-                <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                            {/* NEW
+                            Cases
+                            Recoveries
+                            Deaths
+                            Tests
+                            Active Cases
 
-                    {/* NEW
-                    Cases
-                    Recoveries
-                    Deaths
-                    Tests
-                    Active Cases
+                            TOTAL
+                            Cases
+                            Recoveries
+                            Deaths
+                            Tests */}
 
-                    TOTAL
-                    Cases
-                    Recoveries
-                    Deaths
-                    Tests */}
+                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
 
-                    <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
+                                {this.state.data[this.state.data.length - 1]["Date"]}
 
-                        {this.state.data[this.state.data.length - 1]["Date"]}
+                            </h2>
 
-                    </h2>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Active Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                            </div>
 
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Active Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
-                    </div>
+                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
 
-                    <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
+                                Cumulative Data
 
-                        Cumulative Data
+                            </h2>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
+                            </div>
+                            <div style={{textAlign: "center", margin: "2px"}}>
+                                Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                            </div>
 
-                    </h2>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
-                    </div>
-                    <div style={{textAlign: "center", margin: "2px"}}>
-                        Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
-                    </div>
+                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
 
-                    <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
+                                Get the COVID-19 Alert App
 
-                        Get the COVID-19 Alert App
-
-                    </h2>
-                    <div style={{textAlign: "center"}}>
-                        <AppBadge version="google" url={googlePlayLink} />
-                        <AppBadge version="ios" url={iosStoreLink} />
-                    </div>
-                </div>
-
-                : null : <div> <ChartTab /> </div> }             
-
-                <Dialog
-                    open={this.state.dialogOpen}
-                    aria-labelledby="alert-dialog-title"
-                    aria-describedby="alert-dialog-description"
-                    // fullWidth={true}
-                    // maxWidth={"sm"}
-                    >
-                    <DialogTitle id="alert-dialog-title">{"Addition Ontario COVID-19 data"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description" style={{marginBottom: "-30px"}}>
-                                New Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
-                                <br />
-                                Total Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
-                                <br />
-                                Total Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
-                                <br />
-                                Resolved Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
-                                <br />
-                                New Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
-                                <br />
-                                Total Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
-                                <br />
-                                <br />
-                                <div style={{paddingBottom: "5px"}}>
-                                    <b>Get the COVID-19 Alert App</b>
-                                </div>
+                            </h2>
+                            <div style={{textAlign: "center"}}>
                                 <AppBadge version="google" url={googlePlayLink} />
                                 <AppBadge version="ios" url={iosStoreLink} />
+                            </div>
+                        </div>
+                        <div style={{fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "white"}}>
 
-                            </DialogContentText>
-                        </DialogContent>
-                    <DialogActions>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description" style={{fontSize: 10, marginLeft: -10}}>
-                                Source: https://covid-19.ontario.ca/
-                            </DialogContentText>
-                        </DialogContent>
-                        <Button onClick={this.handleClose.bind(this)} color="primary">
-                            Close
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                            Source: https://covid-19.ontario.ca/
+
+                        </div>
+                    </div>
+                
+                : null : 
+                    <div> 
+                        <ChartTab /> 
+                    </div> 
+                }
             </div>
-            
         )
     }
 }
