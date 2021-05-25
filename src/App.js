@@ -252,63 +252,136 @@ class App extends Component {
                     <Tab style={{color: "white", fontSize: 14, fontWeight: "bold"}} label="Graph" />
                 </Tabs>
 
-                {this.state.value == 0 ? 
+                {this.state.value == 0 ? this.state.data.length > 0 ? 
 
-                <Grid container spacing={2} style={{height: "10vh"}}>
-                    <Grid item xs={1}>
-                        <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
-                            <HelpOutlineIcon />
-                        </IconButton>
-                    </Grid>
+                <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
 
-                    <Grid item xs={11} style={{color: "white", fontSize: 14, fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
-                        Active Cases: <span> 
-                            {this.state.data.length > 0 ? 
-                                <span style={{color: "red"}}> 
-                                    { this.state.data[this.state.data.length - 1]["Active Cases"] } 
-                                    <span> {" "}
-                                        (
-                                            {this.state.activeCasesChange}
-                                        )
-                                    </span> 
-                                </span>
-                            : ""}  
-                        </span> 
+                    
+                    
+
+                    {/* NEW
+                    Cases
+                    Recoveries
+                    Deaths
+                    Tests
+                    Active Cases
+
+                    TOTAL
+                    Cases
+                    Recoveries
+                    Deaths
+                    Tests */}
+
+                        <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}} id="alert-dialog-title">
+
+                            {this.state.data[this.state.data.length - 1]["Date"]}
+
+                        </h2>
+
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Active Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                        </div>
+
+                        <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}} id="alert-dialog-title">
+
+                            Cumulative Data
+
+                        </h2>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
+                        </div>
+                        <div style={{textAlign: "center", margin: "2px"}}>
+                            Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                        </div>
+
+                                <div style={{paddingBottom: "5px"}}>
+                                    <b>Get the COVID-19 Alert App</b>
+                                </div>
+                                <AppBadge version="google" url={googlePlayLink} />
+                                <AppBadge version="ios" url={iosStoreLink} />
+
+                            {/* </DialogContentText> */}
+                        {/* </DialogContent> */}
+
                         
 
-                        <br />
+                </div>
 
-                        New Cases: <span style={{color: "blue"}}> 
-                        {this.state.data.length > 0 ? 
-                                <span style={{color: "blue"}}> 
-                                    { this.state.data[this.state.data.length - 1]["New Cases"] } 
-                                    <span> {" "}
-                                        (
-                                            {this.state.newCasesChange}
-                                        )
-                                    </span> 
-                                </span>
-                            : ""}  
-                        </span>
+                : null : <div> <ChartTab /> </div> }
+
+                {/* // <Grid container spacing={2} style={{height: "10vh"}}>
+                //     <Grid item xs={1}>
+                //         <IconButton style={{color: "red"}} onClick={this.handleOpen.bind(this)} size="medium">
+                //             <HelpOutlineIcon />
+                //         </IconButton>
+                //     </Grid>
+
+                //     <Grid item xs={11} style={{color: "white", fontSize: 14, fontWeight: "bold", paddingTop: 10, paddingLeft: !isBrowser ? 20 : "", paddingBottom: !isBrowser ? 10 : ""}}>
+                //         Active Cases: <span> 
+                //             {this.state.data.length > 0 ? 
+                //                 <span style={{color: "red"}}> 
+                //                     { this.state.data[this.state.data.length - 1]["Active Cases"] } 
+                //                     <span> {" "}
+                //                         (
+                //                             {this.state.activeCasesChange}
+                //                         )
+                //                     </span> 
+                //                 </span>
+                //             : ""}  
+                //         </span> 
                         
-                        <br />
 
-                        New Recoveries: <span style={{color: "green"}}> 
-                        {this.state.data.length > 0 ? 
-                                <span style={{color: "green"}}> 
-                                    { this.state.data[this.state.data.length - 1]["New Recoveries"] } 
-                                    <span> {" "}
-                                        (
-                                            {this.state.resolvedCasesChange}
-                                        )
-                                    </span> 
-                                </span>
-                            : ""}  
-                        </span>
-                    </Grid>
-                </Grid>
+                //         <br />
 
-                : <div> <ChartTab /> </div> }
+                //         New Cases: <span style={{color: "blue"}}> 
+                //         {this.state.data.length > 0 ? 
+                //                 <span style={{color: "blue"}}> 
+                //                     { this.state.data[this.state.data.length - 1]["New Cases"] } 
+                //                     <span> {" "}
+                //                         (
+                //                             {this.state.newCasesChange}
+                //                         )
+                //                     </span> 
+                //                 </span>
+                //             : ""}  
+                //         </span>
+                        
+                //         <br />
+
+                //         New Recoveries: <span style={{color: "green"}}> 
+                //         {this.state.data.length > 0 ? 
+                //                 <span style={{color: "green"}}> 
+                //                     { this.state.data[this.state.data.length - 1]["New Recoveries"] } 
+                //                     <span> {" "}
+                //                         (
+                //                             {this.state.resolvedCasesChange}
+                //                         )
+                //                     </span> 
+                //                 </span>
+                //             : ""}  
+                //         </span>
+                //     </Grid>
+                // </Grid> */}
+
+                
                 
                 {/* <Grid item xs={12} style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}> */}
 
