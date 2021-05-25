@@ -18,9 +18,9 @@ class ChartTab extends Component {
         this.state = {
             data: [],
             // dialogOpen: false,
-            activeCasesChange: "",
-            newCasesChange: "",
-            resolvedCasesChange: "",
+            // activeCasesChange: "",
+            // newCasesChange: "",
+            // resolvedCasesChange: "",
             // value: 0,
             // refCurrent: {}
         }
@@ -161,24 +161,24 @@ class ChartTab extends Component {
 
             this.setState({data: googleData, refCurrent: this.chartRef.current })
 
-            var active = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
-            var newCases = (googleData[this.state.data.length - 1]["New Cases"] - googleData[this.state.data.length - 2]["New Cases"])
-            var resolved = (googleData[this.state.data.length - 1]["New Recoveries"] - googleData[this.state.data.length - 2]["New Recoveries"])
+            // var active = (googleData[this.state.data.length - 1]["Active Cases"] - googleData[this.state.data.length - 2]["Active Cases"])
+            // var newCases = (googleData[this.state.data.length - 1]["New Cases"] - googleData[this.state.data.length - 2]["New Cases"])
+            // var resolved = (googleData[this.state.data.length - 1]["New Recoveries"] - googleData[this.state.data.length - 2]["New Recoveries"])
 
-            if (active > 0)
-                active = "+" + active
+            // if (active > 0)
+            //     active = "+" + active
 
-            if (newCases > 0)
-                newCases = "+" + newCases
+            // if (newCases > 0)
+            //     newCases = "+" + newCases
 
-            if (resolved > 0)
-                resolved = "+" + resolved
+            // if (resolved > 0)
+            //     resolved = "+" + resolved
             
-            this.setState({
-                activeCasesChange: active,
-                newCasesChange: newCases,
-                resolvedCasesChange: resolved
-            })
+            // this.setState({
+            //     activeCasesChange: active,
+            //     newCasesChange: newCases,
+            //     resolvedCasesChange: resolved
+            // })
 
             },
             simpleSheet: true
