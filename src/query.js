@@ -14,16 +14,7 @@ const httpsOptions = {
     })
   };
 
-  (async () => {
-
-    const config = require("./TwitterAPIKeys")
-    const twitterClient = new Twitter(config)
-    twitterClient.post('statuses/update', {status: "Test \n newline"}, function(error, tweet, response){
-		if(!error){
-			console.log(error);
-		}
-	})
-
+(async () => {
 
     // console.log(twitterClient)
 
@@ -96,6 +87,28 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         })
 
         doc.sheetsByIndex[0].saveUpdatedCells()
+
+        const config = require("./TwitterAPIKeys")
+        const twitterClient = new Twitter(config)
+        twitterClient.post('statuses/update', {status:
+
+            // "Today's numbers (Apr 12): \n" +
+            "Today's numbers (" + dateFormat(new Date(), "mmmm dd") + "): \n" +
+            newCases + " new cases \n" +
+            newRecoveries + " recoveries \n" +
+            newDeaths + " deaths \n" +
+            // "34758 active cases (+1941) \n" +
+            activeCases + " active cases (" + activeCaseDifference + ") \n\n" +
+
+            "Visit https://covontario.ca to view the graph \n\n" +
+
+            "#COVID19Ontario #COVID19 #COVID #Ontario"
+
+            }, function(error, tweet, response){
+            if(!error){
+                console.log(error);
+            }
+        })
 
     }
 
