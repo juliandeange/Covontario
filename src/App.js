@@ -17,6 +17,7 @@ class App extends Component {
         super(props);
         this.state = {
             data: [],
+            activeCaseDifference: {},
             value: 0,
         }
     }
@@ -27,7 +28,10 @@ class App extends Component {
             key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
             callback: googleData => {
 
-                this.setState({data: googleData })
+                this.setState({ 
+                    data: googleData,
+                    activeCaseDifference: googleData[googleData.length - 1]["Active Case Difference"]
+                })
 
             },
             simpleSheet: true
@@ -77,7 +81,7 @@ class App extends Component {
                             Deaths
                             Tests */}
 
-                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
+                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold", textDecoration: "underline"}}>
 
                                 {this.state.data[this.state.data.length - 1]["Date"]}
 
@@ -96,16 +100,20 @@ class App extends Component {
                                     Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
                                 </div>
                                 <div style={{textAlign: "center", margin: "2px"}}>
-                                    Active Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                                    Active Cases: {this.state.data.length > 0 ? 
+                                    // this.state.data[this.state.data.length - 1]["Active Cases"] 
+                                    this.state.activeCaseDifference > 0 ? " (+" + this.state.activeCaseDifference + ")" :
+                                    " (" + this.state.activeCaseDifference + ")" : 
+                                    ""}
                                 </div>
                             </div>
 
-                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
+                            <h2 style={{textAlign: "center", color: "white", textDecoration: "underline"}}>
 
                                 Cumulative Data
 
                             </h2>
-                            <div style={{color: "white"}}>
+                            <div style={{color: "white", fontWeight: "bold"}}>
                                 <div style={{textAlign: "center", margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                                 </div>
@@ -122,7 +130,7 @@ class App extends Component {
 
                             <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
 
-                                Get the COVID-19 Alert App
+                                Download the COVID-19 Alert App
 
                             </h2>
                             <div style={{textAlign: "center"}}>

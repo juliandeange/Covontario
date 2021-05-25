@@ -4,6 +4,7 @@ import Chart from 'chart.js'
 import { Component } from 'react'
 import Tabletop from 'tabletop'
 import {isBrowser} from "react-device-detect"
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
@@ -108,7 +109,7 @@ class ChartTab extends Component {
             zoom: {
                 enabled: true,                      
                 mode: 'x',
-                speed: 0.04 // as a percent
+                speed: 0.04 // 4%
             }
         }
 
@@ -152,7 +153,7 @@ class ChartTab extends Component {
                 
             });
 
-            this.setState({data: googleData, refCurrent: this.chartRef.current })
+                this.setState({data: googleData })
 
             },
             simpleSheet: true
@@ -164,13 +165,19 @@ class ChartTab extends Component {
 
         return(
 
-            <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
-                <canvas
-                    id="myChart"
-                    ref={this.chartRef}
-                    style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
-                    {/* // style={{height: "100vh", width: "100%"}}/> */}
-                        
+            <div>
+                {this.state.data.length <= 0 ? 
+                    <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                        <CircularProgress color="secondary"/> 
+                    </div> : 
+                    null
+                }
+                    <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
+                        <canvas
+                            id="myChart"
+                            ref={this.chartRef}
+                            style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
+                    </div>         
             </div>
 
         )
