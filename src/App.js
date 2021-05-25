@@ -48,7 +48,7 @@ class App extends Component {
 
         return (
             
-            <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>     
+            <div style={{height: !isBrowser ? "calc(100vh)" : "90vh"}}>     
 
                 <Tabs
                     value={this.state.value}
@@ -82,21 +82,22 @@ class App extends Component {
                                 {this.state.data[this.state.data.length - 1]["Date"]}
 
                             </h2>
-
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Active Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                            <div style={{color: "white"}}>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Active Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] : ""}
+                                </div>
                             </div>
 
                             <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
@@ -104,17 +105,19 @@ class App extends Component {
                                 Cumulative Data
 
                             </h2>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
-                            </div>
-                            <div style={{textAlign: "center", margin: "2px"}}>
-                                Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                            <div style={{color: "white"}}>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
+                                </div>
+                                <div style={{textAlign: "center", margin: "2px"}}>
+                                    Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
+                                </div>
                             </div>
 
                             <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
