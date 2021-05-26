@@ -109,8 +109,8 @@ class App extends Component {
                                 <div style={{margin: "2px"}}>
                                     Active Cases: {this.state.data.length > 0 ? 
                                     // this.state.data[this.state.data.length - 1]["Active Cases"] 
-                                    this.state.activeCaseDifference > 0 ? " (+" + this.state.activeCaseDifference + ")" :
-                                    " (" + this.state.activeCaseDifference + ")" : 
+                                    this.state.activeCaseDifference > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] + " (+" + this.state.activeCaseDifference + ")" :
+                                    this.state.data[this.state.data.length - 1]["Active Cases"] + " (" + this.state.activeCaseDifference + ")" : 
                                     ""}
                                 </div>
                             </div>
