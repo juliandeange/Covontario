@@ -92,13 +92,11 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         const twitterClient = new Twitter(config)
         twitterClient.post('statuses/update', {status:
 
-            // "Today's numbers (Apr 12): \n" +
             "Today's numbers (" + dateFormat(new Date(), "mmmm dd") + "): \n" +
             newCases + " new cases \n" +
             newRecoveries + " recoveries \n" +
             newDeaths + " deaths \n" +
-            // "34758 active cases (+1941) \n" +
-            activeCases + " active cases (" + activeCaseDifference + ") \n\n" +
+            activeCases + " active cases (" + (activeCaseDifference >= 0 ? "+" : "") + activeCaseDifference + ") \n\n" +
 
             "Visit https://covontario.ca to view the graph \n\n" +
 
