@@ -60,13 +60,14 @@ class App extends Component {
                     indicatorColor="primary"
                     textColor="primary"
                     centered>
-                    <Tab style={{color: "white", fontSize: 14, fontWeight: "bold"}} label="Information" />
-                    <Tab style={{color: "white", fontSize: 14, fontWeight: "bold"}} label="Graph" />
+                    <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Information" />
+                    <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Graph" />
                 </Tabs>
 
                 {this.state.value === 0 ? this.state.data.length > 0 ? 
                     <div>
-                        <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+
+                        <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100vh"}}>
 
                             {/* NEW
                             Cases
@@ -81,25 +82,31 @@ class App extends Component {
                             Deaths
                             Tests */}
 
-                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold", textDecoration: "underline"}}>
+                            <h5 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold"}}>
+
+                                Daily COVID-19 statistics for Ontario
+
+                            </h5>
+                            
+                            <h2 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold", textDecoration: "underline"}}>
 
                                 {this.state.data[this.state.data.length - 1]["Date"]}
 
                             </h2>
-                            <div style={{color: "white"}}>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                            <div style={{color: "#e0e0e0", fontWeight: "bold", textAlign: "center"}}>
+                                <div style={{margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Active Cases: {this.state.data.length > 0 ? 
                                     // this.state.data[this.state.data.length - 1]["Active Cases"] 
                                     this.state.activeCaseDifference > 0 ? " (+" + this.state.activeCaseDifference + ")" :
@@ -108,37 +115,37 @@ class App extends Component {
                                 </div>
                             </div>
 
-                            <h2 style={{textAlign: "center", color: "white", textDecoration: "underline"}}>
+                            <h2 style={{textAlign: "center", color: "#e0e0e0", textDecoration: "underline"}}>
 
                                 Cumulative Data
 
                             </h2>
-                            <div style={{color: "white", fontWeight: "bold"}}>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                            <div style={{color: "#e0e0e0", fontWeight: "bold", textAlign: "center"}}>
+                                <div style={{margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
                                 </div>
-                                <div style={{textAlign: "center", margin: "2px"}}>
+                                <div style={{margin: "2px"}}>
                                     Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
                                 </div>
                             </div>
 
-                            <h2 style={{textAlign: "center", color: "white", fontWeight: "bold"}}>
+                            <h5 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold"}}>
 
                                 Download the COVID-19 Alert App
 
-                            </h2>
+                            </h5>
                             <div style={{textAlign: "center"}}>
                                 <AppBadge version="google" url={googlePlayLink} />
                                 <AppBadge version="ios" url={iosStoreLink} />
                             </div>
                         </div>
-                        <div style={{fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "white"}}>
+                        <div style={{fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
 
                             Source: https://covid-19.ontario.ca/
 
