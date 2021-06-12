@@ -5,7 +5,7 @@ import Tabletop from 'tabletop'
 import AppBadge from 'react-app-badge'
 
 import isBrowser from 'react-device-detect'
-import { Tabs, Tab } from '@material-ui/core'
+import { Tabs, Tab, Grid } from '@material-ui/core'
 import ChartTab from './ChartTab'
 
 
@@ -85,7 +85,7 @@ class App extends Component {
                             <h5 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold"}}>
 
                                 Daily COVID-19 statistics for Ontario
-
+                                
                             </h5>
                             
                             <h2 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold", textDecoration: "underline"}}>
@@ -141,8 +141,14 @@ class App extends Component {
 
                             </h5>
                             <div style={{textAlign: "center"}}>
-                                <AppBadge version="google" url={googlePlayLink} />
-                                <AppBadge version="ios" url={iosStoreLink} />
+                                <Grid container spacing={0} justify="center">
+                                    <Grid item xs={3}>
+                                        <AppBadge version="google" url={googlePlayLink} />
+                                    </Grid>
+                                    <Grid item xs={3}>
+                                        <AppBadge version="ios" url={iosStoreLink} />
+                                    </Grid>
+                                </Grid>
                             </div>
                         </div>
                         <div style={{fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
