@@ -1,7 +1,6 @@
 import React from 'react'
 import './App.css'
 import { Component } from 'react'
-// import Tabletop from 'tabletop'
 import AppBadge from 'react-app-badge'
 
 import isBrowser from 'react-device-detect'
