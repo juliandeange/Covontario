@@ -1,12 +1,13 @@
 import React from 'react'
 import './App.css'
 import { Component } from 'react'
-import Tabletop from 'tabletop'
+// import Tabletop from 'tabletop'
 import AppBadge from 'react-app-badge'
 
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid } from '@material-ui/core'
 import ChartTab from './ChartTab'
+const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 
 class App extends Component {
@@ -22,21 +23,23 @@ class App extends Component {
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
 
-        Tabletop.init({
-            key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
-            callback: googleData => {
+        const creds = require('./client_secret.json');
+        const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
 
-                this.setState({ 
-                    data: googleData,
-                    activeCaseDifference: googleData[googleData.length - 1]["Active Case Difference"]
-                })
+        await doc.useServiceAccountAuth({
+            client_email: creds.client_email,
+            private_key: creds.private_key,
+        });
+    
+        await doc.loadInfo()
+        const rows = await doc.sheetsByIndex[0].getRows()
 
-            },
-            simpleSheet: true
-          })
-
+        this.setState({ 
+            data: rows,
+            activeCaseDifference: rows[rows.length - 1]["Active Case Difference"]
+        })
     }
 
     handleTabChange = (event, value) => {
@@ -160,7 +163,7 @@ class App extends Component {
                 
                 : null : 
                     <div> 
-                        <ChartTab /> 
+                        <ChartTab data={this.state.data}/> 
                     </div> 
                 }
             </div>
