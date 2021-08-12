@@ -2,7 +2,6 @@ import React from 'react'
 import './App.css'
 import Chart from 'chart.js'
 import { Component } from 'react'
-import Tabletop from 'tabletop'
 import {isBrowser} from "react-device-detect"
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -18,11 +17,29 @@ class ChartTab extends Component {
         super(props);
         this.state = {
             data: [],
+            color: "Red",
+            chart: {}
         }
     }
 
+    // panningNow({ chart }) {
 
-    componentDidMount(){
+    //     let x = chart.scales["x-axis-0"];
+    //     // document.getElementById("vv").innerText = JSON.stringify(chart.data.datasets[0].data.slice(x.minIndex, x.maxIndex + 1));
+    //     console.log(x)
+
+    //   }
+
+    // test(chart) {
+
+        // let x = chart.scales["x-axis-0"];
+        // console.log(chart)
+        // this.setState({ color: "White" })
+        // this.state.chart.reset()
+
+    // }
+
+    async componentDidMount() {
 
         const myChartRef = this.chartRef.current.getContext("2d");
 
@@ -77,6 +94,9 @@ class ChartTab extends Component {
                         fontStyle: "bold",
                         labelString: "Active Cases"
                     },
+                    // ticks: {
+                    //     max: value
+                    // }
                 },
                 {
                     id: "OtherCases",
@@ -92,6 +112,9 @@ class ChartTab extends Component {
                         fontStyle: "bold",
                         labelString: "New Cases / Recoveries"
                     },
+                    // ticks: {
+                    //     max: value
+                    // }
                 }
             ]
             },
@@ -105,28 +128,28 @@ class ChartTab extends Component {
             pan: {
                 enabled: true,
                 mode: 'x',
+                onPan: function(chart) {
+
+                }
             },
             zoom: {
                 enabled: true,                      
                 mode: 'x',
                 speed: 0.04 // 4%
-            }
+            },
         }
 
-        Tabletop.init({
-            key: '1hHv7MeOpp9G2obU_7iqxh8U0RRvcRSZVTp8VEfn1h8o',
-            callback: googleData => {
-              new Chart(myChartRef, {
-                type: "line",
+        new Chart(myChartRef, {
+            type: "line",
                 data: {
-                    labels: googleData.map((key, index) => { return googleData[index]["Date"]}),
+                    labels: this.props.data.map((key, index) => { return this.props.data[index]["Date"]}),
                     datasets: [
                         {
-                            borderColor: "Red",
+                            borderColor: this.state.color,
                             fill: false,
                             label: "Active Cases",
                             yAxisId: "ActiveCases",
-                            data: googleData.map((key, index) => { return googleData[index]["Active Cases"]}),
+                            data: this.props.data.map((key, index) => { return this.props.data[index]["Active Cases"]}),
                             pointRadius: 5
                         },
                         {
@@ -134,7 +157,7 @@ class ChartTab extends Component {
                             fill: false,
                             label: "New Cases",
                             yAxisID: "OtherCases",
-                            data: googleData.map((key, index) => { return googleData[index]["New Cases"]}),
+                            data: this.props.data.map((key, index) => { return this.props.data[index]["New Cases"]}),
                             pointRadius: 5
                         },
                         {
@@ -142,22 +165,18 @@ class ChartTab extends Component {
                             fill: false,
                             label: "New Recoveries",
                             yAxisID: "OtherCases",
-                            data: googleData.map((key, index) => {return googleData[index]["New Recoveries"]}),
+                            data: this.props.data.map((key, index) => {return this.props.data[index]["New Recoveries"]}),
                             hidden: true,
                             pointRadius: 5
                         }
 
                     ]
                 },
-                options: options
-                
-            });
+            options: options
+        
+        });
 
-                this.setState({data: googleData })
-
-            },
-            simpleSheet: true
-          })
+        this.setState({data: this.props.data, chart: myChartRef })
 
     }
 
