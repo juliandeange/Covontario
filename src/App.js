@@ -1,11 +1,13 @@
 import React from 'react'
 import './App.css'
 import { Component } from 'react'
-import AppBadge from 'react-app-badge'
+import ChartTab from './ChartTab'
 
+import AppBadge from 'react-app-badge'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid } from '@material-ui/core'
-import ChartTab from './ChartTab'
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 
@@ -160,7 +162,11 @@ class App extends Component {
                         </div>
                     </div>
                 
-                : null : 
+                : 
+                    <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                        <CircularProgress color="secondary"/> 
+                    </div> 
+                : 
                     <div> 
                         <ChartTab data={this.state.data}/> 
                     </div> 
