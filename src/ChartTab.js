@@ -8,6 +8,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
 
+var value = 1
+
 class ChartTab extends Component { 
 
 
@@ -18,7 +20,10 @@ class ChartTab extends Component {
         this.state = {
             data: [],
             color: "Red",
-            chart: {}
+            chart: {},
+            value: 1,
+            baselineMin: 0,
+            baselineMax: 0
         }
     }
 
@@ -38,6 +43,21 @@ class ChartTab extends Component {
         // this.state.chart.reset()
 
     // }
+
+    setOptions(chart) {
+        
+        // chart.chart.options.scales.yAxes[0].ticks.max++
+        // chart.chart.options.scales.yAxes[1].ticks.max++
+
+        // var maxDiff = max - (max + this.state.data.length)
+        // var minDiff = max - (max + this.state.data.length + 90)
+
+        // chart.chart.update()
+
+        // console.log(maxDiff + " " + minDiff)
+
+
+    }
 
     async componentDidMount() {
 
@@ -95,7 +115,7 @@ class ChartTab extends Component {
                         labelString: "Active Cases"
                     },
                     // ticks: {
-                    //     max: value
+                    //     max: this.state.value
                     // }
                 },
                 {
@@ -113,7 +133,7 @@ class ChartTab extends Component {
                         labelString: "New Cases / Recoveries"
                     },
                     // ticks: {
-                    //     max: value
+                    //     max: this.state.value
                     // }
                 }
             ]
@@ -128,9 +148,12 @@ class ChartTab extends Component {
             pan: {
                 enabled: true,
                 mode: 'x',
-                onPan: function(chart) {
+                onPan: this.setOptions.bind(this)
+                // onPan: function(chart) {
 
-                }
+                //     // chart.chart.update()
+
+                // }
             },
             zoom: {
                 enabled: true,                      
@@ -139,7 +162,7 @@ class ChartTab extends Component {
             },
         }
 
-        new Chart(myChartRef, {
+        var chart = new Chart(myChartRef, {
             type: "line",
                 data: {
                     labels: this.props.data.map((key, index) => { return this.props.data[index]["Date"]}),
@@ -176,7 +199,15 @@ class ChartTab extends Component {
         
         });
 
-        this.setState({data: this.props.data, chart: myChartRef })
+        var min = chart.scales["A"].min
+        var max = chart.scales["A"].max
+
+        this.setState({
+            data: this.props.data, 
+            chart: myChartRef,
+            baselineMin: min,
+            baselineMax: max
+        })
 
     }
 
