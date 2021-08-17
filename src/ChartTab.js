@@ -26,31 +26,34 @@ class ChartTab extends Component {
             baselineMax: 0
         }
     }
-
-    // panningNow({ chart }) {
-
-    //     let x = chart.scales["x-axis-0"];
-    //     // document.getElementById("vv").innerText = JSON.stringify(chart.data.datasets[0].data.slice(x.minIndex, x.maxIndex + 1));
-    //     console.log(x)
-
-    //   }
-
-    // test(chart) {
-
-        // let x = chart.scales["x-axis-0"];
-        // console.log(chart)
-        // this.setState({ color: "White" })
-        // this.state.chart.reset()
-
-    // }
-
-    setOptions(chart) {
+    
+    setAxis(chart) {
         
         // chart.chart.options.scales.yAxes[0].ticks.max++
         // chart.chart.options.scales.yAxes[1].ticks.max++
 
-        // var maxDiff = max - (max + this.state.data.length)
-        // var minDiff = max - (max + this.state.data.length + 90)
+        // Get date range shown
+        var startEpoch = chart.chart.scales["A"]._ticks[0].value
+        var endEpoch = chart.chart.scales["A"]._ticks[89].value
+
+        var startDate = new Date(startEpoch)
+        var endDate = new Date(endEpoch)
+
+        var startDateString = startDate.toLocaleString('default', { month: 'long' }) + ' ' + startDate.getDate() + ' ' + startDate.getFullYear()
+        var endDateString = endDate.toLocaleString('default', { month: 'long' }) + ' ' + endDate.getDate() + ' ' + endDate.getFullYear()
+
+        var startIndex = this.state.data.findIndex(i => i.Date == startDateString)
+        var endIndex = this.state.data.findIndex(i => i.Date == endDateString)
+
+        // Get range of dates shown
+        var range = this.state.data.slice(startIndex, endIndex)
+
+        // Get max values for each axis
+        var maxActive = Math.max(...range.map(i => i["Active Cases"]))
+        var maxNew = Math.max(...range.map(i => i["New Recoveries"]))
+        var maxRecovery = Math.max(...range.map(i => i["New Cases"]))
+
+        var maxRightAxis = Math.max(maxNew, maxRecovery)
 
         // chart.chart.update()
 
@@ -90,7 +93,7 @@ class ChartTab extends Component {
                     },
                     type: "time",
                     time:{
-                        tooltipFormat: "MMM DD YYYY"
+                        tooltipFormat: "MMM DD YYYY",
                     },
                     gridLines: {
                         display: false
@@ -148,7 +151,7 @@ class ChartTab extends Component {
             pan: {
                 enabled: true,
                 mode: 'x',
-                onPan: this.setOptions.bind(this)
+                onPanComplete: this.setAxis.bind(this)
                 // onPan: function(chart) {
 
                 //     // chart.chart.update()
