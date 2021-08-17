@@ -63,7 +63,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
     var yesterday = rows[rows.length - 1]["Date"]
     var yesterdayTotalCases = rows[rows.length - 1]["Total Cases"]
 
-    if (yesterday != today && yesterdayTotalCases != todayTotalCases) {
+    if (yesterday != today && yesterdayTotalCases != todayTotalCases && todayTotalCases >= yesterdayTotalCases) {
 
         var activeCases = todayTotalCases - todayTotalResolved - todayTotalFatal
         var newCases = todayTotalCases - yesterdayTotalCases
@@ -92,7 +92,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         const twitterClient = new Twitter(config)
         twitterClient.post('statuses/update', {status:
 
-            "Today's numbers (" + dateFormat(new Date(), "mmmm dd") + "): \n" +
+            "Ontario COVID-19 data for today (" + dateFormat(new Date(), "mmmm dd") + "): \n" +
             newCases + " new cases \n" +
             newRecoveries + " recoveries \n" +
             newDeaths + " deaths \n" +
