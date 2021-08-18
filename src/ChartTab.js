@@ -174,7 +174,8 @@ class ChartTab extends Component {
             zoom: {
                 enabled: true,                      
                 mode: 'x',
-                speed: 0.04 // 4%
+                speed: 0.04, // 4%
+                onZoomComplete: this.setAxis.bind(this)
             },
         }
 
