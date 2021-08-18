@@ -8,8 +8,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
 
-var value = 1
-
 class ChartTab extends Component { 
 
 
@@ -21,9 +19,7 @@ class ChartTab extends Component {
             data: [],
             color: "Red",
             chart: {},
-            value: 1,
-            baselineMin: 0,
-            baselineMax: 0
+            value: 1
         }
     }
     
@@ -34,19 +30,19 @@ class ChartTab extends Component {
 
         // Get date range shown
         var startEpoch = chart.chart.scales["A"]._ticks[0].value
-        var endEpoch = chart.chart.scales["A"]._ticks[89].value
+        var endEpoch = chart.chart.scales["A"]._ticks[chart.chart.scales["A"]._ticks.length - 1].value
 
         var startDate = new Date(startEpoch)
         var endDate = new Date(endEpoch)
 
-        var startDateString = startDate.toLocaleString('default', { month: 'long' }) + ' ' + startDate.getDate() + ' ' + startDate.getFullYear()
-        var endDateString = endDate.toLocaleString('default', { month: 'long' }) + ' ' + endDate.getDate() + ' ' + endDate.getFullYear()
+        var startDateString = startDate.toLocaleString('default', { month: 'long' }) + ' ' + (startDate.getDate() < 10 ? '0' + startDate.getDate() : startDate.getDate()) + ' ' + startDate.getFullYear()
+        var endDateString = endDate.toLocaleString('default', { month: 'long' }) + ' ' + (endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()) + ' ' + endDate.getFullYear()
 
-        var startIndex = this.state.data.findIndex(i => i.Date == startDateString)
-        var endIndex = this.state.data.findIndex(i => i.Date == endDateString)
+        var startIndex = this.state.data.findIndex(i => i.Date === startDateString)
+        var endIndex = this.state.data.findIndex(i => i.Date === endDateString)
 
         // Get range of dates shown
-        var range = this.state.data.slice(startIndex, endIndex)
+        var range = this.state.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.state.data.length : endIndex)
 
         // Get max values for each axis
         var maxActive = Math.max(...range.map(i => i["Active Cases"]))
@@ -55,7 +51,36 @@ class ChartTab extends Component {
 
         var maxRightAxis = Math.max(maxNew, maxRecovery)
 
-        // chart.chart.update()
+        var leftLimit = maxActive
+        var rightLimit = maxRightAxis
+        
+        if (leftLimit < 100)
+            leftLimit = Math.ceil(maxActive / 5) * 5
+        else if (leftLimit < 1000)
+            leftLimit = Math.ceil(maxActive / 50) * 50
+        else if (leftLimit < 10000)
+            leftLimit = Math.ceil(maxActive / 500) * 500
+        else if (leftLimit < 100000)
+            leftLimit = Math.ceil(maxActive / 5000) * 5000
+        else if (leftLimit < 1000000)
+            leftLimit = Math.ceil(maxActive / 50000) * 50000
+
+        if (rightLimit < 100)
+            rightLimit = Math.ceil(maxRightAxis / 5) * 5
+        else if (rightLimit < 1000)
+            rightLimit = Math.ceil(maxRightAxis / 50) * 50
+        else if (rightLimit < 10000)
+            rightLimit = Math.ceil(maxRightAxis / 500) * 500
+        else if (rightLimit < 100000)
+            rightLimit = Math.ceil(maxRightAxis / 5000) * 5000
+        else if (rightLimit < 1000000)
+            rightLimit = Math.ceil(maxRightAxis / 50000) * 50000
+
+        // Set the new axis
+        chart.chart.options.scales.yAxes[0].ticks.max = leftLimit
+        chart.chart.options.scales.yAxes[1].ticks.max = rightLimit
+
+        chart.chart.update()
 
         // console.log(maxDiff + " " + minDiff)
 
@@ -202,15 +227,12 @@ class ChartTab extends Component {
         
         });
 
-        var min = chart.scales["A"].min
-        var max = chart.scales["A"].max
-
         this.setState({
             data: this.props.data, 
-            chart: myChartRef,
-            baselineMin: min,
-            baselineMax: max
+            chart: myChartRef
         })
+
+        // this.setAxis(chart)
 
     }
 
