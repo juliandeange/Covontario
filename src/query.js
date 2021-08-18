@@ -16,8 +16,6 @@ const httpsOptions = {
 
 (async () => {
 
-    // console.log(twitterClient)
-
     await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=1000000', httpsOptions)
     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
     .then(response => response.json())
