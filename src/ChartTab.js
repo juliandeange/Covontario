@@ -38,11 +38,11 @@ class ChartTab extends Component {
         var startDateString = startDate.toLocaleString('default', { month: 'long' }) + ' ' + (startDate.getDate() < 10 ? '0' + startDate.getDate() : startDate.getDate()) + ' ' + startDate.getFullYear()
         var endDateString = endDate.toLocaleString('default', { month: 'long' }) + ' ' + (endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()) + ' ' + endDate.getFullYear()
 
-        var startIndex = this.state.data.findIndex(i => i.Date === startDateString)
-        var endIndex = this.state.data.findIndex(i => i.Date === endDateString)
+        var startIndex = this.props.data.findIndex(i => i.Date === startDateString)
+        var endIndex = this.props.data.findIndex(i => i.Date === endDateString)
 
         // Get range of dates shown
-        var range = this.state.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.state.data.length : endIndex)
+        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.state.data.length : endIndex)
 
         // Get max values for each axis
         var maxActive = Math.max(...range.map(i => i["Active Cases"]))
@@ -54,6 +54,7 @@ class ChartTab extends Component {
         var leftLimit = maxActive
         var rightLimit = maxRightAxis
         
+        // Round the axis values
         if (leftLimit < 100)
             leftLimit = Math.ceil(maxActive / 5) * 5
         else if (leftLimit < 1000)
@@ -81,8 +82,6 @@ class ChartTab extends Component {
         chart.chart.options.scales.yAxes[1].ticks.max = rightLimit
 
         chart.chart.update()
-
-        // console.log(maxDiff + " " + minDiff)
 
 
     }
@@ -142,9 +141,6 @@ class ChartTab extends Component {
                         fontStyle: "bold",
                         labelString: "Active Cases"
                     },
-                    // ticks: {
-                    //     max: this.state.value
-                    // }
                 },
                 {
                     id: "OtherCases",
@@ -160,9 +156,6 @@ class ChartTab extends Component {
                         fontStyle: "bold",
                         labelString: "New Cases / Recoveries"
                     },
-                    // ticks: {
-                    //     max: this.state.value
-                    // }
                 }
             ]
             },
@@ -177,11 +170,6 @@ class ChartTab extends Component {
                 enabled: true,
                 mode: 'x',
                 onPanComplete: this.setAxis.bind(this)
-                // onPan: function(chart) {
-
-                //     // chart.chart.update()
-
-                // }
             },
             zoom: {
                 enabled: true,                      
@@ -232,14 +220,13 @@ class ChartTab extends Component {
             chart: myChartRef
         })
 
-        // this.setAxis(chart)
+        this.setAxis(chart)
 
     }
 
     render() {
 
         return(
-
             <div>
                 {this.state.data.length <= 0 ? 
                     <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
@@ -254,12 +241,8 @@ class ChartTab extends Component {
                             style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
                     </div>         
             </div>
-
         )
-
     }
-
-
 }
 
 export default ChartTab
