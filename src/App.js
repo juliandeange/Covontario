@@ -26,7 +26,7 @@ class App extends Component {
 
     async componentDidMount(){
 
-        const creds = require('./client_secret.json');
+        const creds = require('./covontario_read_only.json');
         const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
 
         await doc.useServiceAccountAuth({
