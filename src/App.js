@@ -8,12 +8,14 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid } from '@material-ui/core'
 
+import Feedback from '@material-ui/icons/Feedback'
+import IconButton from '@material-ui/core/IconButton';
+
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 
 class App extends Component {
-
-    chartRef = React.createRef();
 
     constructor(props) {
         super(props);
@@ -145,19 +147,25 @@ class App extends Component {
 
                             </h5>
                             <div style={{textAlign: "center"}}>
-                                <Grid container spacing={0} justify="center">
-                                    <Grid item xs={3}>
-                                        <AppBadge version="google" url={googlePlayLink} />
+                                <Grid container spacing={1} justify="center">
+                                    <Grid item>
+                                        <AppBadge version="google" height="40" url={googlePlayLink} />
                                     </Grid>
-                                    <Grid item xs={3}>
-                                        <AppBadge version="ios" url={iosStoreLink} />
+                                    <Grid item>
+                                        <AppBadge version="ios" height="40" url={iosStoreLink} />
                                     </Grid>
                                 </Grid>
                             </div>
                         </div>
-                        <div style={{fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
+                        <div style={{width: "100vh", textAlign: "center", fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
+                        
+                                    Source: https://covid-19.ontario.ca/
 
-                            Source: https://covid-19.ontario.ca/
+                                    <IconButton>
+                                        <Feedback style={{fill: "white", height: 20}} />
+                                    </IconButton>
+
+                                    Send Feedback
 
                         </div>
                     </div>
