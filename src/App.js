@@ -7,13 +7,11 @@ import AppBadge from 'react-app-badge'
 import CircularProgress from '@material-ui/core/CircularProgress';
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid } from '@material-ui/core'
-
 import Feedback from '@material-ui/icons/Feedback'
 import IconButton from '@material-ui/core/IconButton';
 
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-
 
 class App extends Component {
 
@@ -161,7 +159,7 @@ class App extends Component {
                         
                                     Source: https://covid-19.ontario.ca/
 
-                                    <IconButton>
+                                    <IconButton onClick={() => {window.open('mailto:covontario@gmail.com?subject=Covontario - Feedback')} }>
                                         <Feedback style={{fill: "white", height: 20}} />
                                     </IconButton>
 
