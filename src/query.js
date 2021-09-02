@@ -25,7 +25,7 @@ const httpsOptions = {
             data: data
         })
 
-        var fatal = jsonQuery('result.records[*Outcome1=Fatal', {
+        var fatal = jsonQuery('result.records[*Outcome1=Fatal]', {
             data: data
         })
 
