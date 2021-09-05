@@ -3,7 +3,7 @@ import './App.css'
 import Chart from 'chart.js'
 import { Component } from 'react'
 import {isBrowser} from "react-device-detect"
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'

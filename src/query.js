@@ -1,12 +1,12 @@
-const fetch = require('node-fetch');
+const fetch = require('node-fetch')
 const https = require('https') 
 
-const { google } = require('googleapis'); 
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+const { google } = require('googleapis')
+const { GoogleSpreadsheet } = require('google-spreadsheet')
 const Twitter = require('twitter')
 
 const jsonQuery = require('json-query') 
-var dateFormat = require('dateformat');
+var dateFormat = require('dateformat')
      
 const httpsOptions = {
     agent: new https.Agent({
@@ -18,8 +18,12 @@ const httpsOptions = {
 
     await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=1000000', httpsOptions)
     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
+    // await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1000000', httpsOptions)
     .then(response => response.json())
     .then(data => {
+
+        // var latestRecord = data.result.records[data.result.records.length - 1]
+        // console.log(latestRecord)
 
         var resolved = jsonQuery('result.records[*Outcome1=Resolved]', {
             data: data
@@ -104,6 +108,18 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
             if(!error){
                 console.log(error);
             }
+        })
+
+    }
+    else if (rows[rows.length - 1]["Date"] === today) {
+
+        // console.log(rows[rows.length - 1][""])
+        await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1000000', httpsOptions)
+        .then(response => response.json())
+        .then(data => { 
+
+            var latestData = data.result.records[data.result.records.length - 1]
+            var newTests = latestData["Total tests completed in the last day"]
         })
 
     }
