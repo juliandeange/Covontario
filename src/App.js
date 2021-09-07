@@ -4,12 +4,12 @@ import { Component } from 'react'
 import ChartTab from './ChartTab'
 
 import AppBadge from 'react-app-badge'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from '@material-ui/core/CircularProgress'
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid } from '@material-ui/core'
-import Feedback from '@material-ui/icons/Feedback'
-import IconButton from '@material-ui/core/IconButton';
-
+import { Feedback, More } from '@material-ui/icons'
+import { Button, IconButton } from '@material-ui/core'
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
@@ -18,10 +18,14 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            dialogOpen: false,
             data: [],
             activeCaseDifference: {},
             value: 0,
         }
+
+        this.handleDialogToggle = this.handleDialogToggle.bind(this)
+
     }
 
     async componentDidMount(){
@@ -47,12 +51,23 @@ class App extends Component {
 
         this.setState({ value });
 
-      }
+    }
+
+    handleDialogToggle() {
+
+        if (this.state.dialogOpen === true)
+            this.setState({ dialogOpen: false })
+        else if (this.state.dialogOpen === false)
+            this.setState({ dialogOpen: true })
+
+    }
 
     render() {
 
         const googlePlayLink = "https://play.google.com/store/apps/details?id=ca.gc.hcsc.canada.stopcovid&hl=en_CA"
         const iosStoreLink= "https://apps.apple.com/ca/app/covid-alert/id1520284227"
+
+        const vaxStatus = "https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc"
 
         return (
             
@@ -100,6 +115,9 @@ class App extends Component {
                             <div style={{color: "#e0e0e0", fontWeight: "bold", textAlign: "center"}}>
                                 <div style={{margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleDialogToggle}>
+                                        <More style={{color: "white", maxHeight: 20}}/>
+                                    </IconButton>
                                 </div>
                                 <div style={{margin: "2px"}}>
                                     Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
@@ -166,7 +184,27 @@ class App extends Component {
                                     Send Feedback
 
                         </div>
+                        <Dialog
+                            fullWidth={true}
+                            maxWidth="xs"
+                            open={this.state.dialogOpen}
+                            onClose={this.handleDialogToggle}
+                            aria-labelledby="max-width-dialog-title">
+                            <DialogTitle style={{textAlign: "center"}}>Case Breakdown by Vaccination Status</DialogTitle>
+                            <DialogContent style={{textAlign: "center"}}>
+                                <DialogContentText>
+                                    Breakdown here...
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                            <Button onClick={this.handleDialogToggle} color="primary">
+                                Close
+                            </Button>
+                            </DialogActions>
+                        </Dialog>
                     </div>
+                    
+                    
                 
                 : 
                     <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
