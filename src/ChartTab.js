@@ -24,9 +24,6 @@ class ChartTab extends Component {
     }
     
     setAxis(chart) {
-        
-        // chart.chart.options.scales.yAxes[0].ticks.max++
-        // chart.chart.options.scales.yAxes[1].ticks.max++
 
         // Get date range shown
         var startEpoch = chart.chart.scales["A"]._ticks[0].value
