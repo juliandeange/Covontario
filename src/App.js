@@ -67,8 +67,6 @@ class App extends Component {
         const googlePlayLink = "https://play.google.com/store/apps/details?id=ca.gc.hcsc.canada.stopcovid&hl=en_CA"
         const iosStoreLink= "https://apps.apple.com/ca/app/covid-alert/id1520284227"
 
-        const vaxStatus = "https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc"
-
         return (
             
             <div style={{height: !isBrowser ? "calc(100vh)" : "90vh"}}>     
@@ -81,6 +79,16 @@ class App extends Component {
                     centered>
                     <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Information" />
                     <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Graph" />
+                    {/* <Select
+                        // labelId="demo-simple-select-label"
+                        // id="demo-simple-select"
+                        // value={age}
+                        // onChange={handleChange}
+                    >
+                    <MenuItem value={10}>Ten</MenuItem>
+                    <MenuItem value={20}>Twenty</MenuItem>
+                    <MenuItem value={30}>Thirty</MenuItem>
+                    </Select> */}
                 </Tabs>
 
                 {this.state.value === 0 ? this.state.data.length > 0 ? 
