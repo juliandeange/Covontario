@@ -22,9 +22,6 @@ const httpsOptions = {
     .then(response => response.json())
     .then(data => {
 
-        // var latestRecord = data.result.records[data.result.records.length - 1]
-        // console.log(latestRecord)
-
         var resolved = jsonQuery('result.records[*Outcome1=Resolved]', {
             data: data
         })
@@ -113,14 +110,36 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
     }
     else if (rows[rows.length - 1]["Date"] === today) {
 
-        // console.log(rows[rows.length - 1][""])
-        await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1000000', httpsOptions)
-        .then(response => response.json())
-        .then(data => { 
+        var latestRow = rows[rows.length - 1]
 
-            var latestData = data.result.records[data.result.records.length - 1]
-            var newTests = latestData["Total tests completed in the last day"]
-        })
+        if (latestRow['New Tests'] === undefined) {
+        
+            await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1&sort=%22Reported%20Date%22%20desc', httpsOptions)
+            .then(response => response.json())
+            .then(data => { 
+
+                var latestData = data.result.records[data.result.records.length - 1]
+                var newTests = latestData["Total tests completed in the last day"]
+
+                console.log(newTests)
+
+            })
+        }
+
+        if (latestRow['Vax Cases'] === undefined) {
+
+            await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc', httpsOptions)
+            .then(response => response.json())
+            .then(data => {
+
+                var unvax = data.result.records[0]['covid19_cases_unvac']
+                console.log(unvax)
+
+            })
+
+        }
+
+
 
     }
 
