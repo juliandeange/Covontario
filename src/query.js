@@ -126,14 +126,27 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
             })
         }
 
-        if (latestRow['Vax Cases'] === undefined) {
+        if (latestRow['Cases_Vax'] === undefined || 
+            latestRow['Cases_Unvax'] === undefined ||
+            latestRow['Cases_Partial'] === undefined ||
+            latestRow['Cases_Unknown'] === undefined) {
 
             await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc', httpsOptions)
             .then(response => response.json())
             .then(data => {
 
+                var vax = data.result.records[0]['covid19_cases_full_vac']
                 var unvax = data.result.records[0]['covid19_cases_unvac']
-                console.log(unvax)
+                var partial = data.result.records[0]['covid19_cases_partial_vac']
+                var unknown = data.result.records[0]['covid19_cases_vac_unknown']
+
+                latestRow['Cases_Vax'] = vax
+                latestRow['Cases_Unvax'] = unvax
+                latestRow['Cases_Partial'] = partial
+                latestRow['Cases_Unknown'] = unknown
+
+                latestRow.save()
+
 
             })
 
