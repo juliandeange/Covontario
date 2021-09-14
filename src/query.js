@@ -112,7 +112,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
         var latestRow = rows[rows.length - 1]
 
-        if (latestRow['New Tests'] === undefined) {
+        if (!latestRow['New Tests']) {
         
             await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1&sort=%22Reported%20Date%22%20desc', httpsOptions)
             .then(response => response.json())
@@ -121,15 +121,17 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
                 var latestData = data.result.records[data.result.records.length - 1]
                 var newTests = latestData["Total tests completed in the last day"]
 
-                console.log(newTests)
+                latestRow['New Tests'] = newTests
+
+                latestRow.save()
 
             })
         }
 
-        if (latestRow['Cases_Vax'] === undefined || 
-            latestRow['Cases_Unvax'] === undefined ||
-            latestRow['Cases_Partial'] === undefined ||
-            latestRow['Cases_Unknown'] === undefined) {
+        if (!latestRow['Cases_Vax'] ||
+            !latestRow['Cases_Unvax']  ||
+            !latestRow['Cases_Partial'] ||
+            !latestRow['Cases_Unknown']) {
 
             await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc', httpsOptions)
             .then(response => response.json())
@@ -146,7 +148,6 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
                 latestRow['Cases_Unknown'] = unknown
 
                 latestRow.save()
-
 
             })
 
