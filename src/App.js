@@ -134,7 +134,7 @@ class App extends Component {
                                     Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
                                 </div>
                                 <div style={{margin: "2px"}}>
-                                    Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] : ""}
+                                    Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] ? this.state.data[this.state.data.length - 1]["New Tests"] : "n/a" : "n/a"}
                                 </div>
                                 <div style={{margin: "2px"}}>
                                     Active Cases: {this.state.data.length > 0 ? 
@@ -198,10 +198,13 @@ class App extends Component {
                             open={this.state.dialogOpen}
                             onClose={this.handleDialogToggle}
                             aria-labelledby="max-width-dialog-title">
-                            <DialogTitle style={{textAlign: "center"}}>Case Breakdown by Vaccination Status</DialogTitle>
+                            <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Case Breakdown by Vaccination Status</DialogTitle>
                             <DialogContent style={{textAlign: "center"}}>
-                                <DialogContentText>
-                                    Breakdown here...
+                                <DialogContentText style={{fontWeight: "bold"}}>
+                                    <div>Vaccinated: </div>
+                                    <div>Unvaccinated: </div>
+                                    <div>Partially Vaccinated: </div>
+                                    <div>Status Unknown: </div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
