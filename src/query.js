@@ -111,6 +111,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
     else if (rows[rows.length - 1]["Date"] === today) {
 
         var latestRow = rows[rows.length - 1]
+        var firstRow = rows[0]
 
         if (!latestRow['New Tests']) {
         
@@ -120,10 +121,13 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
                 var latestData = data.result.records[data.result.records.length - 1]
                 var newTests = latestData["Total tests completed in the last day"]
+                var totalTests = latestData["Total patients approved for testing as of Reporting Date"]
 
                 latestRow['New Tests'] = newTests
+                firstRow['Total Tests'] = totalTests
 
                 latestRow.save()
+                firstRow.save()
 
             })
         }
