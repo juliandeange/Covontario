@@ -199,12 +199,12 @@ class App extends Component {
                             onClose={this.handleDialogToggle}
                             aria-labelledby="max-width-dialog-title">
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Case Breakdown by Vaccination Status</DialogTitle>
-                            <DialogContent style={{textAlign: "center"}}>
-                                <DialogContentText style={{fontWeight: "bold"}}>
-                                    <div>Vaccinated: </div>
-                                    <div>Unvaccinated: </div>
-                                    <div>Partially Vaccinated: </div>
-                                    <div>Status Unknown: </div>
+                            <DialogContent>
+                                <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
+                                    <div>Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Vax"] ? this.state.data[this.state.data.length - 1]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Unvaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Partially Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Partial"] ? this.state.data[this.state.data.length - 1]["Cases_Partial"] : "n/a" : "n/a"}</span></div>
+                                    <div>Status Unknown: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
