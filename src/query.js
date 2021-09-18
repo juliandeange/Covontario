@@ -123,12 +123,21 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
                 var newTests = latestData["Total tests completed in the last day"]
                 var totalTests = latestData["Total patients approved for testing as of Reporting Date"]
 
-                latestRow['New Tests'] = newTests
-                firstRow['Total Tests'] = totalTests
+                var dateFromAPI = new Date(data.result.records[0]['Reported Date'])
+                var today = new Date()
 
-                latestRow.save()
-                firstRow.save()
+                var stringAPI = dateFromAPI.getDate() + '/' + dateFromAPI.getMonth() + '/' + dateFromAPI.getFullYear()
+                var stringToday = today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear()
 
+                if (stringAPI === stringToday) {
+
+                    latestRow['New Tests'] = newTests
+                    firstRow['Total Tests'] = totalTests
+
+                    latestRow.save()
+                    firstRow.save()
+
+                }
             })
         }
 
@@ -146,19 +155,24 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
                 var partial = data.result.records[0]['covid19_cases_partial_vac']
                 var unknown = data.result.records[0]['covid19_cases_vac_unknown']
 
-                latestRow['Cases_Vax'] = vax
-                latestRow['Cases_Unvax'] = unvax
-                latestRow['Cases_Partial'] = partial
-                latestRow['Cases_Unknown'] = unknown
+                var dateFromAPI = new Date(data.result.records[0]['Date'])
+                var today = new Date()
 
-                latestRow.save()
+                var stringAPI = dateFromAPI.getDate() + '/' + dateFromAPI.getMonth() + '/' + dateFromAPI.getFullYear()
+                var stringToday = today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear()
 
+                if (stringAPI === stringToday) {
+
+                    latestRow['Cases_Vax'] = vax
+                    latestRow['Cases_Unvax'] = unvax
+                    latestRow['Cases_Partial'] = partial
+                    latestRow['Cases_Unknown'] = unknown
+
+                    latestRow.save()
+
+                }
             })
-
         }
-
-
-
     }
 
     // Date
