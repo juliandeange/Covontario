@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "default": "ontario-covid-active-cases",
+    "staging": "ontario-covid-active-cases"
+  }
+}
