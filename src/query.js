@@ -12,7 +12,7 @@ const httpsOptions = {
     agent: new https.Agent({
       rejectUnauthorized: false
     })
-  };
+};
 
 (async () => {
 

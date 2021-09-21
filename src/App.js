@@ -11,6 +11,8 @@ import { Feedback, More } from '@material-ui/icons'
 import { Button, IconButton } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 
+// DEPLOY: firebase deploy --only hosting:<YOUR-TARGET-NAME>
+
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 class App extends Component {
