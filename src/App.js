@@ -6,8 +6,8 @@ import ChartTab from './ChartTab'
 import AppBadge from 'react-app-badge'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import isBrowser from 'react-device-detect'
-import { Tabs, Tab, Grid } from '@material-ui/core'
-import { Feedback, More } from '@material-ui/icons'
+import { Tabs, Tab, Grid, Tooltip } from '@material-ui/core'
+import { Feedback, More, Twitter } from '@material-ui/icons'
 import { Button, IconButton } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 
@@ -81,16 +81,6 @@ class App extends Component {
                     centered>
                     <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Information" />
                     <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Graph" />
-                    {/* <Select
-                        // labelId="demo-simple-select-label"
-                        // id="demo-simple-select"
-                        // value={age}
-                        // onChange={handleChange}
-                    >
-                    <MenuItem value={10}>Ten</MenuItem>
-                    <MenuItem value={20}>Twenty</MenuItem>
-                    <MenuItem value={30}>Thirty</MenuItem>
-                    </Select> */}
                 </Tabs>
 
                 {this.state.value === 0 ? this.state.data.length > 0 ? 
@@ -185,14 +175,19 @@ class App extends Component {
                         </div>
                         <div style={{width: "100vh", textAlign: "center", fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
                         
-                                    Source: https://covid-19.ontario.ca/
+                                Source: https://covid-19.ontario.ca/
 
+                                <Tooltip title="Feedback">
                                     <IconButton onClick={() => {window.open('mailto:covontario@gmail.com?subject=Covontario - Feedback')} }>
                                         <Feedback style={{fill: "white", height: 20}} />
                                     </IconButton>
+                                </Tooltip>
 
-                                    Send Feedback
-
+                                <Tooltip title="Twitter">
+                                    <IconButton onClick={() => {window.open('https://twitter.com/covontario')} }>
+                                        <Twitter style={{fill: "#00acee", height: 20}} />
+                                    </IconButton>
+                                </Tooltip>
                         </div>
                         <Dialog
                             fullWidth={true}
@@ -216,9 +211,6 @@ class App extends Component {
                             </DialogActions>
                         </Dialog>
                     </div>
-                    
-                    
-                
                 : 
                     <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
                         <CircularProgress color="secondary"/> 
