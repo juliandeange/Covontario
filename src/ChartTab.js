@@ -80,7 +80,6 @@ class ChartTab extends Component {
 
         chart.chart.update()
 
-
     }
 
     async componentDidMount() {
@@ -89,7 +88,11 @@ class ChartTab extends Component {
 
         var currentDate = new Date();
         var daysBack = new Date(currentDate);
-        daysBack.setDate(daysBack.getDate() - 90);
+
+        if (isBrowser)
+            daysBack.setDate(daysBack.getDate() - 90);
+        else if (!isBrowser)
+            daysBack.setDate(daysBack.getDate() - 60);
 
         const options = {
             maintainAspectRatio: false,
