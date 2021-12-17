@@ -2,7 +2,7 @@ import React from 'react'
 import './App.css'
 import Chart from 'chart.js'
 import { Component } from 'react'
-import {isBrowser} from "react-device-detect"
+import { isBrowser } from "react-device-detect"
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 // eslint-disable-next-line
@@ -39,12 +39,12 @@ class ChartTab extends Component {
         var endIndex = this.props.data.findIndex(i => i.Date === endDateString)
 
         // Get range of dates shown
-        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.state.data.length : endIndex)
+        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.state.data.length : endIndex + 1)
 
         // Get max values for each axis
         var maxActive = Math.max(...range.map(i => i["Active Cases"]))
-        var maxNew = Math.max(...range.map(i => i["New Recoveries"]))
-        var maxRecovery = Math.max(...range.map(i => i["New Cases"]))
+        var maxRecovery = Math.max(...range.map(i => i["New Recoveries"]))
+        var maxNew = Math.max(...range.map(i => i["New Cases"]))
 
         var maxRightAxis = Math.max(maxNew, maxRecovery)
 
