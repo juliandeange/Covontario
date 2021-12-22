@@ -16,7 +16,7 @@ class ChartTab extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: [],
+            // data: [],
             color: "Red",
             chart: {},
             value: 1
@@ -39,7 +39,7 @@ class ChartTab extends Component {
         var endIndex = this.props.data.findIndex(i => i.Date === endDateString)
 
         // Get range of dates shown
-        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.state.data.length : endIndex + 1)
+        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.props.data.length : endIndex + 1)
 
         // Get max values for each axis
         var maxActive = Math.max(...range.map(i => i["Active Cases"]))
@@ -217,7 +217,7 @@ class ChartTab extends Component {
         });
 
         this.setState({
-            data: this.props.data, 
+            // data: this.props.data, 
             chart: myChartRef
         })
 
@@ -229,19 +229,20 @@ class ChartTab extends Component {
 
         return(
             <div>
-                {this.state.data.length <= 0 ? 
+                {this.props.data.length <= 0 ? 
                     <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
                         <CircularProgress color="secondary"/> 
                     </div> : 
                     null
                 }
-                    {/* <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}> */}
-                    <div style={{height: !isBrowser ? "95vh" : "90vh"}}>
-                        <canvas
-                            id="myChart"
-                            ref={this.chartRef}
-                            style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
-                    </div>         
+                <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
+                {/* <div style={{height: !isBrowser ? "95vh" : "90vh"}}> */}
+                {/* <div style={{height: !isBrowser ? "100%" : "90vh"}}> */}
+                    <canvas
+                        id="myChart"
+                        ref={this.chartRef}
+                        style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
+                </div>         
             </div>
         )
     }

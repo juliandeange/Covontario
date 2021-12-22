@@ -201,19 +201,19 @@ class App extends Component {
                         </div>
                         <div style={{width: "100vh", textAlign: "center", fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
                         
-                                Source: https://covid-19.ontario.ca/
+                            Source: https://covid-19.ontario.ca/
 
-                                <Tooltip title="Feedback">
-                                    <IconButton onClick={() => {window.open('mailto:covontario@gmail.com?subject=Covontario - Feedback')} }>
-                                        <Feedback style={{fill: "white", height: 20}} />
-                                    </IconButton>
-                                </Tooltip>
+                            <Tooltip title="Feedback">
+                                <IconButton onClick={() => {window.open('mailto:covontario@gmail.com?subject=Covontario - Feedback')} }>
+                                    <Feedback style={{fill: "white", height: 20}} />
+                                </IconButton>
+                            </Tooltip>
 
-                                <Tooltip title="Twitter">
-                                    <IconButton onClick={() => {window.open('https://twitter.com/covontario')} }>
-                                        <Twitter style={{fill: "#00acee", height: 20}} />
-                                    </IconButton>
-                                </Tooltip>
+                            <Tooltip title="Twitter">
+                                <IconButton onClick={() => {window.open('https://twitter.com/covontario')} }>
+                                    <Twitter style={{fill: "#00acee", height: 20}} />
+                                </IconButton>
+                            </Tooltip>
                         </div>
                         <Dialog
                             fullWidth={true}
@@ -237,13 +237,23 @@ class App extends Component {
                             </DialogActions>
                         </Dialog>
                     </div>
+
+                : null : this.state.tab === 1 && this.state.graphTab === 0 ?
+
+                    // Cases tab
+                    <div> 
+                        <ChartTab data={this.state.data}/> 
+                    </div>
+
+                : this.state.tab === 1 && this.state.graphTab === 1 ?
+
+                    // Hospitalizations tab
+                    <div>
+                        Hospitalization data here
+                    </div>
                 : 
                     <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
                         <CircularProgress color="secondary"/> 
-                    </div> 
-                : 
-                    <div> 
-                        <ChartTab data={this.state.data}/> 
                     </div> 
                 }
             </div>
