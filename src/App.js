@@ -1,7 +1,8 @@
 import React from 'react'
 import './App.css'
 import { Component } from 'react'
-import ChartTab from './ChartTab'
+import GraphCases from './GraphCases'
+import GraphHospitalization from './GraphHospitalizations'
 
 import AppBadge from 'react-app-badge'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -242,14 +243,14 @@ class App extends Component {
 
                     // Cases tab
                     <div> 
-                        <ChartTab data={this.state.data}/> 
+                        <GraphCases data={this.state.data}/> 
                     </div>
 
                 : this.state.tab === 1 && this.state.graphTab === 1 ?
 
                     // Hospitalizations tab
                     <div>
-                        Hospitalization data here
+                        <GraphHospitalization data={this.state.data} />
                     </div>
                 : 
                     <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>

@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
 
-class ChartTab extends Component { 
+class GraphHospitalizations extends Component { 
 
 
     chartRef = React.createRef();
@@ -248,4 +248,4 @@ class ChartTab extends Component {
     }
 }
 
-export default ChartTab
+export default GraphHospitalizations
