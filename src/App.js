@@ -7,7 +7,7 @@ import AppBadge from 'react-app-badge'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid, Tooltip } from '@material-ui/core'
-import { Feedback, More, Twitter } from '@material-ui/icons'
+import { Feedback, Home, More, Timeline, Twitter } from '@material-ui/icons'
 import { Button, IconButton } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 
@@ -23,7 +23,8 @@ class App extends Component {
             dialogOpen: false,
             data: [],
             activeCaseDifference: {},
-            value: 0,
+            tab: 0,
+            graphTab: 0
         }
 
         this.handleDialogToggle = this.handleDialogToggle.bind(this)
@@ -51,7 +52,16 @@ class App extends Component {
 
     handleTabChange = (event, value) => {
 
-        this.setState({ value });
+        // 0 = Information / Dashboard
+        // 1 = Graph
+        if (value !== undefined)
+            this.setState({ tab: value });
+
+    }
+
+    handleGraphTabChange = (event, value) => {
+
+        this.setState({ graphTab: value })
 
     }
 
@@ -74,16 +84,32 @@ class App extends Component {
             <div style={{height: !isBrowser ? "calc(100vh)" : "90vh"}}>     
 
                 <Tabs
-                    value={this.state.value}
+                    value={this.state.tab}
                     onChange={this.handleTabChange}
                     indicatorColor="primary"
                     textColor="primary"
                     centered>
-                    <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Information" />
-                    <Tab style={{color: "#e0e0e0", fontSize: 14, fontWeight: "bold"}} label="Graph" />
+                    <Tab style={{color: "#e0e0e0"}} label={<Home />}/>
+                    <Tab style={{color: "#e0e0e0"}} label={<Timeline />} />
+                    {this.state.tab === 1 ? 
+                        <div>
+                            <Tabs
+                                value={this.state.graphTab}
+                                onChange={this.handleGraphTabChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                centered>
+                                <Tab style={{color: "#e0e0e0", fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Cases" />
+                                <Tab style={{color: "#e0e0e0", fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Hospitalizations" />
+                            </Tabs>
+                        </div>
+                    : 
+                        null
+                    }
+                    
                 </Tabs>
 
-                {this.state.value === 0 ? this.state.data.length > 0 ? 
+                {this.state.tab === 0 ? this.state.data.length > 0 ? 
                     <div>
 
                         <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)", width: "100vh"}}>
