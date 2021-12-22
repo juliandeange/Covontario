@@ -235,7 +235,8 @@ class ChartTab extends Component {
                     </div> : 
                     null
                 }
-                    <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
+                    {/* <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}> */}
+                    <div style={{height: !isBrowser ? "95vh" : "90vh"}}>
                         <canvas
                             id="myChart"
                             ref={this.chartRef}
