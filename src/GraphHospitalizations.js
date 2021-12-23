@@ -22,6 +22,12 @@ class GraphHospitalizations extends Component {
             value: 1
         }
     }
+
+    filterUndefined(i) {
+
+        return i !== undefined
+
+    }
     
     setAxis(chart) {
 
@@ -39,17 +45,14 @@ class GraphHospitalizations extends Component {
         var endIndex = this.props.data.findIndex(i => i.Date === endDateString)
 
         // Get range of dates shown
-        var range = this.props.data.slice(startIndex === -1 ? 57 : startIndex, endIndex === -1 ? this.props.data.length : endIndex + 1)
+        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.props.data.length : endIndex + 1)
 
         // Get max values for each axis
+        var maxHos = Math.max(...range.map(i => i["Hospitalizations"]).filter(this.filterUndefined))
+        var maxICU = Math.max(...range.map(i => i["ICU"]).filter(this.filterUndefined))
+        var maxICUVent = Math.max(...range.map(i => i["ICU_Ventilated"]).filter(this.filterUndefined))
 
-        console.log(...range.map(i => i["Hospitalizations"]))
-
-        var maxHos = Math.max(...range.map(i => i["Hospitalizations"]))
-        var maxICU = Math.max(...range.map(i => i["ICU"]))
-        var macICUVent = Math.max(...range.map(i => i["ICU_Ventilated"]))
-
-        var maxAxis = Math.max(maxHos, maxICU, macICUVent)
+        var maxAxis = Math.max(maxHos, maxICU, maxICUVent)
 
         var limit = maxAxis
         

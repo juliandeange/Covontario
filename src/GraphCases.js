@@ -22,6 +22,12 @@ class GraphCases extends Component {
             value: 1
         }
     }
+
+    filterUndefined(i) {
+
+        return i !== undefined
+
+    }
     
     setAxis(chart) {
 
@@ -42,9 +48,9 @@ class GraphCases extends Component {
         var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.props.data.length : endIndex + 1)
 
         // Get max values for each axis
-        var maxActive = Math.max(...range.map(i => i["Active Cases"]))
-        var maxRecovery = Math.max(...range.map(i => i["New Recoveries"]))
-        var maxNew = Math.max(...range.map(i => i["New Cases"]))
+        var maxActive = Math.max(...range.map(i => i["Active Cases"]).filter(this.filterUndefined))
+        var maxRecovery = Math.max(...range.map(i => i["New Recoveries"]).filter(this.filterUndefined))
+        var maxNew = Math.max(...range.map(i => i["New Cases"]).filter(this.filterUndefined))
 
         var maxRightAxis = Math.max(maxNew, maxRecovery)
 
