@@ -113,26 +113,36 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         var latestRow = rows[rows.length - 1]
         var firstRow = rows[0]
 
-        if (!latestRow['New Tests']) {
+        if (!latestRow['New Tests'] ||
+            !latestRow['Hospitalizations'] ||
+            !latestRow['ICU'] ||
+            !latestRow['ICU_Ventilated']) {
         
             await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1&sort=%22Reported%20Date%22%20desc', httpsOptions)
             .then(response => response.json())
             .then(data => { 
 
                 var latestData = data.result.records[data.result.records.length - 1]
-                var newTests = latestData["Total tests completed in the last day"]
-                var totalTests = latestData["Total patients approved for testing as of Reporting Date"]
+                var newTests = latestData['Total tests completed in the last day']
+                var totalTests = latestData['Total patients approved for testing as of Reporting Date']
+                var hospitalizations = latestData['Number of patients hospitalized with COVID-19']
+                var icu = latestData['Number of patients in ICU due to COVID-19']
+                var icuVented = latestData['Number of patients in ICU on a ventilator due to COVID-19']
 
                 var dateFromAPI = new Date(data.result.records[0]['Reported Date'])
                 var today = new Date()
 
-                var stringAPI = dateFromAPI.getDate() + '/' + dateFromAPI.getMonth() + '/' + dateFromAPI.getFullYear()
-                var stringToday = today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear()
+                var dateStringAPI = dateFromAPI.getDate() + '/' + dateFromAPI.getMonth() + '/' + dateFromAPI.getFullYear()
+                var dateStringToday = today.getDate() + '/' + today.getMonth() + '/' + today.getFullYear()
 
-                if (stringAPI === stringToday) {
+                if (dateStringAPI === dateStringToday) {
 
                     latestRow['New Tests'] = newTests
                     firstRow['Total Tests'] = totalTests
+
+                    latestRow['Hospitalizations'] = hospitalizations
+                    latestRow['ICU'] = icu
+                    latestRow['ICU_Ventilated'] = icuVented
 
                     latestRow.save()
                     firstRow.save()
