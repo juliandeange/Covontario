@@ -264,10 +264,9 @@ class App extends Component {
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Hospitalization Data</DialogTitle>
                             <DialogContent>
                                 <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
-                                    <div>Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Vax"] ? this.state.data[this.state.data.length - 1]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
-                                    <div>Unvaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] : "n/a" : "n/a"}</span></div>
-                                    <div>Partially Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Partial"] ? this.state.data[this.state.data.length - 1]["Cases_Partial"] : "n/a" : "n/a"}</span></div>
-                                    <div>Status Unknown: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] : "n/a" : "n/a"}</span></div>
+                                    <div>Hospitalizations: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Hospitalizations"] ? this.state.data[this.state.data.length - 1]["Hospitalizations"] : "n/a" : "n/a"}</span></div>
+                                    <div>ICU Occupancy: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU"] ? this.state.data[this.state.data.length - 1]["ICU"] : "n/a" : "n/a"}</span></div>
+                                    <div>ICU + Ventilated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
