@@ -8,7 +8,7 @@ import AppBadge from 'react-app-badge'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import isBrowser from 'react-device-detect'
 import { Tabs, Tab, Grid, Tooltip } from '@material-ui/core'
-import { Feedback, Home, More, Timeline, Twitter } from '@material-ui/icons'
+import { Feedback, Home, LocalHospital, Timeline, Twitter, Vaccines } from '@mui/icons-material'
 import { Button, IconButton } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 
@@ -21,14 +21,16 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dialogOpen: false,
+            vaccinationDialogOpen: false,
+            hospitalDialogOpen: false,
             data: [],
             activeCaseDifference: {},
             tab: 0,
             graphTab: 0
         }
 
-        this.handleDialogToggle = this.handleDialogToggle.bind(this)
+        this.handleVaccinationDialog = this.handleVaccinationDialog.bind(this)
+        this.handleHospitalDialog = this.handleHospitalDialog.bind(this)
 
     }
 
@@ -66,12 +68,21 @@ class App extends Component {
 
     }
 
-    handleDialogToggle() {
+    handleVaccinationDialog() {
 
-        if (this.state.dialogOpen === true)
-            this.setState({ dialogOpen: false })
-        else if (this.state.dialogOpen === false)
-            this.setState({ dialogOpen: true })
+        if (this.state.vaccinationDialogOpen === true)
+            this.setState({ vaccinationDialogOpen: false })
+        else if (this.state.vaccinationDialogOpen === false)
+            this.setState({ vaccinationDialogOpen: true })
+
+    }
+    
+    handleHospitalDialog() {
+
+        if (this.state.hospitalDialogOpen === true)
+            this.setState({ hospitalDialogOpen: false })
+        else if (this.state.hospitalDialogOpen === false)
+            this.setState({ hospitalDialogOpen: true })
 
     }
 
@@ -137,14 +148,21 @@ class App extends Component {
                             <h2 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold", textDecoration: "underline"}}>
 
                                 {this.state.data[this.state.data.length - 1]["Date"]}
+                                <Tooltip title="Vaccination Breakdown">
+                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleVaccinationDialog}>
+                                        <Vaccines style={{color: "white", maxHeight: 20}} />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Hospitalization Data">
+                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleHospitalDialog}>
+                                        <LocalHospital style={{color: "white", maxHeight: 20}} />
+                                    </IconButton>
+                                </Tooltip>
 
                             </h2>
                             <div style={{color: "#e0e0e0", fontWeight: "bold", textAlign: "center"}}>
                                 <div style={{margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
-                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleDialogToggle}>
-                                        <More style={{color: "white", maxHeight: 20}}/>
-                                    </IconButton>
                                 </div>
                                 <div style={{margin: "2px"}}>
                                     Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
@@ -219,8 +237,8 @@ class App extends Component {
                         <Dialog
                             fullWidth={true}
                             maxWidth="xs"
-                            open={this.state.dialogOpen}
-                            onClose={this.handleDialogToggle}
+                            open={this.state.vaccinationDialogOpen}
+                            onClose={this.handleVaccinationDialog}
                             aria-labelledby="max-width-dialog-title">
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Case Breakdown by Vaccination Status</DialogTitle>
                             <DialogContent>
@@ -232,7 +250,28 @@ class App extends Component {
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
-                            <Button onClick={this.handleDialogToggle} color="primary">
+                            <Button onClick={this.handleVaccinationDialog} color="primary">
+                                Close
+                            </Button>
+                            </DialogActions>
+                        </Dialog>
+                        <Dialog
+                            fullWidth={true}
+                            maxWidth="xs"
+                            open={this.state.hospitalDialogOpen}
+                            onClose={this.handleHospitalDialog}
+                            aria-labelledby="max-width-dialog-title">
+                            <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Hospitalization Data</DialogTitle>
+                            <DialogContent>
+                                <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
+                                    <div>Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Vax"] ? this.state.data[this.state.data.length - 1]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Unvaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Partially Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Partial"] ? this.state.data[this.state.data.length - 1]["Cases_Partial"] : "n/a" : "n/a"}</span></div>
+                                    <div>Status Unknown: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] : "n/a" : "n/a"}</span></div>
+                                </DialogContentText>
+                            </DialogContent>
+                            <DialogActions>
+                            <Button onClick={this.handleHospitalDialog} color="primary">
                                 Close
                             </Button>
                             </DialogActions>

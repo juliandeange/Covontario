@@ -16,8 +16,6 @@ class GraphCases extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // data: [],
-            color: "Red",
             chart: {},
             value: 1
         }
@@ -191,7 +189,7 @@ class GraphCases extends Component {
                     labels: this.props.data.map((key, index) => { return this.props.data[index]["Date"]}),
                     datasets: [
                         {
-                            borderColor: this.state.color,
+                            borderColor: "Red",
                             fill: false,
                             label: "Active Cases",
                             yAxisId: "ActiveCases",
