@@ -26,8 +26,8 @@ class GraphCases extends Component {
     setAxis(chart) {
 
         // Get date range shown
-        var startEpoch = chart.chart.scales["A"]._ticks[0].value
-        var endEpoch = chart.chart.scales["A"]._ticks[chart.chart.scales["A"]._ticks.length - 1].value
+        var startEpoch = chart.chart.scales["X"]._ticks[0].value
+        var endEpoch = chart.chart.scales["X"]._ticks[chart.chart.scales["X"]._ticks.length - 1].value
 
         var startDate = new Date(startEpoch)
         var endDate = new Date(endEpoch)
@@ -107,7 +107,7 @@ class GraphCases extends Component {
             },
             scales:{
                 xAxes:[{
-                    id: "A",
+                    id: "X",
                     scaleLabel: {
                         display: true,
                         fontColor: "white",
