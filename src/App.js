@@ -261,12 +261,12 @@ class App extends Component {
                             open={this.state.hospitalDialogOpen}
                             onClose={this.handleHospitalDialog}
                             aria-labelledby="max-width-dialog-title">
-                            <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Hospitalization Data</DialogTitle>
+                            <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Current Hospitalization Data</DialogTitle>
                             <DialogContent>
                                 <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
                                     <div>Hospitalizations: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Hospitalizations"] ? this.state.data[this.state.data.length - 1]["Hospitalizations"] : "n/a" : "n/a"}</span></div>
                                     <div>ICU Occupancy: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU"] ? this.state.data[this.state.data.length - 1]["ICU"] : "n/a" : "n/a"}</span></div>
-                                    <div>ICU + Ventilated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] : "n/a" : "n/a"}</span></div>
+                                    <div>ICU (Ventilated): <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
