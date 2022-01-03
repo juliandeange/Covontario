@@ -5,16 +5,19 @@ import GraphCases from './GraphCases'
 import GraphHospitalization from './GraphHospitalizations'
 
 import AppBadge from 'react-app-badge'
-import CircularProgress from '@material-ui/core/CircularProgress'
 import isBrowser from 'react-device-detect'
-import { Tabs, Tab, Grid, Tooltip } from '@material-ui/core'
-import { Feedback, Home, LocalHospital, Timeline, Twitter, Vaccines } from '@mui/icons-material'
-import { Button, IconButton } from '@material-ui/core'
+import { Button, CircularProgress, Grid, IconButton, Tab, Tabs, Tooltip } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
+import { Feedback, Home, LocalHospital, Timeline, Today, Twitter, Vaccines } from '@mui/icons-material'
+import { MobileDatePicker } from '@mui/lab';
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import TextField from '@mui/material/TextField';
 
 // DEPLOY: firebase deploy --only hosting:<YOUR-TARGET-NAME>
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
+const OffWhite = '#e0e0e0'
 
 class App extends Component {
 
@@ -24,6 +27,8 @@ class App extends Component {
             vaccinationDialogOpen: false,
             hospitalDialogOpen: false,
             data: [],
+            date: new Date(),
+            dateDialogOpen: false,
             activeCaseDifference: {},
             tab: 0,
             graphTab: 0
@@ -46,6 +51,8 @@ class App extends Component {
     
         await doc.loadInfo()
         const rows = await doc.sheetsByIndex[0].getRows()
+
+        this.handleDateChange(new Date())
 
         this.setState({ 
             data: rows,
@@ -86,6 +93,13 @@ class App extends Component {
 
     }
 
+    handleDateChange(date) {
+
+        var dateString = date.toLocaleDateString('default', {month: 'long', day: 'numeric', year: 'numeric'}).replace(',', '')
+        this.setState({ date: dateString })
+
+    }
+
     render() {
 
         const googlePlayLink = "https://play.google.com/store/apps/details?id=ca.gc.hcsc.canada.stopcovid&hl=en_CA"
@@ -101,8 +115,8 @@ class App extends Component {
                     indicatorColor="primary"
                     textColor="primary"
                     centered>
-                    <Tab style={{color: "#e0e0e0"}} label={<Home />}/>
-                    <Tab style={{color: "#e0e0e0"}} label={<Timeline />} />
+                    <Tab style={{color: OffWhite}} label={<Home />}/>
+                    <Tab style={{color: OffWhite}} label={<Timeline />} />
                     {this.state.tab === 1 ? 
                         <div>
                             <Tabs
@@ -111,8 +125,8 @@ class App extends Component {
                                 indicatorColor="primary"
                                 textColor="primary"
                                 centered>
-                                <Tab style={{color: "#e0e0e0", fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Cases" />
-                                <Tab style={{color: "#e0e0e0", fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Hospitalizations" />
+                                <Tab style={{color: OffWhite, fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Cases" />
+                                <Tab style={{color: OffWhite, fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Hospitalizations" />
                             </Tabs>
                         </div>
                     : 
@@ -139,30 +153,54 @@ class App extends Component {
                             Deaths
                             Tests */}
 
-                            <h5 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold"}}>
-
+                            <h5 style={{textAlign: "center", color: OffWhite, fontWeight: "bold"}}>
+                            {/* <Tooltip title="Hospitalization Data">
+                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleHospitalDialog}>
+                                        <Today style={{color: "white", maxHeight: 20}} />
+                                    </IconButton>
+                                </Tooltip> */}
+                                <b>Covontario <br /></b>
                                 Daily COVID-19 statistics for Ontario
                                 
                             </h5>
                             
-                            <h2 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold", textDecoration: "underline"}}>
+                            <h2 style={{textAlign: "center", color: OffWhite, textDecoration: "underline"}}>
 
-                                {this.state.data[this.state.data.length - 1]["Date"]}
-                                <Tooltip title="Vaccination Breakdown">
-                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleVaccinationDialog}>
-                                        <Vaccines style={{color: "white", maxHeight: 20}} />
-                                    </IconButton>
-                                </Tooltip>
-                                <Tooltip title="Hospitalization Data">
-                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleHospitalDialog}>
-                                        <LocalHospital style={{color: "white", maxHeight: 20}} />
+                                {this.state.date}
+
+                                <Tooltip title="Change Date">
+                                    <IconButton style={{height: 24, width: 24, marginTop: -3, marginLeft: 10}} onClick={() => this.setState({ dateDialogOpen: true })}>
+                                        <Today style={{color: "white", maxHeight: 24}} />
                                     </IconButton>
                                 </Tooltip>
 
+                                <div style={{ visibility: "hidden", position: "absolute", top: "-9999px" }}>
+                                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                                        <MobileDatePicker
+                                            open={this.state.dateDialogOpen}
+                                            label="Date"
+                                            value={this.state.date}
+                                            onChange={this.handleDateChange.bind(this)}
+                                            onClose={() => this.setState({ dateDialogOpen: false })}
+                                            inputFormat="MMMM dd yyyy"
+                                            renderInput={(params) => <TextField InputLabelProps={{ shrink: true }} {...params} /> }                                            
+                                        />
+                                    </LocalizationProvider >
+                                </div>
                             </h2>
-                            <div style={{color: "#e0e0e0", fontWeight: "bold", textAlign: "center"}}>
+                            <div style={{color: OffWhite, fontWeight: "bold", textAlign: "center"}}>
                                 <div style={{margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                                    <Tooltip title="Vaccination Breakdown">
+                                        <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleVaccinationDialog}>
+                                            <Vaccines style={{color: "white", maxHeight: 20}} />
+                                        </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="Hospitalization Data">
+                                            <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleHospitalDialog}>
+                                                <LocalHospital style={{color: "white", maxHeight: 20}} />
+                                            </IconButton>
+                                    </Tooltip>
                                 </div>
                                 <div style={{margin: "2px"}}>
                                     Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
@@ -182,12 +220,12 @@ class App extends Component {
                                 </div>
                             </div>
 
-                            <h2 style={{textAlign: "center", color: "#e0e0e0", textDecoration: "underline"}}>
+                            <h2 style={{textAlign: "center", color: OffWhite, textDecoration: "underline"}}>
 
                                 Cumulative Data
 
                             </h2>
-                            <div style={{color: "#e0e0e0", fontWeight: "bold", textAlign: "center"}}>
+                            <div style={{color: OffWhite, fontWeight: "bold", textAlign: "center"}}>
                                 <div style={{margin: "2px"}}>
                                     Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
                                 </div>
@@ -202,7 +240,7 @@ class App extends Component {
                                 </div>
                             </div>
 
-                            <h5 style={{textAlign: "center", color: "#e0e0e0", fontWeight: "bold"}}>
+                            <h5 style={{textAlign: "center", color: OffWhite, fontWeight: "bold"}}>
 
                                 Download the COVID-19 Alert App
 
@@ -218,7 +256,7 @@ class App extends Component {
                                 </Grid>
                             </div>
                         </div>
-                        <div style={{width: "100vh", textAlign: "center", fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: "#e0e0e0"}}>
+                        <div style={{width: "100vh", textAlign: "center", fontSize: 10, position: "fixed", top: "99%", left: "50%", transform: "translate(-50%, -99%)", color: OffWhite}}>
                         
                             Source: https://covid-19.ontario.ca/
 
