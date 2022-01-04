@@ -195,7 +195,7 @@ class App extends Component {
                             </h2>
                             <div style={{color: OffWhite, fontWeight: "bold", textAlign: "center"}}>
                                 <div style={{margin: "2px"}}>
-                                    Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Cases"] : ""}
+                                    Cases: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["New Cases"] : ""}
                                     <Tooltip title="Vaccination Breakdown">
                                         <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleVaccinationDialog}>
                                             <Vaccines style={{color: "white", maxHeight: 20}} />
@@ -208,19 +208,19 @@ class App extends Component {
                                     </Tooltip>
                                 </div>
                                 <div style={{margin: "2px"}}>
-                                    Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Recoveries"] : ""}
+                                    Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["New Recoveries"] : ""}
                                 </div>
                                 <div style={{margin: "2px"}}>
-                                    Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Deaths"] : ""}
+                                    Deaths: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["New Deaths"] : ""}
                                 </div>
                                 <div style={{margin: "2px"}}>
-                                    Tests: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["New Tests"] ? this.state.data[this.state.data.length - 1]["New Tests"] : "n/a" : "n/a"}
+                                    Tests: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["New Tests"] ? this.state.data[this.state.dateIndex]["New Tests"] : "n/a" : "n/a"}
                                 </div>
                                 <div style={{margin: "2px"}}>
                                     Active Cases: {this.state.data.length > 0 ? 
-                                    // this.state.data[this.state.data.length - 1]["Active Cases"] 
-                                    this.state.activeCaseDifference > 0 ? this.state.data[this.state.data.length - 1]["Active Cases"] + " (+" + this.state.activeCaseDifference + ")" :
-                                    this.state.data[this.state.data.length - 1]["Active Cases"] + " (" + this.state.activeCaseDifference + ")" : 
+                                    // this.state.data[this.state.dateIndex]["Active Cases"] 
+                                    this.state.activeCaseDifference > 0 ? this.state.data[this.state.dateIndex]["Active Cases"] + " (+" + this.state.activeCaseDifference + ")" :
+                                    this.state.data[this.state.dateIndex]["Active Cases"] + " (" + this.state.activeCaseDifference + ")" : 
                                     ""}
                                 </div>
                             </div>
@@ -232,13 +232,13 @@ class App extends Component {
                             </h2>
                             <div style={{color: OffWhite, fontWeight: "bold", textAlign: "center"}}>
                                 <div style={{margin: "2px"}}>
-                                    Cases: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Total Cases"] : ""}
+                                    Cases: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Total Cases"] : ""}
                                 </div>
                                 <div style={{margin: "2px"}}>
-                                    Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Resolved Cases"] : ""}
+                                    Recoveries: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Resolved Cases"] : ""}
                                 </div>
                                 <div style={{margin: "2px"}}>
-                                    Deaths: {this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Deceased Cases"] : ""}
+                                    Deaths: {this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Deceased Cases"] : ""}
                                 </div>
                                 <div style={{margin: "2px"}}>
                                     Tests: {this.state.data.length > 0 ? this.state.data[0]["Total Tests"] : ""}
@@ -286,10 +286,10 @@ class App extends Component {
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Case Breakdown by Vaccination Status</DialogTitle>
                             <DialogContent>
                                 <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
-                                    <div>Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Vax"] ? this.state.data[this.state.data.length - 1]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
-                                    <div>Unvaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] ? this.state.data[this.state.data.length - 1]["Cases_Unvax"] : "n/a" : "n/a"}</span></div>
-                                    <div>Partially Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Partial"] ? this.state.data[this.state.data.length - 1]["Cases_Partial"] : "n/a" : "n/a"}</span></div>
-                                    <div>Status Unknown: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] ? this.state.data[this.state.data.length - 1]["Cases_Unknown"] : "n/a" : "n/a"}</span></div>
+                                    <div>Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Cases_Vax"] ? this.state.data[this.state.dateIndex]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Unvaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Cases_Unvax"] ? this.state.data[this.state.dateIndex]["Cases_Unvax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Partially Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Cases_Partial"] ? this.state.data[this.state.dateIndex]["Cases_Partial"] : "n/a" : "n/a"}</span></div>
+                                    <div>Status Unknown: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Cases_Unknown"] ? this.state.data[this.state.dateIndex]["Cases_Unknown"] : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
@@ -307,9 +307,9 @@ class App extends Component {
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Current Hospitalization Data</DialogTitle>
                             <DialogContent>
                                 <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
-                                    <div>Hospitalizations: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["Hospitalizations"] ? this.state.data[this.state.data.length - 1]["Hospitalizations"] : "n/a" : "n/a"}</span></div>
-                                    <div>ICU Occupancy: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU"] ? this.state.data[this.state.data.length - 1]["ICU"] : "n/a" : "n/a"}</span></div>
-                                    <div>ICU (Ventilated): <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] ? this.state.data[this.state.data.length - 1]["ICU_Ventilated"] : "n/a" : "n/a"}</span></div>
+                                    <div>Hospitalizations: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["Hospitalizations"] ? this.state.data[this.state.dateIndex]["Hospitalizations"] : "n/a" : "n/a"}</span></div>
+                                    <div>ICU Occupancy: <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["ICU"] ? this.state.data[this.state.dateIndex]["ICU"] : "n/a" : "n/a"}</span></div>
+                                    <div>ICU (Ventilated): <span style={{fontWeight: "normal"}}>{this.state.data.length > 0 ? this.state.data[this.state.dateIndex]["ICU_Ventilated"] ? this.state.data[this.state.dateIndex]["ICU_Ventilated"] : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
