@@ -6,13 +6,14 @@ import GraphHospitalization from './GraphHospitalizations'
 
 import AppBadge from 'react-app-badge'
 import isBrowser from 'react-device-detect'
+import dateFormat, { masks } from 'dateformat'
 import { Button, CircularProgress, Grid, IconButton, Tab, Tabs, Tooltip } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 import { Feedback, Home, LocalHospital, Timeline, Today, Twitter, Vaccines } from '@mui/icons-material'
-import { MobileDatePicker } from '@mui/lab';
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import TextField from '@mui/material/TextField';
+import { MobileDatePicker } from '@mui/lab'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import TextField from '@mui/material/TextField'
 
 // DEPLOY: firebase deploy --only hosting:<YOUR-TARGET-NAME>
 
@@ -28,6 +29,7 @@ class App extends Component {
             hospitalDialogOpen: false,
             data: [],
             date: new Date(),
+            dateIndex: 0,
             dateDialogOpen: false,
             activeCaseDifference: {},
             tab: 0,
@@ -56,7 +58,8 @@ class App extends Component {
 
         this.setState({ 
             data: rows,
-            activeCaseDifference: rows[rows.length - 1]["Active Case Difference"]
+            activeCaseDifference: rows[rows.length - 1]["Active Case Difference"],
+            dateIndex: rows.length - 1
         })
     }
 
@@ -95,8 +98,14 @@ class App extends Component {
 
     handleDateChange(date) {
 
-        var dateString = date.toLocaleDateString('default', {month: 'long', day: 'numeric', year: 'numeric'}).replace(',', '')
-        this.setState({ date: dateString })
+        // var dateString = date.toLocaleDateString('default', {month: 'long', day: 'numeric', year: 'numeric'}).replace(',', '')
+        var dateString = dateFormat(date, "mmmm dd yyyy")
+        var dataIndex = this.state.data.findIndex(i => i.Date === dateString)
+
+        this.setState({ 
+            date: dateString,
+            dateIndex: dataIndex
+        })
 
     }
 
