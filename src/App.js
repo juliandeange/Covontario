@@ -154,11 +154,6 @@ class App extends Component {
                             Tests */}
 
                             <h5 style={{textAlign: "center", color: OffWhite, fontWeight: "bold"}}>
-                            {/* <Tooltip title="Hospitalization Data">
-                                    <IconButton style={{height: 12, width: 12, marginTop: -6, marginLeft: 10}} onClick={this.handleHospitalDialog}>
-                                        <Today style={{color: "white", maxHeight: 20}} />
-                                    </IconButton>
-                                </Tooltip> */}
                                 <b>Covontario <br /></b>
                                 Daily COVID-19 statistics for Ontario
                                 
@@ -177,10 +172,11 @@ class App extends Component {
                                 <div style={{ visibility: "hidden", position: "absolute", top: "-9999px" }}>
                                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                                         <MobileDatePicker
-                                            open={this.state.dateDialogOpen}
                                             label="Date"
                                             value={this.state.date}
-                                            onChange={this.handleDateChange.bind(this)}
+                                            open={this.state.dateDialogOpen}
+                                            onChange={() => null}
+                                            onAccept={this.handleDateChange.bind(this)}
                                             onClose={() => this.setState({ dateDialogOpen: false })}
                                             inputFormat="MMMM dd yyyy"
                                             renderInput={(params) => <TextField InputLabelProps={{ shrink: true }} {...params} /> }                                            
