@@ -107,6 +107,18 @@ class GraphCases extends Component {
                     fontColor: "white",
                     fontSize: 14,
                     fontStyle: "bold"
+                    // filter: function(item, chart) {
+                    //     // Logic to remove a particular legend item goes here
+                    //     return !item.text.includes('New Cases');
+                    // }
+                },
+                onClick: function(e, legendItem) {
+
+                    var datasetIndex = legendItem.datasetIndex;
+
+                    this.chart.data.datasets[datasetIndex].hidden = !this.chart.data.datasets[datasetIndex].hidden
+                    chart.update()
+
                 }
             },
             scales:{

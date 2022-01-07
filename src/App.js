@@ -6,7 +6,7 @@ import GraphHospitalization from './GraphHospitalizations'
 
 import AppBadge from 'react-app-badge'
 import isBrowser from 'react-device-detect'
-import dateFormat, { masks } from 'dateformat'
+import dateFormat from 'dateformat'
 import { Button, CircularProgress, Grid, IconButton, Tab, Tabs, Tooltip } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
 import { Feedback, Home, LocalHospital, Timeline, Today, Twitter, Vaccines } from '@mui/icons-material'
