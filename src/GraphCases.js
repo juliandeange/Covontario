@@ -98,6 +98,8 @@ class GraphCases extends Component {
         else if (!isBrowser)
             daysBack.setDate(daysBack.getDate() - 60);
 
+        var Jan2022Index = this.props.data.findIndex(i => i.Date === "January 01 2022")
+
         const options = {
             maintainAspectRatio: false,
             responsive: false,
@@ -213,8 +215,26 @@ class GraphCases extends Component {
                             fill: false,
                             label: "New Cases",
                             yAxisID: "OtherCases",
-                            data: this.props.data.map((key, index) => { return this.props.data[index]["New Cases"]}),
+                            data: this.props.data.map((key, index) => { 
+
+                                if (index < Jan2022Index)
+                                    return this.props.data[index]["New Cases"]
+
+                            }),
                             pointRadius: 5
+                        },
+                        {
+                            borderColor: "Orange",
+                            fill: false,
+                            label: "New Cases*",
+                            yAxisID: "OtherCases",
+                            data: this.props.data.map((key, index) => { 
+
+                                if (index >= Jan2022Index)
+                                    return this.props.data[index]["New Cases"]
+
+                            }),
+                            pointRadius: 5 
                         },
                         {
                             borderColor: "Green",
