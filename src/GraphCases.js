@@ -108,17 +108,28 @@ class GraphCases extends Component {
                 labels: {
                     fontColor: "white",
                     fontSize: 14,
-                    fontStyle: "bold"
-                    // filter: function(item, chart) {
-                    //     // Logic to remove a particular legend item goes here
-                    //     return !item.text.includes('New Cases');
-                    // }
+                    fontStyle: "bold",
+                    filter: function(item, chart) {
+
+                        return !item.text.includes('New Cases*');
+                        
+                    }
                 },
                 onClick: function(e, legendItem) {
+
+                    // Dataset Index
+                    // 0 = Active Cases
+                    // 1 = New Cases before Jan 2022
+                    // 2 = New Cases after Jan 2022
+                    // 3 = New Recoveries
 
                     var datasetIndex = legendItem.datasetIndex;
 
                     this.chart.data.datasets[datasetIndex].hidden = !this.chart.data.datasets[datasetIndex].hidden
+
+                    if (datasetIndex === 1)
+                    this.chart.data.datasets[2].hidden = !this.chart.data.datasets[2].hidden
+
                     chart.update()
 
                 }
@@ -219,6 +230,7 @@ class GraphCases extends Component {
 
                                 if (index < Jan2022Index)
                                     return this.props.data[index]["New Cases"]
+                                return null
 
                             }),
                             pointRadius: 5
@@ -232,6 +244,7 @@ class GraphCases extends Component {
 
                                 if (index >= Jan2022Index)
                                     return this.props.data[index]["New Cases"]
+                                return null
 
                             }),
                             pointRadius: 5 
