@@ -109,6 +109,7 @@ class GraphCases extends Component {
                     fontColor: "white",
                     fontSize: 14,
                     fontStyle: "bold",
+                    usePointStyle: true,
                     filter: function(item, chart) {
 
                         return !item.text.includes('New Cases*');
@@ -128,7 +129,7 @@ class GraphCases extends Component {
                     this.chart.data.datasets[datasetIndex].hidden = !this.chart.data.datasets[datasetIndex].hidden
 
                     if (datasetIndex === 1)
-                    this.chart.data.datasets[2].hidden = !this.chart.data.datasets[2].hidden
+                        this.chart.data.datasets[2].hidden = !this.chart.data.datasets[2].hidden
 
                     chart.update()
 
@@ -191,7 +192,8 @@ class GraphCases extends Component {
             tooltips:{
                 callbacks:{
                     label: function(tooltipItem, data){
-                        return tooltipItem.yLabel;
+                        if (!(tooltipItem.label === 'Jan 01 2022' && tooltipItem.datasetIndex === 1))
+                            return tooltipItem.yLabel;
                     }
                 }
             },
@@ -228,7 +230,7 @@ class GraphCases extends Component {
                             yAxisID: "OtherCases",
                             data: this.props.data.map((key, index) => { 
 
-                                if (index < Jan2022Index)
+                                if (index <= Jan2022Index)
                                     return this.props.data[index]["New Cases"]
                                 return null
 

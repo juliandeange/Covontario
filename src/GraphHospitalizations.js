@@ -92,6 +92,7 @@ class GraphHospitalizations extends Component {
             legend: {
                 position: "bottom",
                 labels: {
+                    usePointStyle: true,
                     fontColor: "white",
                     fontSize: 14,
                     fontStyle: "bold"
