@@ -16,7 +16,7 @@ const httpsOptions = {
 
 (async () => {
 
-    await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=1000000', httpsOptions)
+    await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10000000', httpsOptions)
     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
     // await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1000000', httpsOptions)
     .then(response => response.json())
@@ -91,7 +91,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         const twitterClient = new Twitter(config)
         twitterClient.post('statuses/update', {status:
 
-            "Ontario COVID-19 data for today (" + dateFormat(new Date(), "mmmm dd") + "): \n" +
+            "Ontario COVID-19 data for today (" + dateFormat(new Date(), "mmmm dd yyyy") + "): \n" +
             newCases + " new cases \n" +
             newRecoveries + " recoveries \n" +
             newDeaths + " deaths \n" +
