@@ -33,7 +33,10 @@ class App extends Component {
             dateDialogOpen: false,
             activeCaseDifference: {},
             tab: 0,
-            graphTab: 0
+            graphTab: 0,
+            hospDiff: '',
+            icuDiff: '',
+            ventDiff: ''
         }
 
         this.handleVaccinationDialog = this.handleVaccinationDialog.bind(this)
@@ -56,10 +59,24 @@ class App extends Component {
 
         this.handleDateChange(new Date())
 
+        var hosp = rows[rows.length - 1]['Hospitalizations'] - rows[rows.length - 2]['Hospitalizations']
+        var icu = rows[rows.length - 1]['ICU'] - rows[rows.length - 2]['ICU']
+        var vent = rows[rows.length - 1]['ICU_Ventilated'] - rows[rows.length - 2]['ICU_Ventilated']
+
+        if (hosp >= 0)
+            hosp = '+' + hosp
+        if (icu >= 0)
+            icu = '+' + icu
+        if (vent >= 0)
+            vent = '+' + vent
+
         this.setState({ 
             data: rows,
             activeCaseDifference: rows[rows.length - 1]["Active Case Difference"],
-            dateIndex: rows.length - 1
+            dateIndex: rows.length - 1,
+            hospDiff: hosp,
+            icuDiff: icu,
+            ventDiff: vent
         })
     }
 
@@ -102,9 +119,34 @@ class App extends Component {
         var dateString = dateFormat(date, "mmmm dd yyyy")
         var dataIndex = this.state.data.findIndex(i => i.Date === dateString)
 
+        if (this.state.data.length > 0) {
+
+            var hosp = 0
+            var icu = 0
+            var vent = 0
+
+            if (dataIndex >= 0 && dataIndex <= this.state.data.length - 1) {
+
+                hosp = this.state.data[dataIndex]['Hospitalizations'] - this.state.data[dataIndex - 1]['Hospitalizations']
+                icu = this.state.data[dataIndex]['ICU'] - this.state.data[dataIndex - 1]['ICU']
+                vent = this.state.data[dataIndex]['ICU_Ventilated'] - this.state.data[dataIndex - 1]['ICU_Ventilated']
+
+                if (hosp >= 0)
+                    hosp = '+' + hosp
+                if (icu >= 0)
+                    icu = '+' + icu
+                if (vent >= 0)
+                    vent = '+' + vent
+
+            }
+        }
+
         this.setState({ 
             date: dateString,
-            dateIndex: dataIndex
+            dateIndex: dataIndex,
+            hospDiff: hosp,
+            icuDiff: icu,
+            ventDiff: vent
         })
 
     }
@@ -306,9 +348,9 @@ class App extends Component {
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Current Hospitalization Data</DialogTitle>
                             <DialogContent>
                                 <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
-                                    <div>Hospitalizations: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Hospitalizations"] ? this.state.data[this.state.dateIndex]["Hospitalizations"] : "n/a" : "n/a"}</span></div>
-                                    <div>ICU Occupancy: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["ICU"] ? this.state.data[this.state.dateIndex]["ICU"] : "n/a" : "n/a"}</span></div>
-                                    <div>ICU (Ventilated): <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["ICU_Ventilated"] ? this.state.data[this.state.dateIndex]["ICU_Ventilated"] : "n/a" : "n/a"}</span></div>
+                                    <div>Hospitalizations: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Hospitalizations"] ? this.state.data[this.state.dateIndex]["Hospitalizations"] + " (" + this.state.hospDiff + ")" : "n/a" : "n/a"}</span></div>
+                                    <div>ICU Occupancy: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["ICU"] ? this.state.data[this.state.dateIndex]["ICU"] + " (" + this.state.icuDiff + ")" : "n/a" : "n/a"}</span></div>
+                                    <div>ICU (Ventilated): <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["ICU_Ventilated"] ? this.state.data[this.state.dateIndex]["ICU_Ventilated"] + " (" + this.state.ventDiff + ")" : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
                             <DialogActions>
