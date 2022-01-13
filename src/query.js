@@ -95,7 +95,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         const twitterClient = new Twitter(config)
         twitterClient.post('statuses/update', {status:
 
-            "Ontario COVID-19 data for today (" + dateFormat(new Date(), "mmmm dd yyyy") + "): \n" +
+            "Ontario COVID-19 case data for today (" + dateFormat(new Date(), "mmmm dd yyyy") + "): \n" +
             newCases + " new cases \n" +
             newRecoveries + " recoveries \n" +
             newDeaths + " deaths \n" +
