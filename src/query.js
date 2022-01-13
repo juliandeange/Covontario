@@ -64,6 +64,8 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
     if (yesterday != today && yesterdayTotalCases != todayTotalCases && todayTotalCases >= yesterdayTotalCases) {
 
+        // Collect new case data
+
         var activeCases = todayTotalCases - todayTotalResolved - todayTotalFatal
         var newCases = todayTotalCases - yesterdayTotalCases
         var newRecoveries = todayTotalResolved - rows[rows.length - 1]["Resolved Cases"]
@@ -86,6 +88,8 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
         })
 
         doc.sheetsByIndex[0].saveUpdatedCells()
+
+        // Tweet new case data
 
         const config = require("./TwitterAPIKeys")
         const twitterClient = new Twitter(config)
@@ -122,6 +126,8 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
             .then(response => response.json())
             .then(data => { 
 
+                // Collect hospitlalization and test data
+
                 var latestData = data.result.records[data.result.records.length - 1]
                 var newTests = latestData['Total tests completed in the last day']
                 var totalTests = latestData['Total patients approved for testing as of Reporting Date']
@@ -147,6 +153,38 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
                     latestRow.save()
                     firstRow.save()
 
+                    // Tweet hospitalization data
+
+                    hospDiff = hospitalizations - rows[rows.length - 2]['Hospitalizations']
+                    icuDiff = icu - rows[rows.length - 2]['ICU']
+                    ventDiff = icuVented - rows[rows.length - 2]['ICU_Ventilated']
+
+                    if (hospDiff >= 0)
+                        hospDiff = '+' + hospDiff
+                    if (icuDiff >= 0)
+                        icuDiff = '+' + icuDiff
+                    if (ventDiff >= 0)
+                        ventDiff = '+' + ventDiff
+
+                    const config = require("./TwitterAPIKeys")
+                    const twitterClient = new Twitter(config)
+                    twitterClient.post('statuses/update', {status:
+
+                        "Ontario COVID-19 hospitalization data for today (" + dateFormat(new Date(), "mmmm dd yyyy") + "): \n" +
+                        hospitalizations + " in Hospital (" + hospDiff + ")\n" +
+                        icu + " in ICU (" + icuDiff + ")\n" +
+                        icuVented + " in ICU on a ventilator (" + ventDiff + ")\n\n" +
+
+                        "Visit https://covontario.ca to view the graph \n\n" +
+
+                        "#COVID19Ontario #COVID19 #COVID #Ontario"
+
+                        }, function(error, tweet, response){
+                        if(!error){
+                            console.log(error);
+                        }
+                    })
+
                 }
             })
         }
@@ -159,6 +197,8 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
             await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc', httpsOptions)
             .then(response => response.json())
             .then(data => {
+
+                // Collect vaccination breakdown data
 
                 var vax = data.result.records[0]['covid19_cases_full_vac']
                 var unvax = data.result.records[0]['covid19_cases_unvac']
