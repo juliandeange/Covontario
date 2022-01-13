@@ -10,16 +10,7 @@ import Zoom from 'chartjs-plugin-zoom'
 
 class GraphCases extends Component { 
 
-
     chartRef = React.createRef();
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            chart: {},
-            value: 1
-        }
-    }
 
     filterUndefined(i) {
 
@@ -128,8 +119,8 @@ class GraphCases extends Component {
 
                     this.chart.data.datasets[datasetIndex].hidden = !this.chart.data.datasets[datasetIndex].hidden
 
-                    if (datasetIndex === 1)
-                        this.chart.data.datasets[2].hidden = !this.chart.data.datasets[2].hidden
+                    if (datasetIndex === 2)
+                        this.chart.data.datasets[1].hidden = !this.chart.data.datasets[1].hidden
 
                     chart.update()
 
@@ -216,7 +207,7 @@ class GraphCases extends Component {
                     labels: this.props.data.map((key, index) => { return this.props.data[index]["Date"]}),
                     datasets: [
                         {
-                            borderColor: "Red",
+                            borderColor: "Blue",
                             fill: false,
                             label: "Active Cases",
                             yAxisId: "ActiveCases",
@@ -224,9 +215,9 @@ class GraphCases extends Component {
                             pointRadius: 5
                         },
                         {
-                            borderColor: "Blue",
+                            borderColor: "Red",
                             fill: false,
-                            label: "New Cases",
+                            label: "New Cases*",
                             yAxisID: "OtherCases",
                             data: this.props.data.map((key, index) => { 
 
@@ -240,7 +231,7 @@ class GraphCases extends Component {
                         {
                             borderColor: "Orange",
                             fill: false,
-                            label: "New Cases*",
+                            label: "New Cases",
                             yAxisID: "OtherCases",
                             data: this.props.data.map((key, index) => { 
 
@@ -266,11 +257,6 @@ class GraphCases extends Component {
             options: options
         
         });
-
-        this.setState({
-            // data: this.props.data, 
-            chart: myChartRef
-        })
 
         this.setAxis(chart)
 
