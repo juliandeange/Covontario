@@ -9,7 +9,7 @@ import isBrowser from 'react-device-detect'
 import dateFormat from 'dateformat'
 import { Button, CircularProgress, Grid, IconButton, Tab, Tabs, Tooltip } from '@material-ui/core'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core'
-import { Feedback, Home, LocalHospital, Timeline, Today, Twitter, Vaccines } from '@mui/icons-material'
+import { Coronavirus, Feedback, Home, LocalHospital, Timeline, Today, Twitter, Vaccines } from '@mui/icons-material'
 import { MobileDatePicker } from '@mui/lab'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
@@ -56,6 +56,9 @@ class App extends Component {
     
         await doc.loadInfo()
         const rows = await doc.sheetsByIndex[0].getRows()
+
+        // var dateString = dateFormat(new Date, "mmmm dd yyyy")
+        // if (rows[rows.length - 1]['Date'] =)
 
         this.handleDateChange(new Date())
 
@@ -176,8 +179,8 @@ class App extends Component {
                                 indicatorColor="primary"
                                 textColor="primary"
                                 centered>
-                                <Tab style={{color: OffWhite, fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Cases" />
-                                <Tab style={{color: OffWhite, fontSize: 10, fontWeight: "bold", minWidth: "110px", width: "110px"}} label="Hospitalizations" />
+                                <Tab style={{color: OffWhite, fontSize: 10, fontWeight: "bold" /*, minWidth: "110px" , width: "110px"*/ }} label={<Coronavirus />} />
+                                <Tab style={{color: OffWhite, fontSize: 10, fontWeight: "bold" /*, minWidth: "110px" , width: "110px"*/ }} label={<LocalHospital />} />
                             </Tabs>
                         </div>
                     : 
