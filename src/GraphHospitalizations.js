@@ -4,24 +4,24 @@ import Chart from 'chart.js'
 import { Component } from 'react'
 import { isBrowser } from "react-device-detect"
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@mui/material/Snackbar'
 
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
 
 class GraphHospitalizations extends Component { 
 
+    constructor(props) {
+        super(props)
+        this.state = {
+
+            snackOpen: false
+
+        }
+
+    }
 
     chartRef = React.createRef();
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            // data: [],
-            color: "Red",
-            chart: {},
-            value: 1
-        }
-    }
 
     filterUndefined(i) {
 
@@ -192,12 +192,14 @@ class GraphHospitalizations extends Component {
         
         });
 
-        this.setState({
-            // data: this.props.data, 
-            chart: myChartRef
-        })
-
         this.setAxis(chart)
+        this.setState({ snackOpen: true })
+
+    }
+
+    handleSnackClose() {
+
+        this.setState({ snackOpen: false })
 
     }
 
@@ -216,7 +218,13 @@ class GraphHospitalizations extends Component {
                         id="myChart"
                         ref={this.chartRef}
                         style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
-                </div>         
+                </div>  
+                <Snackbar
+                    open={this.state.snackOpen}
+                    autoHideDuration={4000}
+                    onClose={this.handleSnackClose.bind(this)}
+                    message={<span style={{fontWeight: 'bolder'}}>Hospitalizations</span>}
+                />         
             </div>
         )
     }

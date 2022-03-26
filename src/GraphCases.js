@@ -2,13 +2,24 @@ import React from 'react'
 import './App.css'
 import Chart from 'chart.js'
 import { Component } from 'react'
-import { isBrowser } from "react-device-detect"
+import { isBrowser } from 'react-device-detect'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import Snackbar from '@mui/material/Snackbar'
 
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
 
 class GraphCases extends Component { 
+
+    constructor(props) {
+        super(props)
+        this.state = {
+
+            snackOpen: false
+
+        }
+
+    }
 
     chartRef = React.createRef();
 
@@ -259,6 +270,13 @@ class GraphCases extends Component {
         });
 
         this.setAxis(chart)
+        this.setState({ snackOpen: true })
+
+    }
+
+    handleSnackClose() {
+
+        this.setState({ snackOpen: false })
 
     }
 
@@ -279,7 +297,13 @@ class GraphCases extends Component {
                         id="myChart"
                         ref={this.chartRef}
                         style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
-                </div>         
+                </div>
+                <Snackbar
+                    open={this.state.snackOpen}
+                    autoHideDuration={4000}
+                    onClose={this.handleSnackClose.bind(this)}
+                    message={<span style={{fontWeight: 'bolder'}}>Cases</span>}
+                />      
             </div>
         )
     }
