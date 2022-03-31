@@ -193,10 +193,11 @@ class GraphCases extends Component {
             ]
             },
             tooltips:{
+                mode: 'label',
                 callbacks:{
-                    label: function(tooltipItem, data){
+                    label: function(tooltipItem, data) {
                         if (!(tooltipItem.label === 'Jan 01 2022' && tooltipItem.datasetIndex === 1))
-                            return tooltipItem.yLabel;
+                            return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
                     }
                 }
             },

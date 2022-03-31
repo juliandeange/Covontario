@@ -138,9 +138,10 @@ class GraphHospitalizations extends Component {
                 }
             ]},
             tooltips:{
+                mode: "label",
                 callbacks:{
                     label: function(tooltipItem, data){
-                        return tooltipItem.yLabel;
+                        return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;
                     }
                 }
             },
