@@ -330,9 +330,9 @@ class App extends Component {
                             <DialogTitle style={{textAlign: "center", fontWeight: "bold"}}>Case Breakdown by Vaccination Status</DialogTitle>
                             <DialogContent>
                                 <DialogContentText style={{fontWeight: "bold", textAlign: "center"}}>
-                                    <div>Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_Vax"] ? this.state.data[this.state.dateIndex]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
-                                    <div>Unvaccinated: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_Unvax"] ? this.state.data[this.state.dateIndex]["Cases_Unvax"] : "n/a" : "n/a"}</span></div>
-                                    <div>Partially Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_Partial"] ? this.state.data[this.state.dateIndex]["Cases_Partial"] : "n/a" : "n/a"}</span></div>
+                                    <div>Not Fully Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_NotFullyVaccinated"] ? this.state.data[this.state.dateIndex]["Cases_NotFullyVaccinated"] : "n/a" : "n/a"}</span></div>
+                                    <div>Fully Vaccinated: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_Vax"] ? this.state.data[this.state.dateIndex]["Cases_Vax"] : "n/a" : "n/a"}</span></div>
+                                    <div>Received a Booster: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_Boosted"] ? this.state.data[this.state.dateIndex]["Cases_Boosted"] : "n/a" : "n/a"}</span></div>
                                     <div>Status Unknown: <span style={{fontWeight: "normal"}}>{this.state.dateIndex !== -1 ? this.state.data[this.state.dateIndex]["Cases_Unknown"] ? this.state.data[this.state.dateIndex]["Cases_Unknown"] : "n/a" : "n/a"}</span></div>
                                 </DialogContentText>
                             </DialogContent>
