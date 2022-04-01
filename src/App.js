@@ -209,7 +209,7 @@ class App extends Component {
 
                             <h5 style={{textAlign: "center", color: OffWhite, fontWeight: "bold"}}>
                                 <b>Covontario <br /></b>
-                                Daily COVID-19 statistics for Ontario
+                                COVID-19 statistics for Ontario
                                 
                             </h5>
                             
