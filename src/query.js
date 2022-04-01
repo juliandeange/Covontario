@@ -189,9 +189,9 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
             })
         }
 
-        if (!latestRow['Cases_Vax'] ||
-            !latestRow['Cases_Unvax']  ||
-            !latestRow['Cases_Partial'] ||
+        if (!latestRow['Cases_NotFullyVaccinated'] ||
+            !latestRow['Cases_Vax']  ||
+            !latestRow['Cases_Boosted'] ||
             !latestRow['Cases_Unknown']) {
 
             await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=eed63cf2-83dd-4598-b337-b288c0a89a16&limit=1&sort=Date%20desc', httpsOptions)
@@ -200,11 +200,14 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
                 // Collect vaccination breakdown data
 
+                var notFully = data.result.records[0]['covid19_cases_notfull_vac']
                 var vax = data.result.records[0]['covid19_cases_full_vac']
-                var unvax = data.result.records[0]['covid19_cases_unvac']
-                var partial = data.result.records[0]['covid19_cases_partial_vac']
+                var boosted = data.result.records[0]['covid19_cases_boost_vac'] 
                 var unknown = data.result.records[0]['covid19_cases_vac_unknown']
 
+                // var unvax = data.result.records[0]['covid19_cases_unvac']
+                // var partial = data.result.records[0]['covid19_cases_partial_vac']
+                
                 var dateFromAPI = new Date(data.result.records[0]['Date'])
                 var today = new Date()
 
@@ -213,9 +216,9 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
                 if (stringAPI === stringToday) {
 
+                    latestRow['Cases_NotFullyVaccinated'] = notFully
                     latestRow['Cases_Vax'] = vax
-                    latestRow['Cases_Unvax'] = unvax
-                    latestRow['Cases_Partial'] = partial
+                    latestRow['Cases_Boosted'] = boosted
                     latestRow['Cases_Unknown'] = unknown
 
                     latestRow.save()
