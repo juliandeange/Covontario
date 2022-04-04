@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.css'
 import Chart from 'chart.js'
-import { Component } from 'react'
 import { isBrowser } from 'react-device-detect'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { Coronavirus } from '@mui/icons-material'
@@ -10,88 +9,15 @@ import Snackbar from '@mui/material/Snackbar'
 // eslint-disable-next-line
 import Zoom from 'chartjs-plugin-zoom'
 
-class GraphCases extends Component { 
+function GraphCases(data) {
 
-    constructor(props) {
-        super(props)
-        this.state = {
+    const chartRef = React.createRef();
 
-            snackOpen: false
+    const [snackOpen, setSnackOpen] = useState(false)
 
-        }
+    useEffect(() => { 
 
-    }
-
-    chartRef = React.createRef();
-
-    filterUndefined(i) {
-
-        return i !== undefined
-
-    }
-    
-    setAxis(chart) {
-
-        // Get date range shown
-        var startEpoch = chart.chart.scales["X"]._ticks[0].value
-        var endEpoch = chart.chart.scales["X"]._ticks[chart.chart.scales["X"]._ticks.length - 1].value
-
-        var startDate = new Date(startEpoch)
-        var endDate = new Date(endEpoch)
-
-        var startDateString = startDate.toLocaleString('default', { month: 'long' }) + ' ' + (startDate.getDate() < 10 ? '0' + startDate.getDate() : startDate.getDate()) + ' ' + startDate.getFullYear()
-        var endDateString = endDate.toLocaleString('default', { month: 'long' }) + ' ' + (endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()) + ' ' + endDate.getFullYear()
-
-        var startIndex = this.props.data.findIndex(i => i.Date === startDateString)
-        var endIndex = this.props.data.findIndex(i => i.Date === endDateString)
-
-        // Get range of dates shown
-        var range = this.props.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? this.props.data.length : endIndex + 1)
-
-        // Get max values for each axis
-        var maxActive = Math.max(...range.map(i => i["Active Cases"]).filter(this.filterUndefined))
-        var maxRecovery = Math.max(...range.map(i => i["New Recoveries"]).filter(this.filterUndefined))
-        var maxNew = Math.max(...range.map(i => i["New Cases"]).filter(this.filterUndefined))
-
-        var maxRightAxis = Math.max(maxNew, maxRecovery)
-
-        var leftLimit = maxActive
-        var rightLimit = maxRightAxis
-        
-        // Round the axis values
-        if (leftLimit < 100)
-            leftLimit = Math.ceil(maxActive / 5) * 5
-        else if (leftLimit < 1000)
-            leftLimit = Math.ceil(maxActive / 50) * 50
-        else if (leftLimit < 10000)
-            leftLimit = Math.ceil(maxActive / 500) * 500
-        else if (leftLimit < 100000)
-            leftLimit = Math.ceil(maxActive / 5000) * 5000
-        else if (leftLimit < 1000000)
-            leftLimit = Math.ceil(maxActive / 50000) * 50000
-
-        if (rightLimit < 100)
-            rightLimit = Math.ceil(maxRightAxis / 5) * 5
-        else if (rightLimit < 1000)
-            rightLimit = Math.ceil(maxRightAxis / 50) * 50
-        else if (rightLimit < 10000)
-            rightLimit = Math.ceil(maxRightAxis / 500) * 500
-        else if (rightLimit < 100000)
-            rightLimit = Math.ceil(maxRightAxis / 5000) * 5000
-        else if (rightLimit < 1000000)
-            rightLimit = Math.ceil(maxRightAxis / 50000) * 50000
-
-        // Set the new axis
-        chart.chart.options.scales.yAxes[0].ticks.max = leftLimit
-        chart.chart.options.scales.yAxes[1].ticks.max = rightLimit
-
-        chart.chart.update()
-
-    }
-
-    async componentDidMount() {
-
-        const myChartRef = this.chartRef.current.getContext("2d");
+        const myChartRef = chartRef.current.getContext("2d");
 
         var currentDate = new Date();
         var daysBack = new Date(currentDate);
@@ -101,7 +27,7 @@ class GraphCases extends Component {
         else if (!isBrowser)
             daysBack.setDate(daysBack.getDate() - 60);
 
-        var Jan2022Index = this.props.data.findIndex(i => i.Date === "January 01 2022")
+        var Jan2022Index = data.data.findIndex(i => i.Date === "January 01 2022")
 
         const options = {
             maintainAspectRatio: false,
@@ -204,27 +130,27 @@ class GraphCases extends Component {
             pan: {
                 enabled: true,
                 mode: 'x',
-                onPanComplete: this.setAxis.bind(this)
+                onPanComplete: setAxis
             },
             zoom: {
                 enabled: true,                      
                 mode: 'x',
                 speed: 0.04, // 4%
-                onZoomComplete: this.setAxis.bind(this)
+                onZoomComplete: setAxis
             },
         }
 
         var chart = new Chart(myChartRef, {
             type: "line",
                 data: {
-                    labels: this.props.data.map((key, index) => { return this.props.data[index]["Date"]}),
+                    labels: data.data.map((key, index) => { return data.data[index]["Date"]}),
                     datasets: [
                         {
                             borderColor: "Blue",
                             fill: false,
                             label: "Active Cases",
                             yAxisId: "ActiveCases",
-                            data: this.props.data.map((key, index) => { return this.props.data[index]["Active Cases"]}),
+                            data: data.data.map((key, index) => { return data.data[index]["Active Cases"]}),
                             pointRadius: 5
                         },
                         {
@@ -232,10 +158,10 @@ class GraphCases extends Component {
                             fill: false,
                             label: "New Cases*",
                             yAxisID: "OtherCases",
-                            data: this.props.data.map((key, index) => { 
+                            data: data.data.map((key, index) => { 
 
                                 if (index <= Jan2022Index)
-                                    return this.props.data[index]["New Cases"]
+                                    return data.data[index]["New Cases"]
                                 return null
 
                             }),
@@ -246,10 +172,10 @@ class GraphCases extends Component {
                             fill: false,
                             label: "New Cases",
                             yAxisID: "OtherCases",
-                            data: this.props.data.map((key, index) => { 
+                            data: data.data.map((key, index) => { 
 
                                 if (index >= Jan2022Index)
-                                    return this.props.data[index]["New Cases"]
+                                    return data.data[index]["New Cases"]
                                 return null
 
                             }),
@@ -260,55 +186,120 @@ class GraphCases extends Component {
                             fill: false,
                             label: "New Recoveries",
                             yAxisID: "OtherCases",
-                            data: this.props.data.map((key, index) => {return this.props.data[index]["New Recoveries"]}),
+                            data: data.data.map((key, index) => {return data.data[index]["New Recoveries"]}),
                             hidden: true,
                             pointRadius: 5
                         }
 
                     ]
                 },
+
             options: options
         
         });
 
-        this.setAxis(chart)
-        this.setState({ snackOpen: true })
+        setAxis(chart)
+        setSnackOpen(true)
+
+    // eslint-disable-next-line
+    }, [])
+
+    const filterUndefined = (i) => {
+
+        return i !== undefined
+
+    }
+    
+    const setAxis = (chart) => {
+
+        // Get date range shown
+        var startEpoch = chart.chart.scales["X"]._ticks[0].value
+        var endEpoch = chart.chart.scales["X"]._ticks[chart.chart.scales["X"]._ticks.length - 1].value
+
+        var startDate = new Date(startEpoch)
+        var endDate = new Date(endEpoch)
+
+        var startDateString = startDate.toLocaleString('default', { month: 'long' }) + ' ' + (startDate.getDate() < 10 ? '0' + startDate.getDate() : startDate.getDate()) + ' ' + startDate.getFullYear()
+        var endDateString = endDate.toLocaleString('default', { month: 'long' }) + ' ' + (endDate.getDate() < 10 ? '0' + endDate.getDate() : endDate.getDate()) + ' ' + endDate.getFullYear()
+
+        var startIndex = data.data.findIndex(i => i.Date === startDateString)
+        var endIndex = data.data.findIndex(i => i.Date === endDateString)
+
+        // Get range of dates shown
+        var range = data.data.slice(startIndex === -1 ? 0 : startIndex, endIndex === -1 ? data.data.length : endIndex + 1)
+
+        // Get max values for each axis
+        var maxActive = Math.max(...range.map(i => i["Active Cases"]).filter(filterUndefined))
+        var maxRecovery = Math.max(...range.map(i => i["New Recoveries"]).filter(filterUndefined))
+        var maxNew = Math.max(...range.map(i => i["New Cases"]).filter(filterUndefined))
+
+        var maxRightAxis = Math.max(maxNew, maxRecovery)
+
+        var leftLimit = maxActive
+        var rightLimit = maxRightAxis
+        
+        // Round the axis values
+        if (leftLimit < 100)
+            leftLimit = Math.ceil(maxActive / 5) * 5
+        else if (leftLimit < 1000)
+            leftLimit = Math.ceil(maxActive / 50) * 50
+        else if (leftLimit < 10000)
+            leftLimit = Math.ceil(maxActive / 500) * 500
+        else if (leftLimit < 100000)
+            leftLimit = Math.ceil(maxActive / 5000) * 5000
+        else if (leftLimit < 1000000)
+            leftLimit = Math.ceil(maxActive / 50000) * 50000
+
+        if (rightLimit < 100)
+            rightLimit = Math.ceil(maxRightAxis / 5) * 5
+        else if (rightLimit < 1000)
+            rightLimit = Math.ceil(maxRightAxis / 50) * 50
+        else if (rightLimit < 10000)
+            rightLimit = Math.ceil(maxRightAxis / 500) * 500
+        else if (rightLimit < 100000)
+            rightLimit = Math.ceil(maxRightAxis / 5000) * 5000
+        else if (rightLimit < 1000000)
+            rightLimit = Math.ceil(maxRightAxis / 50000) * 50000
+
+        // Set the new axis
+        chart.chart.options.scales.yAxes[0].ticks.max = leftLimit
+        chart.chart.options.scales.yAxes[1].ticks.max = rightLimit
+
+        chart.chart.update()
 
     }
 
-    handleSnackClose() {
+    const handleSnackClose = () => {
 
-        this.setState({ snackOpen: false })
+        setSnackOpen(false)
 
     }
 
-    render() {
+    return(
 
-        return(
-            <div>
-                {this.props.data.length <= 0 ? 
-                    <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
-                        <CircularProgress color="secondary"/> 
-                    </div> : 
-                    null
-                }
-                <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
-                {/* <div style={{height: !isBrowser ? "95vh" : "90vh"}}> */}
-                {/* <div style={{height: !isBrowser ? "100%" : "90vh"}}> */}
-                    <canvas
-                        id="myChart"
-                        ref={this.chartRef}
-                        style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
-                </div>
-                <Snackbar
-                    open={this.state.snackOpen}
-                    autoHideDuration={3000}
-                    onClose={this.handleSnackClose.bind(this)}
-                    message={<span style={{fontWeight: 'bolder'}}><Coronavirus style={{marginBottom: -6, marginRight: 10}} />Cases</span>}
-                />      
+        <div>
+            {data.data.length <= 0 ? 
+                <div style={{position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)"}}>
+                    <CircularProgress color="secondary"/> 
+                </div> : 
+                null
+            }
+            <div style={{height: !isBrowser ? "calc(90vh - 10vh)" : "90vh"}}>
+            {/* <div style={{height: !isBrowser ? "95vh" : "90vh"}}> */}
+            {/* <div style={{height: !isBrowser ? "100%" : "90vh"}}> */}
+                <canvas
+                    id="myChart"
+                    ref={chartRef}
+                    style={{height: !isBrowser ? "95%" : "100%", width: "100%"}}/>
             </div>
-        )
-    }
+            <Snackbar
+                open={snackOpen}
+                autoHideDuration={3000}
+                onClose={handleSnackClose}
+                message={<span style={{fontWeight: 'bolder'}}><Coronavirus style={{marginBottom: -6, marginRight: 10}} />Cases</span>}
+            />      
+        </div>
+    )
 }
 
 export default GraphCases
