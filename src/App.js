@@ -34,38 +34,45 @@ function App() {
     const [icuDiff, setIcuDiff] = useState('')
     const [ventDiff, setVentDiff] = useState('')
 
-    useEffect(async () => {
-     
-        const creds = require('./covontario_read_only.json');
-        const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
+    useEffect(() => {
 
-        await doc.useServiceAccountAuth({
-            client_email: creds.client_email,
-            private_key: creds.private_key,
-        });
+        const setup = async () => {
+            
+            const creds = require('./covontario_read_only.json');
+            const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
     
-        await doc.loadInfo()
-        const rows = await doc.sheetsByIndex[0].getRows()
+            await doc.useServiceAccountAuth({
+                client_email: creds.client_email,
+                private_key: creds.private_key,
+            });
+        
+            await doc.loadInfo()
+            const rows = await doc.sheetsByIndex[0].getRows()
+    
+            var dateString = dateFormat(new Date(), "mmmm dd yyyy")
+    
+            var hosp = rows[rows.length - 1]['Hospitalizations'] - rows[rows.length - 2]['Hospitalizations']
+            var icu = rows[rows.length - 1]['ICU'] - rows[rows.length - 2]['ICU']
+            var vent = rows[rows.length - 1]['ICU_Ventilated'] - rows[rows.length - 2]['ICU_Ventilated']
+    
+            if (hosp >= 0)
+                hosp = '+' + hosp
+            if (icu >= 0)
+                icu = '+' + icu
+            if (vent >= 0)
+                vent = '+' + vent
+    
+            setDate(dateString)
+            setData(rows)
+            setActiveCaseDifference(rows[rows.length - 1]["Active Case Difference"])
+            setDateIndex(rows.length - 1)
+            setHospDiff(hosp)
+            setIcuDiff(icu)
+            setVentDiff(vent)
 
-        handleDateChange(new Date())
+        }
 
-        var hosp = rows[rows.length - 1]['Hospitalizations'] - rows[rows.length - 2]['Hospitalizations']
-        var icu = rows[rows.length - 1]['ICU'] - rows[rows.length - 2]['ICU']
-        var vent = rows[rows.length - 1]['ICU_Ventilated'] - rows[rows.length - 2]['ICU_Ventilated']
-
-        if (hosp >= 0)
-            hosp = '+' + hosp
-        if (icu >= 0)
-            icu = '+' + icu
-        if (vent >= 0)
-            vent = '+' + vent
-
-        setData(rows)
-        setActiveCaseDifference(rows[rows.length - 1]["Active Case Difference"])
-        setDateIndex(rows.length - 1)
-        setHospDiff(hosp)
-        setIcuDiff(icu)
-        setVentDiff(vent)
+        setup()
 
     }, []);
 
@@ -101,10 +108,9 @@ function App() {
             setHospitalDialogOpen(true)
 
     }
-
+    
     const handleDateChange = (date) => {
 
-        // var dateString = date.toLocaleDateString('default', {month: 'long', day: 'numeric', year: 'numeric'}).replace(',', '')
         var dateString = dateFormat(date, "mmmm dd yyyy")
         var dataIndex = data.findIndex(i => i.Date === dateString)
 
