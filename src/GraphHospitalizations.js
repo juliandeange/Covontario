@@ -139,6 +139,7 @@ class GraphHospitalizations extends Component {
             ]},
             tooltips:{
                 mode: "label",
+                position: 'nearest',
                 callbacks:{
                     label: function(tooltipItem, data){
                         return data.datasets[tooltipItem.datasetIndex].label + ": " + tooltipItem.yLabel;

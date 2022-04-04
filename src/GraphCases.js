@@ -120,6 +120,7 @@ function GraphCases(data) {
             },
             tooltips:{
                 mode: 'label',
+                position: 'nearest',
                 callbacks:{
                     label: function(tooltipItem, data) {
                         if (!(tooltipItem.label === 'Jan 01 2022' && tooltipItem.datasetIndex === 1))
