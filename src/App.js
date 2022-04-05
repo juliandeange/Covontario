@@ -62,6 +62,9 @@ function App() {
             if (vent >= 0)
                 vent = '+' + vent
     
+            if (dateString !== rows[rows.length - 1]['Date'])
+                dateString = rows[rows.length - 1]['Date']
+
             setDate(dateString)
             setData(rows)
             setActiveCaseDifference(rows[rows.length - 1]["Active Case Difference"])
