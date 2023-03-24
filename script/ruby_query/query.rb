@@ -1,9 +1,10 @@
 #!/usr/bin/env ruby
 
 require 'net/http'
-# require 'rest_client'
 require 'json'
 require 'uri'
+require 'bundler'
+Bundler.require
 
 def GetData
     url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=100'
@@ -31,6 +32,7 @@ def GetData
     puts "Resolved Cases: #{resolvedCases}"
     puts "Fatal Cases: #{fatalCases}"
     puts "Active Cases: #{total - resolvedCases - fatalCases}"
+    puts "----------"
 
     AccessSpreadsheet(total, resolvedCases, fatalCases)
 
@@ -39,11 +41,27 @@ end
 
 
 def AccessSpreadsheet(total, resolved, fatal)
-   
-    puts Time.new
+
+    # Create google sheet context
+    session = GoogleDrive::Session.from_service_account_key("../client_secret.json")
+    spreadsheet = session.spreadsheet_by_title("Ontario COVID-19")
+    worksheet = spreadsheet.worksheets.first
+    rows = worksheet.rows
+    totalRows = worksheet.rows.length
+
+    # Create hash that maps each column name to an integer
+    # Used because this sheet API doesnt allow accessing rows by key name, only by index
+    count = 0
+    headerRow = {}
+    rows[0].each do |e|
+        headerRow[e] = count
+        count = count + 1
+    end
+
+    # puts rows[totalRows - 1][headerRow["Total Cases"]]
+    # today = Time.new().strftime('%B %d %Y')
+    # yesterday = rows[totalRows - 1]
 
 end
-
-
 
 GetData()
