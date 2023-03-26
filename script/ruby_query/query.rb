@@ -7,8 +7,8 @@ require 'bundler'
 Bundler.require
 
 def GetData
-    url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=100'
-    # url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10000000'
+    # url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=100'
+    url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10000000'
     uri = URI(url)
     response = Net::HTTP.get(uri)
     # puts response;
@@ -72,11 +72,14 @@ def AccessSpreadsheet(total, resolved, fatal)
         newCases = total - yesterdayTotalCases
         newRecoveries = resolved - rows[totalRows - 1][headerRow["Resolved Cases"]].to_i
         newFatal = fatal - rows[totalRows - 1][headerRow["Deceased Cases"]].to_i
-        activeCaseDifference = activeCases - rows[totalRows - 1][headerRow["Active Cases"]]
+        activeCaseDifference = activeCases - rows[totalRows - 1][headerRow["Active Cases"]].to_i
+
+        worksheet.insert_rows(totalRows + 1, [[today, total, newCases, "", resolved, newRecoveries, fatal, newFatal, activeCases, activeCaseDifference]])
+        worksheet.save
 
     end
 
-    puts "yesterday #{yesterday}, today: #{today}"
+
 
 end
 
