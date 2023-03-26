@@ -59,8 +59,24 @@ def AccessSpreadsheet(total, resolved, fatal)
     end
 
     # puts rows[totalRows - 1][headerRow["Total Cases"]]
-    # today = Time.new().strftime('%B %d %Y')
-    # yesterday = rows[totalRows - 1]
+    today = Time.new().strftime('%B %d %Y')
+    yesterday = rows[totalRows - 1][headerRow["Date"]]
+
+    yesterdayTotalCases = rows[totalRows - 1][headerRow["Total Cases"]].to_i
+    yesterdayRecoveries = rows[totalRows - 1][headerRow["Resolved Cases"]].to_i
+    yesterdayFatal= rows[totalRows - 1][headerRow["Deceased Cases"]].to_i
+
+    if yesterday != today && yesterdayTotalCases != total && total >= yesterdayTotalCases
+        
+        activeCases = total - resolved - fatal
+        newCases = total - yesterdayTotalCases
+        newRecoveries = resolved - rows[totalRows - 1][headerRow["Resolved Cases"]].to_i
+        newFatal = fatal - rows[totalRows - 1][headerRow["Deceased Cases"]].to_i
+        activeCaseDifference = activeCases - rows[totalRows - 1][headerRow["Active Cases"]]
+
+    end
+
+    puts "yesterday #{yesterday}, today: #{today}"
 
 end
 
