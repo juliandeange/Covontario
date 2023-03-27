@@ -88,10 +88,12 @@ GEM
     memoizable (0.4.2)
       thread_safe (~> 0.3, >= 0.3.1)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.1)
     multi_json (1.15.0)
     multipart-post (2.3.0)
     naught (1.1.0)
-    nokogiri (1.13.10-x86_64-darwin)
+    nokogiri (1.13.10)
+      mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
     os (1.1.4)
     parallel (1.22.1)
@@ -171,6 +173,7 @@ GEM
 
 PLATFORMS
   x86_64-darwin-18
+  x86_64-darwin-21
 
 DEPENDENCIES
   google_drive (~> 3.0)

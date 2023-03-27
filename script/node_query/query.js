@@ -46,7 +46,7 @@ const httpsOptions = {
 
 async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotalFatal) {
 
-    const creds = require('./client_secret.json');
+    const creds = require('../client_secret.json');
     const doc = new GoogleSpreadsheet(creds.spreadsheet_url);
 
     await doc.useServiceAccountAuth({
@@ -91,7 +91,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
         // Tweet new case data
 
-        const config = require("./TwitterAPIKeys")
+        const config = require("../TwitterAPIKeys")
         const twitterClient = new Twitter(config)
         twitterClient.post('statuses/update', {status:
 
@@ -166,7 +166,7 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
                     if (ventDiff >= 0)
                         ventDiff = '+' + ventDiff
 
-                    const config = require("./TwitterAPIKeys")
+                    const config = require("../TwitterAPIKeys")
                     const twitterClient = new Twitter(config)
                     twitterClient.post('statuses/update', {status:
 
