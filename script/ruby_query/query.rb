@@ -4,6 +4,8 @@ require 'net/http'
 require 'json'
 require 'uri'
 require 'bundler'
+
+require './CaseData.rb'
 Bundler.require
 
 def GetData
@@ -34,7 +36,7 @@ def GetData
     puts "Active Cases: #{total - resolvedCases - fatalCases}"
     puts "----------"
 
-    AccessSpreadsheet(total, resolvedCases, fatalCases)
+    # AccessSpreadsheet(total, resolvedCases, fatalCases)
 
     puts 'done'
 end
@@ -58,6 +60,7 @@ def AccessSpreadsheet(total, resolved, fatal)
         count = count + 1
     end
 
+
     # puts rows[totalRows - 1][headerRow["Total Cases"]]
     today = Time.new().strftime('%B %d %Y')
     yesterday = rows[totalRows - 1][headerRow["Date"]]
@@ -79,7 +82,7 @@ def AccessSpreadsheet(total, resolved, fatal)
 
     end
 
-
+    # r = require('../TwitterAPIKeys.js')
 
 end
 
