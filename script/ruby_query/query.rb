@@ -81,8 +81,23 @@ def AccessSpreadsheet(total, resolved, fatal)
         worksheet.save
 
     end
+def CreateCaseDataObject(data)
 
-    # r = require('../TwitterAPIKeys.js')
+    date = Time.new(data['Reported Date']).strftime('%B %d %Y')
+    total = data['Total Cases']
+    resolved = data['Resolved']
+    fatal = data['Deaths_New_Methodology']
+    active = data['Confirmed Positive']
+    newTests = data['Total tests completed in the last day']
+    totalTests = data['Total patients approved for testing as of Reporting Date']
+
+    return CaseData.new(date, total, resolved, fatal, active, newTests, totalTests)
+
+end
+
+def PrintCaseDataObject(data)
+
+    puts data.inspect
 
 end
 
