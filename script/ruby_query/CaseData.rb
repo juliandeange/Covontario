@@ -4,8 +4,9 @@
 #   - total fatalities
 #   - current active case count
 class CaseData
-    attr_reader :total, :resolved, :fatal, :active
-    def initialize(total, res, fatal, active)
+    attr_reader :date, :total, :resolved, :fatal, :active
+    def initialize(date, total, res, fatal, active)
+        @date = date
         @total = total
         @resolved = res
         @fatal = fatal
