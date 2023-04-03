@@ -276,7 +276,7 @@ function App() {
                                 Deaths: {dateIndex !== -1 ? data[dateIndex]["Deceased Cases"] : "n/a"}
                             </div>
                             <div style={{margin: "2px"}}>
-                                Tests: {dateIndex !== -1 ? data[0]["Total Tests"] : "n/a"}
+                                Tests: {dateIndex !== -1 ? data[dateIndex]["Total Tests"] : "n/a"}
                             </div>
                         </div>
 

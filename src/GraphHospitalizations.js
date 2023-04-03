@@ -25,7 +25,7 @@ function GraphHospitalizations(data) {
 
         const myChartRef = chartRef.current.getContext("2d");
 
-        var currentDate = new Date("June 14 2022");
+        var currentDate = new Date();
         var daysBack = new Date(currentDate);
 
         if (isBrowser)
@@ -64,7 +64,6 @@ function GraphHospitalizations(data) {
                     },
                     ticks: {
                         min: daysBack.toDateString(),
-                        max: currentDate.toDateString(),
                         autoSkip: true,
                         maxTicksLimit: isBrowser ? 50 : 15
                     }
