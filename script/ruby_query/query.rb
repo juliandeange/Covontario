@@ -28,8 +28,6 @@ end
 
 def AccessSpreadsheet(data)
 
-    # puts data
-
     # Create google sheet context
     session = GoogleDrive::Session.from_service_account_key("../client_secret.json")
     spreadsheet = session.spreadsheet_by_title("Ontario COVID-19")
@@ -66,6 +64,9 @@ def AccessSpreadsheet(data)
     end
 
     worksheet.save
+
+    Tweet()
+    
 
 end
 
@@ -152,4 +153,21 @@ def PrintCaseDataObject(data)
 
 end
 
-GetData()
+def Tweet
+
+    creds = File.read('../client_secret.json')
+    credHash = JSON.parse(creds)
+    
+    client = Twitter::REST::Client.new do |config|
+        config.consumer_key        = credHash['consumer_key']
+        config.consumer_secret     = credHash['consumer_secret']
+        config.access_token        = credHash['access_token_key']
+        config.access_token_secret = credHash['access_token_secret']
+    end
+
+    # puts 'done'
+
+end
+
+# GetData()
+Tweet()
