@@ -14,13 +14,11 @@ def GetData
     url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=14&sort=Reported%20Date%20desc'
     uri = URI(url)
     response = Net::HTTP.get(uri)
-    # puts response;
 
     json = JSON.parse(response)
     records = json['result']['records']
-    total = json['result']['total']
 
-    AccessSpreadsheet(records)
+    return records
 
     puts 'done'
 end
@@ -160,16 +158,6 @@ end
 
 def Tweet(data)
 
-    creds = File.read('../TwitterAPIKeys_Ruby.json')
-    credHash = JSON.parse(creds)
-    
-    client = Twitter::REST::Client.new do |config|
-        config.consumer_key        = credHash['consumer_key']
-        config.consumer_secret     = credHash['consumer_secret']
-        config.access_token        = credHash['access_token_key']
-        config.access_token_secret = credHash['access_token_secret']
-    end
-
     # client.update(
     #     "Ontario COVID-19 case data for " + data.date + ": \n" +
     #     data. + " new cases \n" +
@@ -187,4 +175,21 @@ def Tweet(data)
 
 end
 
-GetData()
+def GetTwitterClient
+
+    creds = File.read('../TwitterAPIKeys_Ruby.json')
+    credHash = JSON.parse(creds)
+    
+    client = Twitter::REST::Client.new do |config|
+        config.consumer_key        = credHash['consumer_key']
+        config.consumer_secret     = credHash['consumer_secret']
+        config.access_token        = credHash['access_token_key']
+        config.access_token_secret = credHash['access_token_secret']
+    end
+
+    return client
+
+end
+
+data = GetData()
+AccessSpreadsheet(data)
