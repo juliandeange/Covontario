@@ -64,9 +64,6 @@ def AccessSpreadsheet(data)
 
     worksheet.save
 
-    # Tweet(data)
-    
-
 end
 
 def WriteObjectToSpreadsheet(data, sheet, headerRow)
