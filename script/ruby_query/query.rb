@@ -26,6 +26,8 @@ end
 
 def AccessSpreadsheet(data)
 
+    dataQueue = Queue.new
+
     # Create google sheet context
     session = GoogleDrive::Session.from_service_account_key("../client_secret.json")
     spreadsheet = session.spreadsheet_by_title("Ontario COVID-19")
@@ -54,15 +56,15 @@ def AccessSpreadsheet(data)
             beginInsert = true
             next
         elsif beginInsert == true
-            # puts d
             obj = CreateCaseDataObject(d)
             WriteObjectToSpreadsheet(obj, worksheet, headerRow)
-            Tweet(obj)
+            dataQueue.enq(obj)
         end
 
     end
 
     worksheet.save
+    return dataQueue
 
 end
 
@@ -153,22 +155,28 @@ def PrintCaseDataObject(data)
 
 end
 
-def Tweet(data)
+def TweetDataQueue(client, dataQueue)
 
-    # client.update(
-    #     "Ontario COVID-19 case data for " + data.date + ": \n" +
-    #     data. + " new cases \n" +
-    #     newRecoveries + " recoveries \n" +
-    #     newDeaths + " deaths \n" +
-    #     activeCases + " active cases (" + (activeCaseDifference >= 0 ? "+" : "") + activeCaseDifference + ") \n\n" +
+    while dataQueue.length > 0
+        data = dataQueue.deq()
+        Tweet(client, data)
+    end
 
-    #     "Visit https://covontario.ca to view additional data \n\n" +
+end
 
-    #     "#COVID19Ontario #COVID19 #COVID #Ontario #Covontario"
-    # )
+def Tweet(client, data)
 
-    # client.update("Ruby test \n  test")
-    # puts 'done'
+    client.update(
+        "Ontario COVID-19 case data for " + data.date + ": \n" +
+        "Cases: " + data.newCases.to_s + "\n" +
+        "Deaths: " + data.newFatalities.to_s + "\n" +
+        "Recoveries: " + data.newRecoveries.to_s + "\n" +
+        "Active Cases: " + data.active.to_s + " (" + (data.activeCaseDifference >= 0 ? '+' : '') + data.activeCaseDifference.to_s + ") \n\n" +
+
+        "Visit https://covontario.ca to view additional data \n\n" +
+
+        "#COVID19Ontario #COVID19 #COVID #Ontario #Covontario"
+    )
 
 end
 
@@ -189,4 +197,6 @@ def GetTwitterClient
 end
 
 data = GetData()
-AccessSpreadsheet(data)
+client = GetTwitterClient()
+dataQueue = AccessSpreadsheet(data)
+TweetDataQueue(client, dataQueue)
