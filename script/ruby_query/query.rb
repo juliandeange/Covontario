@@ -44,7 +44,7 @@ def AccessSpreadsheet(data)
         count = count + 1
     end
 
-    puts headerRow
+    # puts headerRow
 
     data.reverse!
     beginInsert = false
@@ -56,16 +56,17 @@ def AccessSpreadsheet(data)
             beginInsert = true
             next
         elsif beginInsert == true
+            # puts d
             obj = CreateCaseDataObject(d)
             WriteObjectToSpreadsheet(obj, worksheet, headerRow)
-            # PrintCaseDataObject(obj)
+            Tweet(obj)
         end
 
     end
 
     worksheet.save
 
-    Tweet()
+    # Tweet(data)
     
 
 end
@@ -79,6 +80,11 @@ def WriteObjectToSpreadsheet(data, sheet, headerRow)
     newRecoveries = data.resolved - rows[totalRows - 1][headerRow['Resolved Cases']].to_i
     newFatalities = data.fatal - rows[totalRows - 1][headerRow['Deceased Cases']].to_i
     activeCaseDifference = data.active - rows[totalRows - 1][headerRow["Active Cases"]].to_i
+
+    data.newCases = newCases
+    data.newRecoveries = newRecoveries
+    data.newFatalities = newFatalities
+    data.activeCaseDifference = activeCaseDifference
 
     # Date
     # Total Cases  
@@ -106,18 +112,18 @@ def WriteObjectToSpreadsheet(data, sheet, headerRow)
     sheet.insert_rows(totalRows + 1, [[
         data.date,
         data.total,
-        newCases,
+        data.newCases,
         '',
         data.resolved,
-        newRecoveries,
+        data.newRecoveries,
         data.fatal,
-        newFatalities,
+        data.newFatalities,
         data.active,
-        activeCaseDifference,
+        data.activeCaseDifference,
         data.newTests,
         '',
         data.totalTests,
-        '',
+        '', # SPARE
         '',
         '',
         '',
@@ -126,8 +132,6 @@ def WriteObjectToSpreadsheet(data, sheet, headerRow)
         data.icu,
         data.icuVented
     ]])
-    # sheet.save
-
 end
 
 def CreateCaseDataObject(data)
@@ -143,7 +147,8 @@ def CreateCaseDataObject(data)
     icu = data['Number of patients in ICU due to COVID-19']
     icuVented = data['Number of patients in ICU on a ventilator due to COVID-19']
 
-    return CaseData.new(date, total, resolved, fatal, active, newTests, totalTests, hospitalizations, icu, icuVented)
+    caseData = CaseData.new(date, total, resolved, fatal, active, newTests, totalTests, hospitalizations, icu, icuVented)
+    return caseData
 
 end
 
@@ -153,9 +158,9 @@ def PrintCaseDataObject(data)
 
 end
 
-def Tweet
+def Tweet(data)
 
-    creds = File.read('../client_secret.json')
+    creds = File.read('../TwitterAPIKeys_Ruby.json')
     credHash = JSON.parse(creds)
     
     client = Twitter::REST::Client.new do |config|
@@ -165,9 +170,21 @@ def Tweet
         config.access_token_secret = credHash['access_token_secret']
     end
 
+    # client.update(
+    #     "Ontario COVID-19 case data for " + data.date + ": \n" +
+    #     data. + " new cases \n" +
+    #     newRecoveries + " recoveries \n" +
+    #     newDeaths + " deaths \n" +
+    #     activeCases + " active cases (" + (activeCaseDifference >= 0 ? "+" : "") + activeCaseDifference + ") \n\n" +
+
+    #     "Visit https://covontario.ca to view additional data \n\n" +
+
+    #     "#COVID19Ontario #COVID19 #COVID #Ontario #Covontario"
+    # )
+
+    # client.update("Ruby test \n  test")
     # puts 'done'
 
 end
 
-# GetData()
-Tweet()
+GetData()
