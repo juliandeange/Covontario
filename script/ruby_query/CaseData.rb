@@ -10,7 +10,8 @@
 #   - current icu cases
 #   - current icu + ventilated cases
 class CaseData
-    attr_reader :date, :total, :resolved, :fatal, :active, :newTests, :totalTests, :hospital, :icu, :icuVented
+    attr_reader :date, :total, :resolved, :fatal, :active, :newTests, :totalTests, :hospital, :icu, :icuVented, :newCases, :newRecoveries, :newFatalities, :activeCaseDifference
+    attr_writer :newCases, :newRecoveries, :newFatalities, :activeCaseDifference
     def initialize(date, total, res, fatal, active, newTests, totalTests, hospital, icu, icuVented)
         @date = date
         @total = total
