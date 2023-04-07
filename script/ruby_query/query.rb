@@ -49,17 +49,12 @@ def AccessSpreadsheet(data)
 
     data.reverse!
     beginInsert = false
+    format = '%Y-%m-%d'
 
     data.each do |d|
-        # time = Time.new(d['Reported Date'][0..9])
-        # date = time.strftime('%B %d %Y')
-        # puts d['Reported Date'][0..9]
-        # format = '%B %d %Y'
-        format = '%Y-%m-%d'
-        # puts d['Reported Date']
+
         date = Date.strptime(d['Reported Date'], format)
         date = date.strftime('%B %d %Y')
-        puts date
 
         if rows[totalRows - 1][headerRow['Date']] == date
             beginInsert = true
@@ -67,6 +62,7 @@ def AccessSpreadsheet(data)
         elsif beginInsert == true
             obj = CreateCaseDataObject(d)
             WriteObjectToSpreadsheet(obj, worksheet, headerRow)
+            PrintCaseDataObject(obj)
             dataQueue.enq(obj)
         end
 
