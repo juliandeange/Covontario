@@ -49,18 +49,21 @@ def AccessSpreadsheet(data)
 
     data.reverse!
     beginInsert = false
-    format = '%Y-%m-%d'
 
     data.each do |d|
 
-        date = Date.strptime(d['Reported Date'], format)
-        date = date.strftime('%B %d %Y')
+        year = d['Reported Date'][0,4].to_i
+        month = d['Reported Date'][5,6].to_i
+        day = d['Reported Date'][8,9].to_i
+
+        parsed = Date.new(year, month, day)
+        date = parsed.strftime('%B %d %Y')
 
         if rows[totalRows - 1][headerRow['Date']] == date
             beginInsert = true
             next
         elsif beginInsert == true
-            obj = CreateCaseDataObject(d)
+            obj = CreateCaseDataObject(d, date)
             WriteObjectToSpreadsheet(obj, worksheet, headerRow)
             PrintCaseDataObject(obj)
             dataQueue.enq(obj)
@@ -136,9 +139,9 @@ def WriteObjectToSpreadsheet(data, sheet, headerRow)
     ]])
 end
 
-def CreateCaseDataObject(data)
+def CreateCaseDataObject(data, date)
 
-    date = Time.new(data['Reported Date']).strftime('%B %d %Y')
+    date = date
     total = data['Total Cases']
     resolved = data['Resolved']
     fatal = data['Deaths_New_Methodology']
