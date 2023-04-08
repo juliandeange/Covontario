@@ -71,7 +71,7 @@ def AccessSpreadsheet(data)
 
     end
     
-    # worksheet.save
+    worksheet.save
     return dataQueue
 
 end
@@ -207,4 +207,4 @@ end
 data = GetData()
 client = GetTwitterClient()
 dataQueue = AccessSpreadsheet(data)
-#TweetDataQueue(client, dataQueue)
+TweetDataQueue(client, dataQueue)
