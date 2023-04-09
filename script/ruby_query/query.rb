@@ -6,10 +6,57 @@ require 'uri'
 require 'bundler'
 require 'date'
 
-require './CaseData.rb'
 Bundler.require
 
+# This class contains attributes to hold:
+#   - the date
+#   - total cases
+#   - total resolved cases
+#   - total fatalities
+#   - current active case count
+#   - new tests completed
+#   - total tests completed
+#   - current hospitalizations
+#   - current icu cases
+#   - current icu + ventilated cases
+class CaseData
+    attr_reader \
+        :date,
+        :total,
+        :resolved,
+        :fatal,
+        :active,
+        :newTests,
+        :totalTests,
+        :hospital,
+        :icu,
+        :icuVented,
+        :newCases,
+        :newRecoveries,
+        :newFatalities,
+        :activeCaseDifference
+    attr_writer \
+        :newCases,
+        :newRecoveries,
+        :newFatalities,
+        :activeCaseDifference
+    def initialize(date, total, res, fatal, active, newTests, totalTests, hospital, icu, icuVented)
+        @date = date
+        @total = total
+        @resolved = res
+        @fatal = fatal
+        @active = active
+        @newTests = newTests
+        @totalTests = totalTests
+        @hospital = hospital
+        @icu = icu
+        @icuVented = icuVented
+    end
+end
+
+
 def GetData
+
     # url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=100'
     # url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10000000'
     url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=14&sort=Reported%20Date%20desc'
