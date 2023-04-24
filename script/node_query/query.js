@@ -1,12 +1,15 @@
 const fetch = require('node-fetch')
 const https = require('https') 
 
+const CaseData = require('./CaseData')
+
 const { google } = require('googleapis')
 const { GoogleSpreadsheet } = require('google-spreadsheet')
 const Twitter = require('twitter')
 
 const jsonQuery = require('json-query') 
 var dateFormat = require('dateformat')
+const { resolve } = require('path')
      
 const httpsOptions = {
     agent: new https.Agent({
@@ -14,35 +17,80 @@ const httpsOptions = {
     })
 };
 
-(async () => {
+const GetData = async() => {
 
-    await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10000000', httpsOptions)
-    // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
-    // await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1000000', httpsOptions)
-    .then(response => response.json())
-    .then(data => {
+    url = 'https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=14&sort=Reported%20Date%20desc'
 
-        var resolved = jsonQuery('result.records[*Outcome1=Resolved]', {
-            data: data
-        })
+    const response = await fetch(url)
+    const data = await response.json()
 
-        var fatal = jsonQuery('result.records[*Outcome1=Fatal]', {
-            data: data
-        })
+    AccessSpreadsheetNew(data.result.records)
 
-        console.log("Total Cases: " + data.result.total.toString());
-        console.log("Resolved Cases: " + resolved.value.length.toString())
-        console.log("Fatal Cases: " + fatal.value.length.toString())
-        console.log("Active Cases: " + (data.result.total - resolved.value.length - fatal.value.length).toString())
+    // console.log(data)
 
-        AccessSpreadsheet(data.result.total, resolved.value.length, fatal.value.length)
+    // console.log(data.result.records)
+    // return data
+
+    // .then(data => data.json())
+    // .then(data => {
+
+    //     resolve(data.result.records)
+    //     // return resolve(r)
+
+    // })
+    // .then(s => {
+
+    //     console.log(s)
+
+    // })
+
+}
+
+// (async () => {
+
+//     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10000000', httpsOptions)
+//     // await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=455fd63b-603d-4608-8216-7d8647f43350&fields=Outcome1&limit=10', httpsOptions)
+//     // await fetch('https://data.ontario.ca/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=1000000', httpsOptions)
+//     await fetch('https://data.ontario.ca/en/api/3/action/datastore_search?resource_id=ed270bb8-340b-41f9-a7c6-e8ef587e6d11&limit=50&sort=Reported%20Date%20desc', httpsOptions)
+//     .then(response => response.json())
+//     .then(data => {
+
+//         var resolved = jsonQuery('result.records[*Outcome1=Resolved]', {
+//             data: data
+//         })
+
+//         var fatal = jsonQuery('result.records[*Outcome1=Fatal]', {
+//             data: data
+//         })
+
+//         console.log("Total Cases: " + data.result.total.toString());
+//         console.log("Resolved Cases: " + resolved.value.length.toString())
+//         console.log("Fatal Cases: " + fatal.value.length.toString())
+//         console.log("Active Cases: " + (data.result.total - resolved.value.length - fatal.value.length).toString())
+
+//         AccessSpreadsheet(data.result.total, resolved.value.length, fatal.value.length)
+
+//     })
+//     .catch(err => {
+//         console.log(err)
+//     })
+
+// })()
+
+const AccessSpreadsheetNew = async(data) => {
+
+    data = data.reverse()
+    // console.log(data)
+
+    data.map((obj) => {
+
+        // console.log(obj['Reported Date'])
+        var date = new Date(obj['Reported Date'])
+        console.log(dateFormat(date, 'mmmm dd yyyy'))
 
     })
-    .catch(err => {
-        console.log(err)
-    })
 
-})()
+}
 
 async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotalFatal) {
 
@@ -244,5 +292,6 @@ async function AccessSpreadsheet(todayTotalCases, todayTotalResolved, todayTotal
 
 }
 
+data = GetData()
 
     
