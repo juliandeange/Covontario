@@ -19,8 +19,8 @@ function GraphCases(data) {
 
         const myChartRef = chartRef.current.getContext("2d");
 
-        var currentDate = new Date();
-        var daysBack = new Date(currentDate);
+        // Last known date of data to keep graph active
+        var daysBack = new Date('April 04 2023');
 
         if (isBrowser)
             daysBack.setDate(daysBack.getDate() - 90);
